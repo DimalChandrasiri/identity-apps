@@ -23,7 +23,7 @@ import {
     LogoutMethods,
     MetadataPropertyInterface,
     SAML2ServiceProviderInterface,
-    SAMLAttributeProfileInterface,
+    
     SAMLMetaDataInterface
 } from "../../../models";
 import { Heading, Hint } from "@wso2is/react-components";

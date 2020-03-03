@@ -158,15 +158,8 @@ export const UserSearch: FunctionComponent<UserSearchProps> = (
             <Grid>
                 <Grid.Row columns={ 1 }>
                     <Grid.Column width={ 16 }>
-                        <Forms onSubmit={ (values) => handleFormSubmit(values) }>
+                        <Forms onSubmit={ (values): void => handleFormSubmit(values) }>
                             <Field
-                                children={ filterAttributeOptions.map((attribute, index) => {
-                                    return {
-                                        key: index,
-                                        text: attribute.text,
-                                        value: attribute.value
-                                    };
-                                }) }
                                 label={ t("views:components.users.search.forms.searchForm.inputs" +
                                     ".filerAttribute.label") }
                                 name={ FILTER_ATTRIBUTE_FIELD_IDENTIFIER }
@@ -177,18 +170,19 @@ export const UserSearch: FunctionComponent<UserSearchProps> = (
                                     ".inputs.filerAttribute.validations.empty") }
                                 type="dropdown"
                                 width={ 16 }
-                            />
+                            >{
+                                filterAttributeOptions.map((attribute, index) => {
+                                    return {
+                                        key: index,
+                                        text: attribute.text,
+                                        value: attribute.value
+                                    };
+                                })
+                            }</Field>
                             <Grid>
                                 <Grid.Row columns={ 2 }>
                                     <Grid.Column width={ 8 }>
                                         <Field
-                                            children={ filterConditionOptions.map((condition, index) => {
-                                                return {
-                                                    key: index,
-                                                    text: condition.text,
-                                                    value: condition.value
-                                                };
-                                            }) }
                                             label={ t("views:components.users.search.forms.searchForm.inputs" +
                                                 ".filterCondition.label") }
                                             name={ FILTER_CONDITION_FIELD_IDENTIFIER }
@@ -199,7 +193,15 @@ export const UserSearch: FunctionComponent<UserSearchProps> = (
                                                 ".searchForm.inputs.filterCondition.validations.empty") }
                                             type="dropdown"
                                             width={ 16 }
-                                        />
+                                    >{
+                                        filterConditionOptions.map((condition, index) => {
+                                            return {
+                                                key: index,
+                                                text: condition.text,
+                                                value: condition.value
+                                            };
+                                        }) 
+                                    }</Field>
                                     </Grid.Column>
                                     <Grid.Column width={ 8 }>
                                         <Field

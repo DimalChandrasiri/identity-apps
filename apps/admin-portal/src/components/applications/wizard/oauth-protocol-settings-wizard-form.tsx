@@ -28,6 +28,7 @@ import { isEmpty } from "lodash";
 /**
  * Proptypes for the oauth protocol settings wizard form component.
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface OAuthProtocolSettingsWizardFormPropsInterface {
     initialValues: any;
     triggerSubmit: boolean;

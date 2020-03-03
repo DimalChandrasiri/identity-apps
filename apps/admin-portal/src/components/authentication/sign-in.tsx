@@ -27,23 +27,13 @@ import { handleSignIn } from "../../store/actions";
 /**
  * This component handles the sign-in function
  */
-export const SignIn = (props) => {
+export const SignIn = (props): void => {
     const dispatch = useDispatch();
     const isAuth = useSelector((state: AppState) => state.authenticationInformation.isAuth);
 
     const error = new URLSearchParams(props.location.search).get("error_description");
 
-    useEffect(() => {
-        if (!isAuth && !error) {
-            dispatch(handleSignIn());
-        } else if (error === USER_DENIED_CONSENT) {
-            dispatch(handleSignIn(true));
-        } else {
-            loginSuccessRedirect();
-        }
-    }, [isAuth]);
-
-    const getAuthenticationCallbackUrl = () => {
+    const getAuthenticationCallbackUrl = (): string => {
         return window.sessionStorage.getItem("auth_callback_url");
     };
 
@@ -56,6 +46,16 @@ export const SignIn = (props) => {
 
         history.push(location);
     };
+
+    useEffect(() => {
+        if (!isAuth && !error) {
+            dispatch(handleSignIn());
+        } else if (error === USER_DENIED_CONSENT) {
+            dispatch(handleSignIn(true));
+        } else {
+            loginSuccessRedirect();
+        }
+    }, [isAuth]);
 
     return null;
 };

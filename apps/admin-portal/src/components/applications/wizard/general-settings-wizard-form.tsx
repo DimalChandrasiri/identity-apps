@@ -19,12 +19,13 @@
 import { Field, Forms, Validation } from "@wso2is/forms";
 import { Hint } from "@wso2is/react-components";
 import { FormValidation } from "@wso2is/validation";
-import React, { FunctionComponent, useEffect, useRef } from "react";
+import React, { FunctionComponent } from "react";
 import { Divider, Grid } from "semantic-ui-react";
 
 /**
  * Proptypes for the general settings wizard form component.
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface GeneralSettingsWizardFormPropsInterface {
     initialValues: any;
     triggerSubmit: boolean;
@@ -67,7 +68,7 @@ export const GeneralSettingsWizardForm: FunctionComponent<GeneralSettingsWizardF
 
     return (
         <Forms
-            onSubmit={ (values) => onSubmit(getFormValues(values)) }
+            onSubmit={ (values): void => onSubmit(getFormValues(values)) }
             submitState={ triggerSubmit }
         >
             <Grid>
@@ -146,7 +147,7 @@ export const GeneralSettingsWizardForm: FunctionComponent<GeneralSettingsWizardF
                                 required={ false }
                                 requiredErrorMessage={ "A valid access URL needs to be defined for an application " +
                                     "to be marked as discoverable" }
-                                validation={ (value: string, validation: Validation) => {
+                                validation={ (value: string, validation: Validation): void => {
                                     if (!FormValidation.url(value)) {
                                         validation.isValid = false;
                                         validation.errorMessages.push("The URL you entered is invalid");

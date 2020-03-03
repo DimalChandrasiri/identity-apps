@@ -32,7 +32,7 @@ import {
     CrossIcon,
     DashboardIcon,
     DocumentIcon,
-    DotIcon,
+    
     DotNetLogo,
     DragIcon,
     DummyUser,

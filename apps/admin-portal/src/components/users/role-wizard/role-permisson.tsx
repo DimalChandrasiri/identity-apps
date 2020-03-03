@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { FunctionComponent, ReactElement, useEffect, useState, SyntheticEvent, Children } from "react";
+import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { getPermissionList } from "../../../../src/api";
 import { Permission, PermissionObject } from "../../../models/permission";
 import SuperTreeview from 'react-super-treeview';
@@ -56,7 +56,7 @@ export const PermissionList: FunctionComponent<PermissionListProp> = (props: Per
      * @returns {Permission[]} - Permission arra with tree structure
      */
     const addPath = (permObj: PermissionObject, pathcomponents: string[], arr: Permission[]): Permission[] => {
-        let component = pathcomponents.shift()
+        const component = pathcomponents.shift()
         let comp = arr.find(item => item.name === component)
         if (!comp) {
             comp =  {
@@ -149,10 +149,10 @@ export const PermissionList: FunctionComponent<PermissionListProp> = (props: Per
         permissionTree && permissionTree.length != 0 ? <SuperTreeview
             data={ permissionTree }
             keywordLabel= "label"
-            isDeletable= {() => { return false } }
+            isDeletable= { () => { return false } }
             noChildrenAvailableMessage= ""
-            onUpdateCb={updatedData => setPermissionTree(updatedData)}
-            onCheckToggleCb={handlePermssionCheck}
+            onUpdateCb={ updatedData => setPermissionTree(updatedData) }
+            onCheckToggleCb={ handlePermssionCheck }
         /> :  <p>Loading Permissions</p>
     );
 }

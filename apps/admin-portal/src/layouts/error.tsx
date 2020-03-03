@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, ReactElement } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Container, Divider } from "semantic-ui-react";
 import { ProtectedRoute } from "../components";
@@ -29,9 +29,7 @@ import { errorLayoutRoutes } from "../configs";
  * @return {JSX.Element}
  * @constructor
  */
-export const ErrorPageLayout: React.FunctionComponent<PropsWithChildren<{}>> = (
-    props: PropsWithChildren<{}>
-): JSX.Element => {
+export const ErrorPageLayout: React.FunctionComponent<PropsWithChildren<{}>> = (): JSX.Element => {
 
     return (
         <Container className="layout-content error-page-layout">
@@ -52,7 +50,7 @@ export const ErrorPageLayout: React.FunctionComponent<PropsWithChildren<{}>> = (
                                 : (
                                     <Route
                                         path={ route.path }
-                                        render={ (renderProps) =>
+                                        render={ (renderProps): ReactElement =>
                                             (<route.component { ...renderProps } />)
                                         }
                                         key={ index }

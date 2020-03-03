@@ -146,6 +146,13 @@ module.exports = (env) => {
                             happyPackMode: true,
                             transpileOnly: false
                         }
+                    },{
+                        loader:"eslint-loader",
+                        options: {
+                            happyPackMode: true,
+                            transpileOnly: false,
+                            fix: true
+                        }
                     }],
                     exclude: /(node_modules)/
                 },
@@ -164,7 +171,8 @@ module.exports = (env) => {
                             happyPackMode: true,
                             transpileOnly: false
                         }
-                    }]
+                    }],
+                    exclude: /(node_modules)/
                 },
                 {
                     test: /\.js$/,

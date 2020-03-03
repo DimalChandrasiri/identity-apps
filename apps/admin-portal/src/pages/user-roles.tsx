@@ -48,7 +48,7 @@ export const UserRoles = (): ReactElement => {
         setListItemLimit(DEFAULT_ROLE_LIST_ITEM_LIMIT);
     }, []);
 
-    const getRoleList = () => {
+    const getRoleList = (): void => {
         getGroupsList(null).then((response)=> {
             if (response.status === 200) {
                 setRoleList(response.data);
@@ -65,11 +65,11 @@ export const UserRoles = (): ReactElement => {
         setListUpdated(false);
     }, [ isListUpdated ]);
 
-    const handlePaginationChange = (event: React.MouseEvent<HTMLAnchorElement>, data: PaginationProps) => {
+    const handlePaginationChange = (event: React.MouseEvent<HTMLAnchorElement>, data: PaginationProps): void => {
         setListOffset((data.activePage as number - 1) * listItemLimit);
     };
 
-    const handleItemsPerPageDropdownChange = (event: React.MouseEvent<HTMLAnchorElement>, data: DropdownProps) => {
+    const handleItemsPerPageDropdownChange = (event: React.MouseEvent<HTMLAnchorElement>, data: DropdownProps): void => {
         setListItemLimit(data.value as number);
     };
 
@@ -78,7 +78,7 @@ export const UserRoles = (): ReactElement => {
      *
      * @param {AlertInterface} alert - Alert object.
      */
-    const handleAlerts = (alert: AlertInterface) => {
+    const handleAlerts = (alert: AlertInterface): void => {
         dispatch(addAlert(alert));
     };
 
@@ -88,7 +88,7 @@ export const UserRoles = (): ReactElement => {
      * @param id - Role ID which needs to be deleted
      */
     const handleOnDelete = (id: string): void => {
-        deleteSelectedRole(id).then((response) => {
+        deleteSelectedRole(id).then(() => {
             handleAlerts({
                 description: t(
                     "views:components.roles.notifications.deleteRole.success.description"
@@ -115,7 +115,7 @@ export const UserRoles = (): ReactElement => {
                 onPageChange={ handlePaginationChange }
                 rightActionPanel={
                     (
-                        <PrimaryButton onClick={ () => setShowWizard(true) }>
+                        <PrimaryButton onClick={ (): void => setShowWizard(true) }>
                             <Icon name="add"/>
                             Add Role
                         </PrimaryButton>
@@ -132,8 +132,8 @@ export const UserRoles = (): ReactElement => {
                 {
                     showWizard && (
                         <CreateRoleWizard
-                            closeWizard={ () => setShowWizard(false) }
-                            updateList={ () => setListUpdated(true) }
+                            closeWizard={ (): void => setShowWizard(false) }
+                            updateList={ (): void => setListUpdated(true) }
                         />
                     ) 
                 }
