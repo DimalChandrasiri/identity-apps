@@ -81,11 +81,7 @@ export const UserProfile: FunctionComponent<ProfileProps> = (props: ProfileProps
 
     }, [profileDetails.profileSchemas]);
 
-    useEffect(() => {
-        mapUserToSchema(profileSchema, user);
-    }, [profileSchema, user]);
-
-    /**
+        /**
      * The following function maps profile details to the SCIM schemas.
      *
      * @param proSchema ProfileSchema
@@ -130,6 +126,10 @@ export const UserProfile: FunctionComponent<ProfileProps> = (props: ProfileProps
             setProfileInfo(tempProfileInfo);
         }
     };
+
+    useEffect(() => {
+        mapUserToSchema(profileSchema, user);
+    }, [profileSchema, user]);
 
     /**
      * This function handles deletion of the user.

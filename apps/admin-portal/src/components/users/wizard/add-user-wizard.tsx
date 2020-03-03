@@ -37,6 +37,7 @@ interface AddUserWizardPropsInterface {
     listOffset: number;
     listItemLimit: number;
     updateList: () => void;
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     rolesList: any;
     onUserListDomainChange: (domain: string) => void;
 }
@@ -45,6 +46,7 @@ interface AddUserWizardPropsInterface {
  * Interface for the wizard state.
  */
 interface WizardStateInterface {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     [ key: string ]: any;
 }
 
@@ -100,7 +102,7 @@ export const AddUserWizard: FunctionComponent<AddUserWizardPropsInterface> = (
         setPartiallyCompletedStep(undefined);
     }, [ partiallyCompletedStep ]);
 
-    const navigateToNext = () => {
+    const navigateToNext = (): void => {
         switch (currentWizardStep) {
             case 0:
                 setSubmitGeneralSettings();
@@ -113,14 +115,81 @@ export const AddUserWizard: FunctionComponent<AddUserWizardPropsInterface> = (
         }
     };
 
-    const navigateToPrevious = () => {
+    const navigateToPrevious = (): void => {
         setPartiallyCompletedStep(currentWizardStep);
+    };
+    
+    /**
+     * This function handles assigning the roles to the user.
+     */
+    const assignUserRole = (user: any, roles: any): void => {
+        const roleIds = [];
+
+        roles.map((role) => {
+            roleIds.push(role.id);
+        });
+        const data = {
+            Operations: [
+                {
+                    op: "add",
+                    value: {
+                        members: [
+                            {
+                                display: user.userName,
+                                value: user.id
+                            }
+                        ]
+                    }
+                }
+            ],
+            schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+        };
+
+        for (const roleId of roleIds) {
+            addUserRole(data, roleId)
+                .catch((error) => {
+                    if (!error.response || error.response.status === 401) {
+                        dispatch(addAlert({
+                            description: t(
+                                "views:components.users.notifications.addUser.error.description"
+                            ),
+                            level: AlertLevels.ERROR,
+                            message: t(
+                                "views:components.users.notifications.addUser.error.message"
+                            )
+                        }));
+                    } else if (error.response && error.response.data && error.response.data.detail) {
+
+                        dispatch(addAlert({
+                            description: t(
+                                "views:components.users.notifications.addUser.error.description",
+                                { description: error.response.data.detail }
+                            ),
+                            level: AlertLevels.ERROR,
+                            message: t(
+                                "views:components.users.notifications.addUser.error.message"
+                            )
+                        }));
+                    } else {
+                        // Generic error message
+                        dispatch(addAlert({
+                            description: t(
+                                "views:components.users.notifications.addUser.genericError.description"
+                            ),
+                            level: AlertLevels.ERROR,
+                            message: t(
+                                "views:components.users.notifications.addUser.genericError.message"
+                            )
+                        }));
+                    }
+                });
+        }
     };
 
     /**
      * This function handles adding the user.
      */
-    const addUserBasic = (userInfo: any) => {
+    const addUserBasic = (userInfo: any): void => {
         let userName = "";
         userInfo.domain !== "primary" ? userName = userInfo.domain + "/" + userInfo.userName : userName =
             userInfo.userName;
@@ -225,79 +294,12 @@ export const AddUserWizard: FunctionComponent<AddUserWizardPropsInterface> = (
     };
 
     /**
-     * This function handles assigning the roles to the user.
-     */
-    const assignUserRole = (user: any, roles: any) => {
-        const roleIds = [];
-
-        roles.map((role) => {
-            roleIds.push(role.id);
-        });
-        const data = {
-            Operations: [
-                {
-                    op: "add",
-                    value: {
-                        members: [
-                            {
-                                display: user.userName,
-                                value: user.id
-                            }
-                        ]
-                    }
-                }
-            ],
-            schemas: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-        };
-
-        for (const roleId of roleIds) {
-            addUserRole(data, roleId)
-                .catch((error) => {
-                    if (!error.response || error.response.status === 401) {
-                        dispatch(addAlert({
-                            description: t(
-                                "views:components.users.notifications.addUser.error.description"
-                            ),
-                            level: AlertLevels.ERROR,
-                            message: t(
-                                "views:components.users.notifications.addUser.error.message"
-                            )
-                        }));
-                    } else if (error.response && error.response.data && error.response.data.detail) {
-
-                        dispatch(addAlert({
-                            description: t(
-                                "views:components.users.notifications.addUser.error.description",
-                                { description: error.response.data.detail }
-                            ),
-                            level: AlertLevels.ERROR,
-                            message: t(
-                                "views:components.users.notifications.addUser.error.message"
-                            )
-                        }));
-                    } else {
-                        // Generic error message
-                        dispatch(addAlert({
-                            description: t(
-                                "views:components.users.notifications.addUser.genericError.description"
-                            ),
-                            level: AlertLevels.ERROR,
-                            message: t(
-                                "views:components.users.notifications.addUser.genericError.message"
-                            )
-                        }));
-                    }
-                });
-        }
-    };
-
-    /**
      * Handles wizard step submit.
      *
      * @param values - Forms values to be stored in state.
      * @param {WizardStepsFormTypes} formType - Type of the form.
      */
-    const handleWizardFormSubmit = (values: any, formType: WizardStepsFormTypes) => {
+    const handleWizardFormSubmit = (values: any, formType: WizardStepsFormTypes): void => {
         setCurrentWizardStep(currentWizardStep + 1);
         setWizardState(_.merge(wizardState, { [ formType ]: values }));
     };
@@ -307,7 +309,8 @@ export const AddUserWizard: FunctionComponent<AddUserWizardPropsInterface> = (
      *
      * @return {any}
      */
-    const generateWizardSummary = () => {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const generateWizardSummary = (): any => {
         if (!wizardState) {
             return;
         }
@@ -324,7 +327,7 @@ export const AddUserWizard: FunctionComponent<AddUserWizardPropsInterface> = (
         return _.merge(_.cloneDeep(summary));
     };
 
-    const handleWizardFormFinish = (user: any) => {
+    const handleWizardFormFinish = (user: any): void => {
         addUserBasic(user);
     };
 

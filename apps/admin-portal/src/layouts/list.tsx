@@ -50,14 +50,9 @@ export const ListLayout: FunctionComponent<PropsWithChildren<ListLayoutPropsInte
     const {
         advancedSearch,
         children,
-        leftActionPanel,
-        listItemLimit,
-        onSortStrategyChange,
         rightActionPanel,
         showPagination,
         showTopActionPanel,
-        sortOptions,
-        sortStrategy,
         totalListSize,
         totalPages,
         ...rest

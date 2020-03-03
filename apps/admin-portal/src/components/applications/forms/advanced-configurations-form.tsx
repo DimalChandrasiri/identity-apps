@@ -19,7 +19,7 @@
 import { Field, Forms, Validation } from "@wso2is/forms";
 import { Heading, Hint } from "@wso2is/react-components";
 import React, { FunctionComponent, useState } from "react";
-import { Button, Divider, Grid, Segment } from "semantic-ui-react";
+import { Button, Divider, Grid } from "semantic-ui-react";
 import { AdvancedConfigurationsInterface } from "../../../models";
 import { FormValidation } from "@wso2is/validation";
 

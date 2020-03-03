@@ -18,13 +18,13 @@
 
 import { UserAvatar } from "@wso2is/react-components";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+
 import { getUserDetails } from "../api";
 import { EditUser } from "../components/users/edit-user";
 import { history } from "../helpers";
 import { PageLayout } from "../layouts";
-import { AlertInterface, BasicProfileInterface, createEmptyProfile } from "../models";
-import { addAlert } from "../store/actions";
+import {  BasicProfileInterface, createEmptyProfile } from "../models";
+
 
 /**
  * User Edit page.
@@ -33,26 +33,17 @@ import { addAlert } from "../store/actions";
  */
 export const UserEditPage = (): JSX.Element => {
     const [ user, setUserProfile ] = useState<BasicProfileInterface>(createEmptyProfile);
-    const dispatch = useDispatch();
 
-    /**
-     * Dispatches the alert object to the redux store.
-     * @param {AlertInterface} alert - Alert object.
-     */
-    const handleAlerts = (alert: AlertInterface) => {
-        dispatch(addAlert(alert));
-    };
-
-    const handleUserUpdate = (userInfo: BasicProfileInterface) => {
+    const handleUserUpdate = (userInfo: BasicProfileInterface): void => {
         setUserProfile(userInfo);
     };
 
-    const getUser = (id: string) => {
+    const getUser = (id: string): void => {
         getUserDetails(id)
             .then((response) => {
                 setUserProfile(response);
             })
-            .catch((error) => {
+            .catch(() => {
                 // TODO add to notifications
             });
     };
@@ -64,7 +55,7 @@ export const UserEditPage = (): JSX.Element => {
         getUser(id);
     }, []);
 
-    const handleBackButtonClick = () => {
+    const handleBackButtonClick = (): void => {
         history.push("/users");
     };
 

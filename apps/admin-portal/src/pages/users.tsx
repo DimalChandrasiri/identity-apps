@@ -37,7 +37,7 @@ import { DEFAULT_USER_LIST_ITEM_LIMIT } from "../constants";
  *
  * @return {JSX.Element}
  */
-export const UsersPage: React.FunctionComponent<any> = (): ReactElement => {
+export const UsersPage: React.FunctionComponent = (): ReactElement => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
 
@@ -49,21 +49,21 @@ export const UsersPage: React.FunctionComponent<any> = (): ReactElement => {
     const [ rolesList, setRolesList ] = useState([]);
     const [ isListUpdated, setListUpdated ] = useState(false);
 
-    const getList = (limit: number, offset: number, filter: string) => {
+    const getList = (limit: number, offset: number, filter: string): void => {
         getUsersList(limit, offset, filter)
             .then((response) => {
                 setUsersList(response);
             });
     };
 
-    const getRolesList = (domain: string) => {
+    const getRolesList = (domain: string): void => {
         getGroupsList(domain)
             .then((response) => {
                 setRolesList(response.data.Resources);
             });
     };
 
-    const getRoleListForDomain = (domain: string) => {
+    const getRoleListForDomain = (domain: string): void => {
         getGroupsList(domain)
             .then((response) => {
                 setRolesList([ ...rolesList, ...response.data.Resources ] );
@@ -99,7 +99,7 @@ export const UsersPage: React.FunctionComponent<any> = (): ReactElement => {
                     action={ (
                         <Button
                             className="link-button"
-                            onClick={ () => getList(listItemLimit, listOffset, null) }
+                            onClick={ (): void => getList(listItemLimit, listOffset, null) }
                         >
                             { t("views:placeholders.emptySearchResult.action") }
                         </Button>
@@ -121,7 +121,7 @@ export const UsersPage: React.FunctionComponent<any> = (): ReactElement => {
      *
      * @param {AlertInterface} alert - Alert object.
      */
-    const handleAlerts = (alert: AlertInterface) => {
+    const handleAlerts = (alert: AlertInterface): void => {
         dispatch(addAlert(alert));
     };
 
@@ -141,11 +141,11 @@ export const UsersPage: React.FunctionComponent<any> = (): ReactElement => {
         getList(null, null, query);
     };
 
-    const handlePaginationChange = (event: React.MouseEvent<HTMLAnchorElement>, data: PaginationProps) => {
+    const handlePaginationChange = (event: React.MouseEvent<HTMLAnchorElement>, data: PaginationProps): void => {
         setListOffset((data.activePage as number - 1) * listItemLimit);
     };
 
-    const handleItemsPerPageDropdownChange = (event: React.MouseEvent<HTMLAnchorElement>, data: DropdownProps) => {
+    const handleItemsPerPageDropdownChange = (event: React.MouseEvent<HTMLAnchorElement>, data: DropdownProps): void => {
         setListItemLimit(data.value as number);
     };
 
@@ -165,11 +165,6 @@ export const UsersPage: React.FunctionComponent<any> = (): ReactElement => {
             });
     };
 
-    const options = [
-        { key: "import", icon: "download", text: "Import users", value: "import" },
-        { key: "export", icon: "upload", text: "Export users", value: "export" },
-    ];
-
     return (
         <PageLayout
             title="Users page"
@@ -185,7 +180,7 @@ export const UsersPage: React.FunctionComponent<any> = (): ReactElement => {
                 onPageChange={ handlePaginationChange }
                 rightActionPanel={
                     (
-                        <PrimaryButton onClick={ () => setShowWizard(true) }>
+                        <PrimaryButton onClick={ (): void => setShowWizard(true) }>
                             <Icon name="add"/>
                             Add User
                         </PrimaryButton>
@@ -209,10 +204,10 @@ export const UsersPage: React.FunctionComponent<any> = (): ReactElement => {
                 {
                     showWizard && (
                     <AddUserWizard
-                        closeWizard={ () => setShowWizard(false) }
+                        closeWizard={ (): void => setShowWizard(false) }
                         listOffset={ listOffset }
                         listItemLimit={ listItemLimit }
-                        updateList={ () => setListUpdated(true) }
+                        updateList={ (): void => setListUpdated(true) }
                         rolesList={ rolesList }
                         onUserListDomainChange={ (domain) => getRoleListForDomain(domain) }
                     />
