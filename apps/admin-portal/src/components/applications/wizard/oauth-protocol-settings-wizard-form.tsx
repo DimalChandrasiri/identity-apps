@@ -122,7 +122,7 @@ export const OAuthProtocolSettingsWizardForm: FunctionComponent<OAuthProtocolSet
 
     return (
         <Forms
-            onSubmit={ (values) => {
+            onSubmit={ (values): void => {
                 // check whether callback url is empty or not
                 if (isEmpty(callBackUrls)) {
                     setShowURLError(true);
@@ -140,7 +140,7 @@ export const OAuthProtocolSettingsWizardForm: FunctionComponent<OAuthProtocolSet
                     value={ buildCallBackURLWithSeparator(initialCallbackURLs) }
                     placeholder={ "Enter callbackUrl" }
                     validationErrorMsg={ "Please add valid URL." }
-                    validation={ (value: string) => {
+                    validation={ (value: string): boolean => {
                         if (FormValidation.url(value)) {
                             return true;
                         }
@@ -167,6 +167,8 @@ export const OAuthProtocolSettingsWizardForm: FunctionComponent<OAuthProtocolSet
                                     ? [ "supportPublicClients" ]
                                     : []
                             }
+                            /* eslint-disable react/no-children-prop */
+                            // TODO handle in proper way
                             children={ [
                                 {
                                     label: "Public Client",

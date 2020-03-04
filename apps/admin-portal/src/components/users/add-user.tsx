@@ -31,6 +31,7 @@ import { getUserStoreList } from "../../api";
  */
 interface AddUserProps {
     onUserStoreDomainChange: (domain: string) => void;
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     initialValues: any;
     triggerSubmit: boolean;
     onSubmit: (values: any) => void;
@@ -61,13 +62,6 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
     ];
 
     /**
-     * Fetch the list of available user stores.
-     */
-    useEffect(() => {
-        getUserStores();
-    }, []);
-
-    /**
      * The following function fetch the user store list and set it to the state.
      */
     const getUserStores = () => {
@@ -92,6 +86,13 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
 
         setUserStoresList(storeOptions);
     };
+
+    /**
+     * Fetch the list of available user stores.
+     */
+    useEffect(() => {
+        getUserStores();
+    }, []);
 
     const getFormValues = (values) => {
         return {
@@ -200,6 +201,8 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
                                 "views:components.user.forms.addUserForm.inputs.domain.label"
                             ) }
                             name="domain"
+                            /* eslint-disable react/no-children-prop */
+                            // TODO handle in proper way
                             children={ userStoreOptions }
                             placeholder={ t(
                                 "views:components.user.forms.addUserForm.inputs.domain.placeholder"
@@ -310,6 +313,8 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
                             name="passwordOption"
                             default="Ask password"
                             listen={ (values) => { setPasswordOption(values.get("passwordOption").toString()); } }
+                            /* eslint-disable react/no-children-prop */
+                            // TODO handle in proper way
                             children={ passwordOptions }
                             value={ initialValues && initialValues.passwordOption }
                         />

@@ -16,7 +16,7 @@
 * under the License.
 */
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, ReactElement } from "react"
 import { PageLayout } from "../layouts"
 import { getAClaim } from "../api";
 import { Claim, AlertLevels } from "../models";
@@ -30,7 +30,7 @@ import { history } from "../helpers";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../store/actions";
 
-export const LocalClaimsEditPage = (props): React.ReactElement => {
+export const LocalClaimsEditPage = (props): ReactElement => {
 
     const claimID = props.match.params.id;
 
@@ -38,11 +38,7 @@ export const LocalClaimsEditPage = (props): React.ReactElement => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        getClaim();
-    }, []);
-
-    const getClaim = () => {
+    const getClaim = (): void => {
         getAClaim(claimID).then(response => {
             setClaim(response);
         }).catch(error => {
@@ -56,30 +52,35 @@ export const LocalClaimsEditPage = (props): React.ReactElement => {
         })
     }
 
+    useEffect(() => {
+        getClaim();
+    }, []);
+
+    /* eslint-disable react/display-name */
     const panes = [
         {
             menuItem: "Basic Details",
-            render: () => (
+            render: (): ReactElement => (
                 <EditBasicDetailsLocalClaims
-                    claim={claim}
-                    update={getClaim} />
+                    claim={ claim }
+                    update={ getClaim } />
             )
         },
         {
             menuItem: "Mapped Attributes",
-            render: () => (
+            render: (): ReactElement => (
                 <EditMappedAttributesLocalClaims
-                    claim={claim}
-                    update={getClaim}
+                    claim={ claim }
+                    update={ getClaim }
                 />
             )
         },
         {
             menuItem: "Additional Properties",
-            render: () => (
+            render: (): ReactElement => (
                 <EditAdditionalPropertiesLocalClaims
-                    claim={claim}
-                    update={getClaim}
+                    claim={ claim }
+                    update={ getClaim }
                 />
             )
         }
@@ -87,18 +88,18 @@ export const LocalClaimsEditPage = (props): React.ReactElement => {
 
     return (
         <PageLayout
-            title={claim?.displayName}
-            description={"Edit Local Claim"}
-            backButton={{
-                onClick: () => {
+            title={ claim?.displayName }
+            description={ "Edit Local Claim" }
+            backButton={ {
+                onClick: (): void => {
                     history.push("/local-dialect");
                 },
                 text: "Go back to Local Claims"
-            }}
+            } }
             titleTextAlign="left"
-            bottomMargin={false}
+            bottomMargin={ false }
         >
-            <ResourceTab panes={panes} />
+            <ResourceTab panes={ panes } />
         </PageLayout>
     )
 }

@@ -17,7 +17,7 @@
  */
 
 import { ResourceTab } from "@wso2is/react-components";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import { AlertInterface, BasicProfileInterface } from "../../models";
 import { addAlert } from "../../store/actions";
@@ -43,14 +43,17 @@ export const EditUser: FunctionComponent<EditUserPropsInterface> = (
     } = props;
     const dispatch = useDispatch();
 
-    const handleAlerts = (alert: AlertInterface) => {
+    const handleAlerts = (alert: AlertInterface): void => {
         dispatch(addAlert(alert));
     };
 
-    const panes = () => ([
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const panes = (): Record<string, any>[] => ([
         {
             menuItem: "Profile",
-            render: () => (
+            /* eslint-disable react/display-name */
+            //TODO implement properly
+            render: (): ReactElement => (
                 <ResourceTab.Pane attached={ false }>
                     <UserProfile onAlertFired={ handleAlerts }  user={ user } setUser={ setUser }/>
                 </ResourceTab.Pane>

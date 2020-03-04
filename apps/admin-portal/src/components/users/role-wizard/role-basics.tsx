@@ -27,6 +27,7 @@ import { CreateRoleFormData } from "../../../../src/models";
 interface RoleBasicProps {
     dummyProp?: string;
     triggerSubmit: boolean;
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     onSubmit: (values: any) => void;
 }
 
@@ -60,6 +61,7 @@ export const RoleBasics: FunctionComponent<RoleBasicProps> = (props: RoleBasicPr
      * 
      * @param values - contains values from form elements
      */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const getFormValues = (values: any): CreateRoleFormData => {
         return {
             domain: values.get("domain").toString(),
@@ -69,7 +71,7 @@ export const RoleBasics: FunctionComponent<RoleBasicProps> = (props: RoleBasicPr
 
     return (
         <Forms
-            onSubmit={ (values) => {
+            onSubmit={ (values): void => {
                 onSubmit(getFormValues(values));
             } }
             submitState={ triggerSubmit }
@@ -81,6 +83,8 @@ export const RoleBasics: FunctionComponent<RoleBasicProps> = (props: RoleBasicPr
                             type="dropdown"
                             label="Domain"
                             name="domain"
+                            /* eslint-disable react/no-children-prop */
+                            // TODO handle in proper way
                             children={ roleDomains }
                             placeholder="Domain"
                             requiredErrorMessage="Select Domain"

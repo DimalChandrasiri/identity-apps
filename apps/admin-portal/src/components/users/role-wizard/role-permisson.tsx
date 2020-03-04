@@ -26,6 +26,7 @@ import SuperTreeview from 'react-super-treeview';
  */
 interface PermissionListProp {
     triggerSubmit: boolean;
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     onSubmit: (permissions: any) => void;
 }
 
@@ -99,22 +100,6 @@ export const PermissionList: FunctionComponent<PermissionListProp> = (props: Per
     },[ listOffset, listItemLimit ]);
 
     /**
-     * Util function to check all child elements of the tree.
-     * 
-     * @param nodes - node list which will need to be checked
-     */
-    const applyCheckStateTo = (nodes: any): void => {
-        const checkState = nodes[0].isChecked;
-
-        nodes.forEach((node)=>{
-            node.isChecked = checkState
-            if(node.children){
-                applyCheckStateTo(node.children);
-            }
-        })
-    }
-
-    /**
      * Click event handler for the permission tree checkboxes.
      * 
      * @param nodeData - array of checked elements returned.
@@ -127,6 +112,7 @@ export const PermissionList: FunctionComponent<PermissionListProp> = (props: Per
          * 
          * @param nodes child nodes need to be checked.
          */
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         const applyCheckStateTo = (nodes: any): void => {
             nodes.forEach((node)=>{
                 node.isChecked = checkState

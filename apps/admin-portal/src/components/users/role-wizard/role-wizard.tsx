@@ -43,6 +43,7 @@ interface CreateRoleProps {
 /**
  * Interface to capture current wizard state
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface WizardStateInterface {
     [ key: string ]: any;
 }
@@ -69,46 +70,6 @@ export const CreateRoleWizard: FunctionComponent<CreateRoleProps> = (props: Crea
     const [ finishSubmit, setFinishSubmit ] = useTrigger();
 
     /**
-     * Method to handle the create role wizard finish action.
-     * 
-     * @param permissions - permission list which was created by the user.
-     */
-    const handleRoleWizardFinish = (permissions: string[]) => {
-        addRole(wizardState, permissions)
-    };
-
-    // Create role wizard steps
-    const WIZARD_STEPS = [{
-        content: (
-            <RoleBasics
-                triggerSubmit={ submitGeneralSettings }
-                onSubmit={ (values) => handleWizardSubmit(values) }
-            />
-        ),
-        icon: ApplicationWizardStepIcons.general,
-        title: "Basic Details"
-    },{
-        content: (
-            <PermissionList
-                triggerSubmit={ finishSubmit }
-                onSubmit={ handleRoleWizardFinish }
-            />
-        ),
-        icon: ApplicationWizardStepIcons.general,
-        title: "Permission Selection"
-    }]
-    
-    /**
-     * Create role wizard handler.
-     * 
-     * @param values values which will be taken from the previous wizard step
-     */
-    const handleWizardSubmit = (values: any) => {
-        setCurrentWizardStep(currentStep + 1);
-        setWizardState(_.merge(wizardState, { values }));
-    }
-
-    /**
      * Method to handle create role action when create role wizard finish action is triggered.
      * 
      * @param basicData - basic data required to create role.
@@ -128,12 +89,11 @@ export const CreateRoleWizard: FunctionComponent<CreateRoleProps> = (props: Crea
          *        to add the selected permissions to the created role.
          */
         createRole(roleData).then(response => {
-            debugger;
         
             if (response.status === 201) {
                 const createdRoleId = response.data.id;
                 const permData = permissions;
-                updatePermissionForRole(createdRoleId, permData).then(response => {
+                updatePermissionForRole(createdRoleId, permData).then(() => {
                     dispatch(addAlert({
                         description: t(
                             "views:components.roles.notifications.createRole.success.description"
@@ -217,6 +177,46 @@ export const CreateRoleWizard: FunctionComponent<CreateRoleProps> = (props: Crea
     }
 
     /**
+     * Method to handle the create role wizard finish action.
+     * 
+     * @param permissions - permission list which was created by the user.
+     */
+    const handleRoleWizardFinish = (permissions: string[]): void => {
+        addRole(wizardState, permissions)
+    };
+
+    /**
+     * Create role wizard handler.
+     * 
+     * @param values values which will be taken from the previous wizard step
+     */
+    const handleWizardSubmit = (values: any): void => {
+        setCurrentWizardStep(currentStep + 1);
+        setWizardState(_.merge(wizardState, { values }));
+    }
+
+    // Create role wizard steps
+    const WIZARD_STEPS = [{
+        content: (
+            <RoleBasics
+                triggerSubmit={ submitGeneralSettings }
+                onSubmit={ (values): void => handleWizardSubmit(values) }
+            />
+        ),
+        icon: ApplicationWizardStepIcons.general,
+        title: "Basic Details"
+    },{
+        content: (
+            <PermissionList
+                triggerSubmit={ finishSubmit }
+                onSubmit={ handleRoleWizardFinish }
+            />
+        ),
+        icon: ApplicationWizardStepIcons.general,
+        title: "Permission Selection"
+    }]
+
+    /**
      * Function to change the current wizard step to next.
      */
     const changeStepToNext = (): void => {
@@ -269,7 +269,7 @@ export const CreateRoleWizard: FunctionComponent<CreateRoleProps> = (props: Crea
                 <Grid>
                     <Grid.Row column={ 1 }>
                         <Grid.Column mobile={ 8 } tablet={ 8 } computer={ 8 }>
-                            <LinkButton floated="left" onClick={ () => closeWizard() }>Cancel</LinkButton>
+                            <LinkButton floated="left" onClick={ (): void => closeWizard() }>Cancel</LinkButton>
                         </Grid.Column>
                         <Grid.Column mobile={ 8 } tablet={ 8 } computer={ 8 }>
                             { currentStep < WIZARD_STEPS.length - 1 && (

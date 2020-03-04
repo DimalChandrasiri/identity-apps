@@ -22,6 +22,7 @@ import { Grid, Button } from "semantic-ui-react";
 import { AttributeMapping } from "../../../models";
 import { getUserStoreList } from "../../../api";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface MappedAttributesPropsInterface {
     submitState: boolean;
     onSubmit: (data: any, values: Map<string, FormValue>, properties: Set<number>) => void;
@@ -44,7 +45,7 @@ export const MappedAttributes = (props: MappedAttributesPropsInterface): React.R
         getUserStoreList().then((response) => {
             userstore.push(...response.data);
             setUserStore(userstore);
-        }).catch(error => {
+        }).catch(() => {
             setUserStore(userstore);
         });
     },[])
@@ -57,16 +58,18 @@ export const MappedAttributes = (props: MappedAttributesPropsInterface): React.R
             const isOnlyElement: boolean = mappedAttributes.size === 1;
 
             mappedElements.push(
-                <Grid.Row key={attribute} columns={3}>
-                    <Grid.Column width={7}>
+                <Grid.Row key={ attribute } columns={ 3 }>
+                    <Grid.Column width={ 7 }>
                         <Field
                             type="dropdown"
-                            name={"userstore" + attribute}
-                            label={isFirstElement ? "User Store" : null}
-                            required={true}
+                            name={ "userstore" + attribute }
+                            label={ isFirstElement ? "User Store" : null }
+                            required={ true }
                             requiredErrorMessage="Select a user store"
                             placeholder="Select a user store"
-                            value={values?.get("userstore" + attribute)?.toString()}
+                            value={ values?.get("userstore" + attribute)?.toString() }
+                            /* eslint-disable react/no-children-prop */
+                            // TODO handle in proper way
                             children={
                                 userStore.map(store => {
                                     return {
@@ -81,7 +84,7 @@ export const MappedAttributes = (props: MappedAttributesPropsInterface): React.R
                                     value: string,
                                     validation: Validation,
                                     values: Map<string, FormValue>
-                                ) => {
+                                ): void => {
                                     let isSameUserStore = false;
                                     let mappedAttribute;
                                     for (mappedAttribute of mappedAttributes) {
@@ -93,7 +96,7 @@ export const MappedAttributes = (props: MappedAttributesPropsInterface): React.R
                                             isSameUserStore = true;
                                             break;
                                         }
-                                    };
+                                    }
                                     if (isSameUserStore) {
                                         validation.isValid = false;
                                         validation.errorMessages.push(
@@ -106,18 +109,18 @@ export const MappedAttributes = (props: MappedAttributesPropsInterface): React.R
                             displayErrorOn="blur"
                         />
                     </Grid.Column>
-                    <Grid.Column width={7}>
+                    <Grid.Column width={ 7 }>
                         <Field
                             type="text"
-                            name={"attribute" + attribute}
-                            label={isFirstElement ? "Attribute to map to" : null}
-                            required={true}
+                            name={ "attribute" + attribute }
+                            label={ isFirstElement ? "Attribute to map to" : null }
+                            required={ true }
                             requiredErrorMessage="Enter an attribute or delete the mapping"
                             placeholder="Enter an attribute"
-                            value={values?.get("attribute" + attribute)?.toString()}
+                            value={ values?.get("attribute" + attribute)?.toString() }
                         />
                     </Grid.Column>
-                    <Grid.Column width={2} verticalAlign="bottom">
+                    <Grid.Column width={ 2 } verticalAlign="bottom">
                         {
                             !isOnlyElement
                                 ? (
@@ -126,14 +129,14 @@ export const MappedAttributes = (props: MappedAttributesPropsInterface): React.R
                                         size="mini"
                                         primary
                                         circular
-                                        icon={"trash"}
-                                        onClick={() => {
+                                        icon={ "trash" }
+                                        onClick={ (): void => {
                                             const tempMappedAttributes = new Set(mappedAttributes);
                                             if (!isOnlyElement) {
                                                 tempMappedAttributes.delete(attribute);
                                             }
                                             setMappedAttributes(tempMappedAttributes);
-                                        }}
+                                        } }
                                     />
                                 )
                                 : null
@@ -146,21 +149,21 @@ export const MappedAttributes = (props: MappedAttributesPropsInterface): React.R
         const lastElement: number = Array.from(mappedAttributes)[mappedAttributes.size - 1];
         mappedAttributes.size < userStore.length
             ? mappedElements.push(
-                <Grid.Row key={lastElement + 1} textAlign="center" columns={1}>
-                    <Grid.Column width={14}>
+                <Grid.Row key={ lastElement + 1 } textAlign="center" columns={ 1 }>
+                    <Grid.Column width={ 14 }>
                         <Button
                             type="button"
                             size="mini"
                             primary
                             circular
                             icon="add"
-                            onClick={() => {
+                            onClick={ (): void => {
                                 if (mappedAttributes.size < userStore.length) {
                                     const tempMappedAttributes = new Set(mappedAttributes);
                                     tempMappedAttributes.add(lastElement + 1);
                                     setMappedAttributes(tempMappedAttributes);
                                 }
-                            }}
+                            } }
                         />
                     </Grid.Column>
                 </Grid.Row>
@@ -181,17 +184,17 @@ export const MappedAttributes = (props: MappedAttributesPropsInterface): React.R
     }
     return (
         <Forms
-            onSubmit={(values) => {
+            onSubmit={ (values): void => {
                 const data = {
                     attributeMapping: getMappedAttributes(values),
                 }
                 onSubmit(data, values, mappedAttributes);
-            }}
-            submitState={submitState}
+            } }
+            submitState={ submitState }
         >
             <Grid>
-                <Grid.Row columns={1}>
-                    <Grid.Column width={16}>
+                <Grid.Row columns={ 1 }>
+                    <Grid.Column width={ 16 }>
                         <h5>Map Attributes</h5>
                         <Grid>
                             {

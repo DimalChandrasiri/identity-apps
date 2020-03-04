@@ -106,7 +106,7 @@ export const GeneralSettingsWizardForm: FunctionComponent<GeneralSettingsWizardF
                             required={ false }
                             requiredErrorMessage=""
                             placeholder="Provide the image url for the application"
-                            validation={ (value: string, validation: Validation) => {
+                            validation={ (value: string, validation: Validation): void => {
                                 if (!FormValidation.url(value)) {
                                     validation.isValid = false;
                                     validation.errorMessages.push("The URL you entered is invalid");
@@ -125,6 +125,8 @@ export const GeneralSettingsWizardForm: FunctionComponent<GeneralSettingsWizardF
                                 required={ false }
                                 requiredErrorMessage=""
                                 type="checkbox"
+                                /* eslint-disable react/no-children-prop */
+                                // TODO handle in proper way
                                 children={ [
                                     {
                                         label: "Discoverable application",

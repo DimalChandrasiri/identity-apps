@@ -52,6 +52,8 @@ export const UserProfile: FunctionComponent<ProfileProps> = (props: ProfileProps
     const [profileInfo, setProfileInfo] = useState(new Map<string, string>());
     const [profileSchema, setProfileSchema] = useState<ProfileSchema[]>();
     const profileDetails: AuthStateInterface = useSelector((state: AppState) => state.authenticationInformation);
+    /* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars */
+    // TODO handle this properly
     const [urlSchema, setUrlSchema] = useState<ProfileSchema>();
 
     /**
@@ -96,7 +98,7 @@ export const UserProfile: FunctionComponent<ProfileProps> = (props: ProfileProps
 
                 if (schemaNames.length === 1) {
                     if (schemaNames[0] === "emails") {
-                        if (userInfo.hasOwnProperty(schemaNames[0]) && userInfo[schemaNames[0]][0]) {
+                        if (Object.prototype.hasOwnProperty.call(userInfo, schemaNames[0]) && userInfo[schemaNames[0]][0]) {
                             userInfo[[schemaNames[0]][0]][0].value &&
                             userInfo[[schemaNames[0]][0]][0].value !== "" ? tempProfileInfo.set(schema.name,
                                 userInfo[[schemaNames[0]][0]][0].value as string)
@@ -107,6 +109,8 @@ export const UserProfile: FunctionComponent<ProfileProps> = (props: ProfileProps
                     }
                 } else {
                     if (schemaNames[0] === "name") {
+                        /* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars */
+                        // TODO handle this properly
                         const name = schemaNames[1] && userInfo[schemaNames[0]] &&
                             userInfo[schemaNames[0]][schemaNames[1]] && (
                             tempProfileInfo.set(schema.name, userInfo[schemaNames[0]][schemaNames[1]])
@@ -256,7 +260,7 @@ export const UserProfile: FunctionComponent<ProfileProps> = (props: ProfileProps
             {
                 !_.isEmpty(profileInfo) && (
                     <Forms
-                        onSubmit={ (values) => handleSubmit(values) }
+                        onSubmit={ (values): void => handleSubmit(values) }
                     >
                         <Grid>
                             {
@@ -285,7 +289,7 @@ export const UserProfile: FunctionComponent<ProfileProps> = (props: ProfileProps
                     actionTitle="Delete user"
                     header="Delete the user"
                     subheader="This action is irreversible. Please proceed with caution."
-                    onActionClick={ () => handleUserDelete(user.id) }
+                    onActionClick={ (): void => handleUserDelete(user.id) }
                 />
             </DangerZoneGroup>
         </>

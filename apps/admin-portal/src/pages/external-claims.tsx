@@ -60,11 +60,7 @@ export const ExternalClaimsPage = (props): React.ReactElement => {
 
     }, []);
 
-    useEffect(() => {
-        getExternalClaims();
-    }, [dialectID]);
-
-    const getExternalClaims = (limit?:number,offset?:number,sort?:string,filter?:string) => {
+    const getExternalClaims = (limit?: number,offset?: number,sort?: string,filter?: string): void => {
         dialectID && getAllExternalClaims(dialectID, {limit,offset,sort,filter}).then(response => {
             setClaims(response);
         }).catch(error => {
@@ -78,15 +74,19 @@ export const ExternalClaimsPage = (props): React.ReactElement => {
         });
     }
 
+    useEffect(() => {
+        getExternalClaims();
+    }, [dialectID]);
+
     const paginate = (list: ExternalClaim[], limit: number, offset: number): ExternalClaim[] => {
         return list?.slice(offset, offset + limit);
     };
 
-    const handleItemsPerPageDropdownChange = (event: React.MouseEvent<HTMLAnchorElement>, data: DropdownProps) => {
+    const handleItemsPerPageDropdownChange = (event: React.MouseEvent<HTMLAnchorElement>, data: DropdownProps): void => {
         setListItemLimit(data.value as number);
     };
 
-    const handlePaginationChange = (event: React.MouseEvent<HTMLAnchorElement>, data: PaginationProps) => {
+    const handlePaginationChange = (event: React.MouseEvent<HTMLAnchorElement>, data: PaginationProps): void => {
         setOffset((data.activePage as number - 1) * listItemLimit);
     };
 
@@ -94,71 +94,71 @@ export const ExternalClaimsPage = (props): React.ReactElement => {
         <>
             {addClaim
                 ? <AddExternalClaims
-                    open={addClaim}
-                    onClose={() => { setAddClaim(false) }}
-                    dialect={dialect}
-                    update={getExternalClaims}
+                    open={ addClaim }
+                    onClose={ (): void => { setAddClaim(false) } }
+                    dialect={ dialect }
+                    update={ getExternalClaims }
                 />
                 : null
             }
             {
                 editClaim
                     ? <EditExternalClaims
-                        open={editClaim}
-                        onClose={() => {
+                        open={ editClaim }
+                        onClose={ (): void => {
                             setEditClaim(false);
                             setEditClaimID("");
-                        }}
-                        update={getExternalClaims}
-                        claimID={editClaimID}
-                        dialectID={dialect?.id}
+                        } }
+                        update={ getExternalClaims }
+                        claimID={ editClaimID }
+                        dialectID={ dialect?.id }
                     />
                     : null
             }
             <PageLayout
                 title="External Claims"
-                description={"View, edit and add claims of " + dialect?.dialectURI}
-                showBottomDivider={true}
-                backButton={{
+                description={ "View, edit and add claims of " + dialect?.dialectURI }
+                showBottomDivider={ true }
+                backButton={ {
                     onClick: () => { history.push("/claim-dialects") },
                     text: "Go back to Claim Dialects"
-                }}
+                } }
             >
                 <ListLayout
-                    advancedSearch={<ExternalClaimsSearch onFilter={(query) => {
+                    advancedSearch={ <ExternalClaimsSearch onFilter={ (query): void => {
                         getExternalClaims(null, null, null, query);
-                    }}/>}
-                    currentListSize={listItemLimit}
-                    listItemLimit={listItemLimit}
-                    onItemsPerPageDropdownChange={handleItemsPerPageDropdownChange}
-                    onPageChange={handlePaginationChange}
-                    onSortStrategyChange={null}
+                    } }/> }
+                    currentListSize={ listItemLimit }
+                    listItemLimit={ listItemLimit }
+                    onItemsPerPageDropdownChange={ handleItemsPerPageDropdownChange }
+                    onPageChange={ handlePaginationChange }
+                    onSortStrategyChange={ null }
                     rightActionPanel={
                         (
                             <PrimaryButton
-                                onClick={() => {
+                                onClick={ (): void => {
                                     setAddClaim(true);
-                                }}
+                                } }
                             >
                                 <Icon name="add" />Add a claim
                         </PrimaryButton>
                         )
                     }
-                    showPagination={true}
-                    sortOptions={null}
-                    sortStrategy={null}
-                    totalPages={Math.ceil(claims?.length / listItemLimit)}
-                    totalListSize={claims?.length}
+                    showPagination={ true }
+                    sortOptions={ null }
+                    sortStrategy={ null }
+                    totalPages={ Math.ceil(claims?.length / listItemLimit) }
+                    totalListSize={ claims?.length }
                 >
                     <ClaimsList
-                        list={paginate(claims, listItemLimit, offset)}
-                        localClaim={ListType.EXTERNAL}
-                        openEdit={(claimID: string) => {
+                        list={ paginate(claims, listItemLimit, offset) }
+                        localClaim={ ListType.EXTERNAL }
+                        openEdit={ (claimID: string): void => {
                             setEditClaim(true);
                             setEditClaimID(claimID);
-                        }}
-                        update={getExternalClaims}
-                        dialectID={dialectID}
+                        } }
+                        update={ getExternalClaims }
+                        dialectID={ dialectID }
                     />
                 </ListLayout>
             </PageLayout>

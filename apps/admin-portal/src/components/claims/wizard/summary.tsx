@@ -17,8 +17,8 @@
 */
 
 import React from "react";
-import { Claim, AttributeMapping, Property } from "../../../models";
-import { List, Grid, GridColumn, Icon } from "semantic-ui-react";
+import { Claim, AttributeMapping } from "../../../models";
+import {  Grid,  Icon } from "semantic-ui-react";
 
 interface SummaryLocalClaimsPropsInterface {
     data: Claim;
@@ -32,11 +32,11 @@ export const SummaryLocalClaims = (props: SummaryLocalClaimsPropsInterface): Rea
         description: string | number | React.ReactElement
     ): React.ReactElement => {
         return (
-            <Grid.Row className="summary-field" columns={2}>
-                <Grid.Column mobile={16} tablet={8} computer={7} textAlign="right">
+            <Grid.Row className="summary-field" columns={ 2 }>
+                <Grid.Column mobile={ 16 } tablet={ 8 } computer={ 7 } textAlign="right">
                     <div className="label">{title}</div>
                 </Grid.Column>
-                <Grid.Column mobile={16} tablet={8} computer={8} textAlign="left">
+                <Grid.Column mobile={ 16 } tablet={ 8 } computer={ 8 } textAlign="left">
                     <div className="value url">{description}</div>
                 </Grid.Column>
             </Grid.Row>
@@ -46,7 +46,7 @@ export const SummaryLocalClaims = (props: SummaryLocalClaimsPropsInterface): Rea
     return (
         <Grid className="wizard-summary">
             <Grid.Row>
-                <Grid.Column mobile={16} tablet={16} computer={16} textAlign="center">
+                <Grid.Column mobile={ 16 } tablet={ 16 } computer={ 16 } textAlign="center">
                     <div className="general-details">
                         <h3>{data.displayName}</h3>
                         <div className="description">{data.displayName}</div>
@@ -59,29 +59,29 @@ export const SummaryLocalClaims = (props: SummaryLocalClaimsPropsInterface): Rea
             {data.regEx ? generateSummaryLine("Regular Expression", data.regEx) : null}
             {generateSummaryLine("ReadOnly",
                 <Icon
-                    color={data.readOnly ? "green" : "red"}
-                    name={data.readOnly ? "check circle outline" : "times circle outline"}
+                    color={ data.readOnly ? "green" : "red" }
+                    name={ data.readOnly ? "check circle outline" : "times circle outline" }
                 />
             )}
             {generateSummaryLine("Required",
                 <Icon
-                    color={data.required ? "green" : "red"}
-                    name={data.required ? "check circle outline" : "times circle outline"}
+                    color={ data.required ? "green" : "red" }
+                    name={ data.required ? "check circle outline" : "times circle outline" }
                 />
             )}
             {generateSummaryLine("Show on Profile",
                 <Icon
-                    color={data.supportedByDefault ? "green" : "red"}
-                    name={data.supportedByDefault ? "check circle outline" : "times circle outline"}
+                    color={ data.supportedByDefault ? "green" : "red" }
+                    name={ data.supportedByDefault ? "check circle outline" : "times circle outline" }
                 />
             )}
             {
                 data.attributeMapping?.length > 0 ? generateSummaryLine("Mapped attributes",
                     (
                         <Grid>
-                            {data.attributeMapping.map((attribute: AttributeMapping) => {
+                            {data.attributeMapping.map((attribute: AttributeMapping, index) => {
                                 return (
-                                    <Grid.Row columns={2}>
+                                    <Grid.Row key={ index } columns={ 2 }>
                                         <Grid.Column>
                                             {attribute.userstore}
                                         </Grid.Column>
