@@ -80,16 +80,16 @@ export const EditMappedAttributesLocalClaims = (
             const isOnlyElement: boolean = mappedAttributes.size === 1;
 
             mappedElements.push(
-                <Grid.Row key={attribute} columns={3}>
-                    <Grid.Column width={7}>
+                <Grid.Row key={ attribute } columns={ 3 }>
+                    <Grid.Column width={ 7 }>
                         <Field
                             type="dropdown"
-                            name={"userstore" + attribute}
-                            label={isFirstElement ? "User Store" : null}
-                            required={true}
+                            name={ "userstore" + attribute }
+                            label={ isFirstElement ? "User Store" : null }
+                            required={ true }
                             requiredErrorMessage="Select a user store"
                             placeholder="Select a user store"
-                            value={claim?.attributeMapping[attribute]?.userstore}
+                            value={ claim?.attributeMapping[attribute]?.userstore }
                             children={
                                 userStore.map(store => {
                                     return {
@@ -116,7 +116,7 @@ export const EditMappedAttributesLocalClaims = (
                                             isSameUserStore = true;
                                             break;
                                         }
-                                    };
+                                    }
                                     if (isSameUserStore) {
                                         validation.isValid = false;
                                         validation.errorMessages.push(
@@ -129,18 +129,18 @@ export const EditMappedAttributesLocalClaims = (
                             displayErrorOn="blur"
                         />
                     </Grid.Column>
-                    <Grid.Column width={7}>
+                    <Grid.Column width={ 7 }>
                         <Field
                             type="text"
-                            name={"attribute" + attribute}
-                            label={isFirstElement ? "Attribute to map to" : null}
-                            required={true}
+                            name={ "attribute" + attribute }
+                            label={ isFirstElement ? "Attribute to map to" : null }
+                            required={ true }
                             requiredErrorMessage="Enter an attribute or delete the mapping"
                             placeholder="Enter an attribute"
-                            value={claim?.attributeMapping[attribute]?.mappedAttribute}
+                            value={ claim?.attributeMapping[attribute]?.mappedAttribute }
                         />
                     </Grid.Column>
-                    <Grid.Column width={2} verticalAlign="bottom">
+                    <Grid.Column width={ 2 } verticalAlign="bottom">
                         {
                             !isOnlyElement
                                 ? (
@@ -149,14 +149,14 @@ export const EditMappedAttributesLocalClaims = (
                                         size="mini"
                                         primary
                                         circular
-                                        icon={"trash"}
-                                        onClick={() => {
+                                        icon={ "trash" }
+                                        onClick={ () => {
                                             const tempMappedAttributes = new Set(mappedAttributes);
                                             if (!isOnlyElement) {
                                                 tempMappedAttributes.delete(attribute);
                                             }
                                             setMappedAttributes(tempMappedAttributes);
-                                        }}
+                                        } }
                                     />
                                 )
                                 : null
@@ -169,21 +169,21 @@ export const EditMappedAttributesLocalClaims = (
         const lastElement: number = Array.from(mappedAttributes)[mappedAttributes.size - 1];
         mappedAttributes.size < userStore.length
             ? mappedElements.push(
-                <Grid.Row key={lastElement + 1} textAlign="center" columns={1}>
-                    <Grid.Column width={14}>
+                <Grid.Row key={ lastElement + 1 } textAlign="center" columns={ 1 }>
+                    <Grid.Column width={ 14 }>
                         <Button
                             type="button"
                             size="mini"
                             primary
                             circular
                             icon="add"
-                            onClick={() => {
+                            onClick={ () => {
                                 if (mappedAttributes.size < userStore.length) {
                                     const tempMappedAttributes = new Set(mappedAttributes);
                                     tempMappedAttributes.add(lastElement + 1);
                                     setMappedAttributes(tempMappedAttributes);
                                 }
-                            }}
+                            } }
                         />
                     </Grid.Column>
                 </Grid.Row>
@@ -194,7 +194,7 @@ export const EditMappedAttributesLocalClaims = (
 
     return (
         <Forms
-            onSubmit={(values) => {
+            onSubmit={ (values) => {
                 const { id, dialectURI, ...claimData } = claim;
                 const data: Claim = {
                     ...claimData,
@@ -218,11 +218,11 @@ export const EditMappedAttributesLocalClaims = (
                         }
                     )); 
                 })
-            }}
+            } }
         >
             <Grid>
-                <Grid.Row columns={1}>
-                    <Grid.Column width={6}>
+                <Grid.Row columns={ 1 }>
+                    <Grid.Column width={ 6 }>
                         <h5>Map Attributes</h5>
                         <Grid>
                             {
@@ -231,8 +231,8 @@ export const EditMappedAttributesLocalClaims = (
                         </Grid>
                     </Grid.Column>
                 </Grid.Row>
-                <Grid.Row columns={1}>
-                    <Grid.Column width={6}>
+                <Grid.Row columns={ 1 }>
+                    <Grid.Column width={ 6 }>
                         <Field
                             type="submit"
                             value="Update"

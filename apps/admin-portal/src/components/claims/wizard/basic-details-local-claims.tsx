@@ -34,7 +34,7 @@ export const BasicDetailsLocalClaims = (props: BasicDetailsLocalClaimsPropsInter
 
     return (
         <Forms
-            onSubmit={(values) => {
+            onSubmit={ (values) => {
                 const data = {
                     claimURI: claimURIBase+"/"+values.get("claimURI").toString(),
                     description: values.get("description").toString(),
@@ -46,38 +46,38 @@ export const BasicDetailsLocalClaims = (props: BasicDetailsLocalClaimsPropsInter
                     supportedByDefault: values.get("supportedByDefault").length > 0,
                 }
                 onSubmit(data, values);
-            }}
-            submitState={submitState}
+            } }
+            submitState={ submitState }
         >
             <Grid>
-                <Grid.Row columns={2}>
+                <Grid.Row columns={ 2 }>
                     <Grid.Column>
                         <Field
                             type="text"
                             name="name"
                             label="Name"
-                            required={true}
+                            required={ true }
                             requiredErrorMessage="Name is required"
                             placeholder="Enter a name for the claim"
-                            value={values?.get("name")?.toString()}
+                            value={ values?.get("name")?.toString() }
                         />
                         <Field
                             type="text"
                             name="description"
                             label="Description"
-                            required={true}
+                            required={ true }
                             requiredErrorMessage="Description is required"
                             placeholder="Enter a description"
-                            value={values?.get("description")?.toString()}
+                            value={ values?.get("description")?.toString() }
                         />
                         <Field
                             type="text"
                             name="claimURI"
                             label="Claim ID"
-                            required={true}
+                            required={ true }
                             requiredErrorMessage="Claim URI is required"
                             placeholder="Enter a claim URI"
-                            value={values?.get("claimURI")?.toString()}
+                            value={ values?.get("claimURI")?.toString() }
                         />
                     </Grid.Column>
                     <Grid.Column>
@@ -85,54 +85,54 @@ export const BasicDetailsLocalClaims = (props: BasicDetailsLocalClaimsPropsInter
                             type="text"
                             name="regularExpression"
                             label="Regular Expression"
-                            required={false}
+                            required={ false }
                             requiredErrorMessage=""
                             placeholder="Regular expression to validate the claim"
-                            value={values?.get("regularExpression")?.toString()}
+                            value={ values?.get("regularExpression")?.toString() }
                         />
                         <Field
                             type="number"
                             min="0"
                             name="displayOrder"
                             label="Display Order"
-                            required={false}
+                            required={ false }
                             requiredErrorMessage=""
                             placeholder="Enter the display order"
-                            value={values?.get("displayOrder")?.toString()}
+                            value={ values?.get("displayOrder")?.toString() }
                         />
                     </Grid.Column>
                 </Grid.Row>
-                <Grid.Row columns={1}>
-                    <Grid.Column width={16}>
+                <Grid.Row columns={ 1 }>
+                    <Grid.Column width={ 16 }>
                         <Field
                             type="checkbox"
-                            toggle={true}
+                            toggle={ true }
                             name="supportedByDefault"
                             label="Show on Profile"
-                            required={false}
+                            required={ false }
                             requiredErrorMessage=""
-                            children={[{ value: "Support", label: "" }]}
-                            value={values?.get("supportedByDefault") as string[]}
+                            children={ [{ value: "Support", label: "" }] }
+                            value={ values?.get("supportedByDefault") as string[] }
                         />
                         <Field
                             type="checkbox"
-                            toggle={true}
+                            toggle={ true }
                             name="required"
                             label="Required"
-                            required={false}
+                            required={ false }
                             requiredErrorMessage=""
-                            children={[{ value: "Required", label: "" }]}
-                            value={values?.get("required") as string[]}
+                            children={ [{ value: "Required", label: "" }] }
+                            value={ values?.get("required") as string[] }
                         />
                         <Field
                             type="checkbox"
-                            toggle={true}
+                            toggle={ true }
                             name="readOnly"
                             label="Read Only"
-                            required={false}
+                            required={ false }
                             requiredErrorMessage=""
-                            children={[{ value: "ReadOnly", label: "" }]}
-                            value={values?.get("readOnly") as string[]}
+                            children={ [{ value: "ReadOnly", label: "" }] }
+                            value={ values?.get("readOnly") as string[] }
                         />
                     </Grid.Column>
                 </Grid.Row>

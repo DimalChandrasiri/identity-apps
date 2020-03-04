@@ -90,10 +90,10 @@ export const AddLocalClaims = (props: AddLocalClaimsPropsInterface): React.React
         {
             content: (
                 <BasicDetailsLocalClaims
-                    submitState={firstStep}
-                    onSubmit={onSubmitBasicDetails}
-                    values={basicDetailsData}
-                    claimURIBase={claimURIBase}
+                    submitState={ firstStep }
+                    onSubmit={ onSubmitBasicDetails }
+                    values={ basicDetailsData }
+                    claimURIBase={ claimURIBase }
                 />
             ),
             title: "Basic Local Claim Details",
@@ -102,10 +102,10 @@ export const AddLocalClaims = (props: AddLocalClaimsPropsInterface): React.React
         {
             content: (
                 <MappedAttributes
-                    submitState={secondStep}
-                    onSubmit={onSubmitAdditionalProperties}
-                    values={additionalPropertiesData}
-                    mappedAttributes={mappedAttributes}
+                    submitState={ secondStep }
+                    onSubmit={ onSubmitAdditionalProperties }
+                    values={ additionalPropertiesData }
+                    mappedAttributes={ mappedAttributes }
                 />
             ),
             title: "Mapped Attributes",
@@ -113,7 +113,7 @@ export const AddLocalClaims = (props: AddLocalClaimsPropsInterface): React.React
         },
         {
             content: (
-                <SummaryLocalClaims data={data} />
+                <SummaryLocalClaims data={ data } />
             ),
             icon: ApplicationWizardStepIcons.general,
             title: "Summary"
@@ -144,19 +144,19 @@ export const AddLocalClaims = (props: AddLocalClaimsPropsInterface): React.React
             dimmer="blurring"
             size="small"
             className="wizard application-create-wizard"
-            open={open}
-            onClose={onClose}
+            open={ open }
+            onClose={ onClose }
         >
             <Modal.Header className="wizard-header">
                 Add a Local Claim
             </Modal.Header>
             <Modal.Content className="steps-container">
-                <Steps.Group header="Fill in the following details to create a local claim." current={currentWizardStep}>
+                <Steps.Group header="Fill in the following details to create a local claim." current={ currentWizardStep }>
                     {STEPS.map((step, index) => (
                         <Steps.Step
-                            key={index}
-                            icon={step.icon}
-                            title={step.title}
+                            key={ index }
+                            icon={ step.icon }
+                            title={ step.title }
                         />
                     ))}
                 </Steps.Group>
@@ -166,22 +166,22 @@ export const AddLocalClaims = (props: AddLocalClaimsPropsInterface): React.React
             </Modal.Content>
             <Modal.Actions>
                 <Grid>
-                    <Grid.Row column={1}>
-                        <Grid.Column mobile={8} tablet={8} computer={8}>
-                            <LinkButton floated="left" onClick={() => onClose()}>Cancel</LinkButton>
+                    <Grid.Row column={ 1 }>
+                        <Grid.Column mobile={ 8 } tablet={ 8 } computer={ 8 }>
+                            <LinkButton floated="left" onClick={ () => onClose() }>Cancel</LinkButton>
                         </Grid.Column>
-                        <Grid.Column mobile={8} tablet={8} computer={8}>
+                        <Grid.Column mobile={ 8 } tablet={ 8 } computer={ 8 }>
                             {currentWizardStep < STEPS.length - 1 && (
-                                <PrimaryButton floated="right" onClick={next}>
+                                <PrimaryButton floated="right" onClick={ next }>
                                     Next Step <Icon name="arrow right" />
                                 </PrimaryButton>
                             )}
                             {currentWizardStep === STEPS.length - 1 && (
-                                <PrimaryButton floated="right" onClick={next}>
+                                <PrimaryButton floated="right" onClick={ next }>
                                     Finish</PrimaryButton>
                             )}
                             {currentWizardStep > 0 && (
-                                <LinkButton floated="right" onClick={previous}>
+                                <LinkButton floated="right" onClick={ previous }>
                                     <Icon name="arrow left" /> Previous step
                                 </LinkButton>
                             )}

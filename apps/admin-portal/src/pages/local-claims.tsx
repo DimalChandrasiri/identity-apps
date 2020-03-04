@@ -93,55 +93,55 @@ export const LocalClaimsPage = (): React.ReactElement => {
             {
                 openModal
                     ? <AddLocalClaims
-                        open={openModal}
-                        onClose={() => { setOpenModal(false) }}
-                        claimID={null}
-                        update={getLocalClaims}
-                        claimURIBase={claimURIBase}
+                        open={ openModal }
+                        onClose={ () => { setOpenModal(false) } }
+                        claimID={ null }
+                        update={ getLocalClaims }
+                        claimURIBase={ claimURIBase }
                     />
                     : null
             }
             <PageLayout
                 title="Local Claims"
                 description="View, edit and add local claims"
-                showBottomDivider={true}
+                showBottomDivider={ true }
             >
                 <ListLayout
                     advancedSearch={
                         <LocalClaimsSearch
-                            onFilter={(query) => {
+                            onFilter={ (query): void => {
                                 getLocalClaims(null, null, null, query);
-                            }}
-                            claimURIBase={claimURIBase}
+                            } }
+                            claimURIBase={ claimURIBase }
                         />
                     }
-                    currentListSize={listItemLimit}
-                    listItemLimit={listItemLimit}
-                    onItemsPerPageDropdownChange={handleItemsPerPageDropdownChange}
-                    onPageChange={handlePaginationChange}
-                    onSortStrategyChange={null}
+                    currentListSize={ listItemLimit }
+                    listItemLimit={ listItemLimit }
+                    onItemsPerPageDropdownChange={ handleItemsPerPageDropdownChange }
+                    onPageChange={ handlePaginationChange }
+                    onSortStrategyChange={ null }
                     rightActionPanel={
                         (
                             <PrimaryButton
-                                onClick={() => {
+                                onClick={ (): void => {
                                     setOpenModal(true);
-                                }}
+                                } }
                             >
                                 <Icon name="add" />Add a Local Claim
                         </PrimaryButton>
                         )
                     }
-                    leftActionPanel={null}
-                    showPagination={true}
-                    sortOptions={null}
-                    sortStrategy={null}
-                    totalPages={Math.ceil(claims?.length / listItemLimit)}
-                    totalListSize={claims?.length}
+                    leftActionPanel={ null }
+                    showPagination={ true }
+                    sortOptions={ null }
+                    sortStrategy={ null }
+                    totalPages={ Math.ceil(claims?.length / listItemLimit) }
+                    totalListSize={ claims?.length }
                 >
                     <ClaimsList
-                        list={paginate(claims, listItemLimit, offset)}
-                        localClaim={ListType.LOCAL}
-                        update={getLocalClaims}
+                        list={ paginate(claims, listItemLimit, offset) }
+                        localClaim={ ListType.LOCAL }
+                        update={ getLocalClaims }
                     />
                 </ListLayout>
             </PageLayout>

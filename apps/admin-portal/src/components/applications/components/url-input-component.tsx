@@ -33,7 +33,7 @@ interface URLInputComponentInterface {
     hint?: string;
     showError?: boolean;
     setShowError?: any;
-    required?:boolean;
+    required?: boolean;
     disabled?: boolean;
 }
 

@@ -55,30 +55,30 @@ export const EditAdditionalPropertiesLocalClaims = (
             const isFirstElement: boolean = property === Array.from(properties)[0];
 
             mappedElements.push(
-                <Grid.Row attribute={property} columns={3}>
-                    <Grid.Column width={7}>
+                <Grid.Row attribute={ property } columns={ 3 }>
+                    <Grid.Column width={ 7 }>
                         <Field
                             type="text"
-                            name={"key" + property}
-                            label={isFirstElement ? "Name" : null}
-                            required={false}
+                            name={ "key" + property }
+                            label={ isFirstElement ? "Name" : null }
+                            required={ false }
                             requiredErrorMessage="Enter a name"
                             placeholder="Enter a name"
-                            value={claim?.properties[property]?.key}
+                            value={ claim?.properties[property]?.key }
                         />
                     </Grid.Column>
-                    <Grid.Column width={7}>
+                    <Grid.Column width={ 7 }>
                         <Field
                             type="text"
-                            name={"value" + property}
-                            label={isFirstElement ? "Value" : null}
-                            required={false}
+                            name={ "value" + property }
+                            label={ isFirstElement ? "Value" : null }
+                            required={ false }
                             requiredErrorMessage="Enter a value or delete the property"
                             placeholder="Enter a value"
-                            value={claim?.properties[property]?.value}
+                            value={ claim?.properties[property]?.value }
                         />
                     </Grid.Column>
-                    <Grid.Column width={2} verticalAlign="bottom">
+                    <Grid.Column width={ 2 } verticalAlign="bottom">
                         {
                             !isOnlyElement
                                 ? (
@@ -87,14 +87,14 @@ export const EditAdditionalPropertiesLocalClaims = (
                                         size="mini"
                                         primary
                                         circular
-                                        icon={"trash"}
-                                        onClick={() => {
+                                        icon={ "trash" }
+                                        onClick={ () => {
                                             const tempProperties = new Set(properties);
                                             if (!isOnlyElement) {
                                                 tempProperties.delete(property);
                                             }
                                             setProperties(tempProperties);
-                                        }}
+                                        } }
                                     />
                                 )
                                 : null
@@ -105,19 +105,19 @@ export const EditAdditionalPropertiesLocalClaims = (
         });
         const lastElement: number = Array.from(properties)[properties.size - 1];
         mappedElements.push(
-            <Grid.Row key={lastElement + 1} textAlign="center" columns={1}>
-                <Grid.Column width={14}>
+            <Grid.Row key={ lastElement + 1 } textAlign="center" columns={ 1 }>
+                <Grid.Column width={ 14 }>
                     <Button
                         type="button"
                         size="mini"
                         primary
                         circular
                         icon="add"
-                        onClick={() => {
+                        onClick={ () => {
                             const tempProperties = new Set(properties);
                             tempProperties.add(lastElement + 1);
                             setProperties(tempProperties);
-                        }}
+                        } }
                     />
                 </Grid.Column>
             </Grid.Row>
@@ -138,7 +138,7 @@ export const EditAdditionalPropertiesLocalClaims = (
 
     return (
         <Forms
-            onSubmit={(values) => {
+            onSubmit={ (values) => {
                 const { id,dialectURI, ...claimData } = claim;
                 const data: Claim = {
                     ...claimData,
@@ -162,11 +162,11 @@ export const EditAdditionalPropertiesLocalClaims = (
                         }
                     ));
                 })
-            }}
+            } }
         >
             <Grid>
-                <Grid.Row columns={1} >
-                    <Grid.Column width={6}>
+                <Grid.Row columns={ 1 } >
+                    <Grid.Column width={ 6 }>
                         <h5>Additional Properties</h5>
                         <Grid>
                             {
@@ -175,8 +175,8 @@ export const EditAdditionalPropertiesLocalClaims = (
                         </Grid>
                     </Grid.Column>
                 </Grid.Row>
-                <Grid.Row columns={1}>
-                    <Grid.Column width={6}>
+                <Grid.Row columns={ 1 }>
+                    <Grid.Column width={ 6 }>
                         <Field type="submit" value="Update" />
                     </Grid.Column>
                 </Grid.Row>
