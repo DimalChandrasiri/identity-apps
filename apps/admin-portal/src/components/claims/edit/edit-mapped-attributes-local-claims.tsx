@@ -16,10 +16,10 @@
 * under the License.
 */
 
-import React, { useState, useEffect } from "react";
-import { Claim, AttributeMapping, AlertLevels } from "../../../models";
-import { Grid, Button } from "semantic-ui-react";
-import { Field, Validation, FormValue, Forms } from "@wso2is/forms";
+import React, { useEffect, useState } from "react";
+import { AlertLevels, AttributeMapping, Claim } from "../../../models";
+import { Button, Grid } from "semantic-ui-react";
+import { Field, FormValue, Forms, Validation } from "@wso2is/forms";
 import { getUserStoreList, updateAClaim } from "../../../api";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../../store/actions";

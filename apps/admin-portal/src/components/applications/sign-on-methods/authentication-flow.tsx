@@ -30,10 +30,10 @@ import {
     AuthenticationSequenceType,
     AuthenticationStepInterface,
     AuthenticatorInterface,
+    IDPNameInterface,
     IdentityProviderListItemInterface,
     IdentityProviderListResponseInterface,
-    IdentityProviderResponseInterface,
-    IDPNameInterface
+    IdentityProviderResponseInterface
 } from "../../../models";
 import {
     AuthenticatorListItemInterface,

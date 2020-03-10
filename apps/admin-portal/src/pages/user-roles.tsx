@@ -16,13 +16,13 @@
  * under the License.
  */
 
-import React, { useEffect, useState, ReactElement } from "react";
-import { PageLayout, ListLayout } from "../layouts";
-import { getGroupsList, deleteSelectedRole } from "../api";
+import React, { ReactElement, useEffect, useState } from "react";
+import { ListLayout, PageLayout } from "../layouts";
+import { deleteSelectedRole, getGroupsList } from "../api";
 import { RoleList } from "../components/users";
-import { RoleListInterface, AlertInterface, AlertLevels } from "../models"
+import { AlertInterface, AlertLevels, RoleListInterface } from "../models"
 import { PrimaryButton } from "@wso2is/react-components";
-import { Icon, PaginationProps, DropdownProps } from "semantic-ui-react";
+import { DropdownProps, Icon, PaginationProps } from "semantic-ui-react";
 import { DEFAULT_ROLE_LIST_ITEM_LIMIT } from "../constants";
 import { CreateRoleWizard } from "../components/users/role-wizard";
 import { useDispatch } from "react-redux";

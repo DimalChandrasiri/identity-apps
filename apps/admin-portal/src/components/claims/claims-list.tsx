@@ -17,12 +17,12 @@
 */
 
 import React, { useState } from "react";
-import { ResourceList, LinkButton, PrimaryButton } from "@wso2is/react-components"
-import { Claim, ExternalClaim, ClaimDialect, AlertLevels } from "../../models";
+import { LinkButton, PrimaryButton, ResourceList } from "@wso2is/react-components"
+import { AlertLevels, Claim, ClaimDialect, ExternalClaim } from "../../models";
 import { List, Modal } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { history } from "../../helpers";
-import { deleteAClaim, updateAClaim, deleteAnExternalClaim, deleteADialect } from "../../api";
+import { deleteAClaim, deleteADialect, deleteAnExternalClaim, updateAClaim } from "../../api";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../store/actions";
 

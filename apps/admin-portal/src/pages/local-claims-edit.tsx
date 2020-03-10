@@ -19,11 +19,11 @@
 import React, { useEffect, useState } from "react"
 import { PageLayout } from "../layouts"
 import { getAClaim } from "../api";
-import { Claim, AlertLevels } from "../models";
+import { AlertLevels, Claim } from "../models";
 import { ResourceTab } from "@wso2is/react-components";
 import {
-    EditBasicDetailsLocalClaims,
     EditAdditionalPropertiesLocalClaims,
+    EditBasicDetailsLocalClaims,
     EditMappedAttributesLocalClaims
 } from "../components";
 import { history } from "../helpers";

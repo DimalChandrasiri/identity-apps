@@ -17,7 +17,7 @@
  */
 
 import { GlobalConfig, ServiceResourcesEndpoint } from "../configs";
-import { HttpMethods, Claim, AddExternalClaim, ClaimsGetParams } from "../models";
+import { AddExternalClaim, Claim, ClaimsGetParams, HttpMethods } from "../models";
 import { AxiosHttpClient } from "@wso2is/http";
 
 /**

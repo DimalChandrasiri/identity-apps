@@ -16,11 +16,11 @@
 * under the License.
 */
 
-import React, { useState, useEffect } from "react";
-import { Forms, FormValue, Field, Validation } from "@wso2is/forms";
-import { Grid, Button } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Field, FormValue, Forms, Validation } from "@wso2is/forms";
+import { Button, Grid } from "semantic-ui-react";
 import { AttributeMapping } from "../../../models";
-import { getUserStoreList, getADialect } from "../../../api";
+import { getADialect, getUserStoreList } from "../../../api";
 
 interface BasicDetailsLocalClaimsPropsInterface {
     submitState: boolean;

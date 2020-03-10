@@ -17,9 +17,9 @@
 */
 
 import React, { useEffect, useState } from "react";
-import { Claim, AttributeMapping, AlertLevels } from "../../../models";
-import { Forms, Field, FormValue, Validation } from "@wso2is/forms";
-import { Grid, Button } from "semantic-ui-react";
+import { AlertLevels, AttributeMapping, Claim } from "../../../models";
+import { Field, FormValue, Forms, Validation } from "@wso2is/forms";
+import { Button, Grid } from "semantic-ui-react";
 import { getADialect, getUserStoreList, updateAClaim } from "../../../api";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../../store/actions";

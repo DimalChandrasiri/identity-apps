@@ -18,10 +18,10 @@
 
 import React, { useEffect, useState } from "react";
 import { Modal } from "semantic-ui-react";
-import { Forms, Field, useTrigger, FormValue } from "@wso2is/forms";
+import { Field, FormValue, Forms, useTrigger } from "@wso2is/forms";
 import { LinkButton, PrimaryButton } from "@wso2is/react-components";
-import { getADialect, updateADialect, addDialect } from "../../api";
-import { ClaimDialect, AlertLevels } from "../../models";
+import { addDialect, getADialect, updateADialect } from "../../api";
+import { AlertLevels, ClaimDialect } from "../../models";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../store/actions";
 

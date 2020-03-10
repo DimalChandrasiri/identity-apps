@@ -16,7 +16,6 @@
  * under the License.
  */
 
-import axios from "axios";
 import {
     ACCESS_TOKEN,
     AUTHORIZATION_CODE,
@@ -25,12 +24,14 @@ import {
     REQUEST_PARAMS,
     SERVICE_RESOURCES
 } from "../constants";
-import { AuthenticatedUserInterface } from "../models/authenticated-user";
 import { AccountSwitchRequestParams, OIDCRequestParamsInterface } from "../models/oidc-request-params";
-import { TokenResponseInterface, TokenRequestHeader } from "../models/token-response";
-import { getCodeChallenge, getCodeVerifier, getEmailHash, getJWKForTheIdToken, isValidIdToken } from "./crypto";
+import { TokenRequestHeader, TokenResponseInterface } from "../models/token-response";
 import { getAuthorizeEndpoint, getIssuer, getJwksUri, getRevokeTokenEndpoint, getTokenEndpoint } from "./op-config";
-import { getSessionParameter, removeSessionParameter, setSessionParameter } from "./session";
+import { getCodeChallenge, getCodeVerifier, getEmailHash, getJWKForTheIdToken, isValidIdToken } from "./crypto";
+import { getSessionParameter, removeSessionParameter, setSessionParameter } from "./session"
+
+import { AuthenticatedUserInterface } from "../models/authenticated-user";
+import axios from "axios";
 
 /**
  * Checks whether authorization code present in the request.

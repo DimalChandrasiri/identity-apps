@@ -17,13 +17,13 @@
 */
 
 import React, { useState } from "react";
-import { Modal, Grid, Icon } from "semantic-ui-react";
-import { useTrigger, FormValue } from "@wso2is/forms";
+import { Grid, Icon, Modal } from "semantic-ui-react";
+import { FormValue, useTrigger } from "@wso2is/forms";
 import { addLocalClaim } from "../../../api";
-import { Steps, PrimaryButton, LinkButton } from "@wso2is/react-components";
+import { LinkButton, PrimaryButton, Steps } from "@wso2is/react-components";
 import { ApplicationWizardStepIcons } from "../../../configs";
 import { BasicDetailsLocalClaims, MappedAttributes, SummaryLocalClaims } from "../wizard";
-import { Claim, AlertLevels } from "../../../models";
+import { AlertLevels, Claim } from "../../../models";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../../store/actions";
 

@@ -18,14 +18,14 @@
 
 import _ from "lodash";
 import React, { FunctionComponent, ReactElement, useState } from "react";
-import { Modal, Grid, Icon } from "semantic-ui-react";
-import { Heading, Steps, LinkButton, PrimaryButton } from "@wso2is/react-components";
+import { Grid, Icon, Modal } from "semantic-ui-react";
+import { Heading, LinkButton, PrimaryButton, Steps } from "@wso2is/react-components";
 import { useTrigger } from "@wso2is/forms";
 import { ApplicationWizardStepIcons } from "../../../configs";
 import { RoleBasics } from "./role-basics";
 import { PermissionList } from "./role-permisson";
 import { createRole, updatePermissionForRole } from "../../../api";
-import { CreateRoleInterface, AlertLevels } from "../../../models";
+import { AlertLevels, CreateRoleInterface } from "../../../models";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../../store/actions";

@@ -16,12 +16,12 @@
 * under the License.
 */
 
-import React, { useState, useEffect } from "react";
-import { Modal, Header } from "semantic-ui-react";
-import { ClaimDialect, Claim, AlertLevels } from "../../../models";
+import React, { useEffect, useState } from "react";
+import { Header, Modal } from "semantic-ui-react";
+import { AlertLevels, Claim, ClaimDialect } from "../../../models";
 import { LinkButton, PrimaryButton } from "@wso2is/react-components";
-import { getLocalClaims, addExternalClaim } from "../../../api";
-import { Forms, Field, FormValue, useTrigger } from "@wso2is/forms";
+import { addExternalClaim, getLocalClaims } from "../../../api";
+import { Field, FormValue, Forms, useTrigger } from "@wso2is/forms";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../../store/actions";
 

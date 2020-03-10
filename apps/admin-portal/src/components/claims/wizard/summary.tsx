@@ -17,8 +17,8 @@
 */
 
 import React from "react";
-import { Claim, AttributeMapping, Property } from "../../../models";
-import { List, Grid, GridColumn, Icon } from "semantic-ui-react";
+import { AttributeMapping, Claim, Property } from "../../../models";
+import { Grid, GridColumn, Icon, List } from "semantic-ui-react";
 
 interface SummaryLocalClaimsPropsInterface {
     data: Claim;

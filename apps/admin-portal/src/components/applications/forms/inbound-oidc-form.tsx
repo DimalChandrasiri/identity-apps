@@ -23,11 +23,11 @@ import { isEmpty } from "lodash";
 import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { Button, Divider, Grid } from "semantic-ui-react";
 import {
-    emptyOIDCConfig,
     MetadataPropertyInterface,
     OAuth2PKCEConfigurationInterface,
     OIDCDataInterface,
-    OIDCMetadataInterface
+    OIDCMetadataInterface,
+    emptyOIDCConfig
 } from "../../../models";
 import { URLInputComponent } from "../components";
 

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { FunctionComponent, ReactElement, useEffect, useState, SyntheticEvent, Children } from "react";
+import React, { Children, FunctionComponent, ReactElement, SyntheticEvent, useEffect, useState } from "react";
 import { getPermissionList } from "../../../../src/api";
 import { Permission, PermissionObject } from "../../../models/permission";
 import SuperTreeview from 'react-super-treeview';

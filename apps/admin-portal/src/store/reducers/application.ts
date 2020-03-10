@@ -17,7 +17,7 @@
  */
 
 import { ApplicationReducerStateInterface } from "../../models";
-import { ApplicationActions, ApplicationActionTypes } from "../actions/types";
+import { ApplicationActionTypes, ApplicationActions } from "../actions/types";
 
 /**
  * Common profile reducer initial state.

@@ -17,7 +17,7 @@
  */
 
 import React, { SyntheticEvent } from "react";
-import { i18n, SupportedLanguages } from "../../../configs";
+import { SupportedLanguages, i18n } from "../../../configs";
 import { LanguageSwitcherDropdown } from "./language-switcher-dropdown";
 
 /**

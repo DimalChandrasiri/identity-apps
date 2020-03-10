@@ -21,18 +21,18 @@ import { SignIn, SignOut } from "../components/authentication";
 import { AppLayout, AuthLayout, DashboardLayout, DefaultPageLayout, ErrorPageLayout } from "../layouts";
 import {
     ApplicationEditPage,
-    ApplicationsPage,
     ApplicationTemplateSelectPage,
+    ApplicationsPage,
+    ClaimDialectsPage,
+    ExternalClaimsPage,
     HomePage,
+    LocalClaimsEditPage,
+    LocalClaimsPage,
     PageNotFound,
     PrivacyPage,
     UserEditPage,
-    UsersPage,
     UserRoles,
-    LocalClaimsPage,
-    ExternalClaimsPage,
-    ClaimDialectsPage,
-    LocalClaimsEditPage
+    UsersPage
 } from "../pages";
 
 /**
