@@ -20,6 +20,13 @@ module.exports = {
         "react/jsx-curly-spacing": [2, "always", {
             "allowMultiline": true,
             "spacing": {"objectLiterals": "always"}
+        }],
+        "max-len": [2, 120, 4, {"ignoreUrls": true}],
+        "sort-imports": ["error", {
+            "ignoreCase": false,
+            "ignoreDeclarationSort": false,
+            "ignoreMemberSort": false,
+            "memberSyntaxSortOrder": ["none", "all", "single", "multiple"]
         }]
     },
     overrides: [
