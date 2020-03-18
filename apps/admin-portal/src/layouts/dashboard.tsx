@@ -36,7 +36,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Button, Responsive } from "semantic-ui-react";
 import { ProtectedRoute } from "../components";
-import { GlobalConfig, LogoImage, routes, SidePanelIcons, SidePanelMiscIcons } from "../configs";
+import { GlobalConfig, LogoImage, routes, SidePanelIcons, SidePanelMiscIcons, SupportedLanguages, i18n } from "../configs";
 import { UIConstants } from "../constants";
 import { AppConfig, history } from "../helpers";
 import { AppConfigInterface } from "../models";
@@ -345,6 +345,12 @@ export const DashboardLayout: FunctionComponent<DashboardLayoutPropsInterface> =
                             : null
                     }
                     fixed="bottom"
+                    showLanguageSwitcher
+                    onLanguageChange={ (data) => {
+                        i18n.changeLanguage(data);
+                    } }
+                    currentLanguage={ i18n.languages[0] }
+                    supportedLanguages={ SupportedLanguages }
                     fluid={ !isMobileViewport ? fluid : false }
                     links={ [
                         {
