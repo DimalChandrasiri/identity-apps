@@ -27,6 +27,7 @@ export * from "./application-edit";
 export * from "./user-edit";
 export * from "./application-template";
 export * from "./role";
+export * from "./resident-identify-config";
 export * from "./external-claims";
 export * from "./local-claims";
 export * from "./claim-dialects";

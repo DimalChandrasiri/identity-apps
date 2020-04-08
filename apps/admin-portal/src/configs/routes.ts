@@ -41,7 +41,8 @@ import {
     UserStores,
     UserStoresEditPage,
     IdentityProviderEditPage,
-    ServerConfigurationsPage
+    ServerConfigurationsPage,
+    ResidentIdentityConfig
 } from "../pages";
 import {
     USER_STORES_PATH,
@@ -275,9 +276,19 @@ const DASHBOARD_LAYOUT_ROUTES: RouteInterface[] = [
                 exact: true,
                 icon: "serverConfigurations",
                 id: "serverConfigurations",
-                level: 2,
+                level: 1,
                 name: "Server Configurations",
                 path: "/server-configurations",
+                protected: true,
+                showOnSidePanel: true
+            },{
+                component: ResidentIdentityConfig,
+                exact: true,
+                icon: "serverConfigurations",
+                id: "ResidentRealConfig",
+                level: 2,
+                name: "Resident Configuration",
+                path: "/resident-configurations",
                 protected: true,
                 showOnSidePanel: true
             }
