@@ -16,12 +16,12 @@
 * under the License.
 */
 
-import React, { ReactElement } from "react";
+import React, { FunctionComponent , ReactElement } from "react";
 import { ResourceList, ResourceListItem, Avatar } from "@wso2is/react-components";
 import { Icon } from "semantic-ui-react";
 import { EmailTemplateType } from "../../models";
 
-interface EmailTemplateListProps {
+interface EmailTemplateListPropsInterface {
     templateList: EmailTemplateType[];
 }
 
@@ -30,8 +30,8 @@ interface EmailTemplateListProps {
  * 
  * @param props props required to render the email template list
  */
-export const EmailTemplateList: React.FunctionComponent<EmailTemplateListProps> = (
-    props: EmailTemplateListProps
+export const EmailTemplateList: FunctionComponent<EmailTemplateListPropsInterface> = (
+    props: EmailTemplateListPropsInterface
 ): ReactElement => {
 
     const {
