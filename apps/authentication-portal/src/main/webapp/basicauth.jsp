@@ -182,6 +182,7 @@
                     id="usernameUserInput"
                     value=""
                     name="usernameUserInput"
+                    aria-label="User Name"
                     tabindex="1"
                     placeholder="<%=AuthenticationEndpointUtil.i18n(resourceBundle, "username")%>"
                     required>
@@ -198,6 +199,7 @@
                     type="password"
                     id="password"
                     name="password"
+                    aria-label="Password"
                     value=""
                     autocomplete="off"
                     tabindex="2"
@@ -296,7 +298,7 @@
     <div class="field">
         <div class="ui checkbox">
             <input tabindex="3" type="checkbox" id="chkRemember" name="chkRemember">
-            <label><%=AuthenticationEndpointUtil.i18n(resourceBundle, "remember.me")%></label>
+            <label for="chkRemember"><%=AuthenticationEndpointUtil.i18n(resourceBundle, "remember.me")%></label>
         </div>
     </div>
     <input type="hidden" name="sessionDataKey" value='<%=Encode.forHtmlAttribute

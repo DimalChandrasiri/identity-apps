@@ -39,7 +39,7 @@
     <div class="field">
         <div class="ui checkbox">
             <input type="checkbox" id="chkRemember" name="chkRemember">
-            <label><%=AuthenticationEndpointUtil.i18n(resourceBundle, "remember.me")%></label>
+            <label for="chkRemember"><%=AuthenticationEndpointUtil.i18n(resourceBundle, "remember.me")%></label>
         </div>
     </div>
 
