@@ -127,35 +127,6 @@ export const getDeveloperViewRoutes = (): RouteInterface[] => {
             showOnSidePanel: true
         },
         {
-            category: "devPortal:components.sidePanel.categories.application",
-            children: [
-                {
-                    component: lazy(() =>
-                        import("../../remote-repository-configuration/pages/remote-repository-config-edit")),
-                    exact: true,
-                    icon: {
-                        icon: SidePanelIcons.childIcon
-                    },
-                    id: "remote-repo-edit",
-                    name: "Remote Repo Config Edit",
-                    path: AppConstants.getPaths().get("REMOTE_REPO_CONFIG_EDIT"),
-                    protected: true,
-                    showOnSidePanel: false
-                }
-            ],
-            component: lazy(() => import("../../remote-repository-configuration/pages/remote-repository-config")),
-            exact: true,
-            icon: {
-                icon: SidePanelIcons.remoteFetch
-            },
-            id: "remote-repo",
-            name: "Remote Repo Config",
-            order: 3,
-            path: AppConstants.getPaths().get("REMOTE_REPO_CONFIG"),
-            protected: true,
-            showOnSidePanel: true
-        },
-        {
             category: "devPortal:components.sidePanel.categories.general",
             children: [
                 {
