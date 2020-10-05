@@ -307,7 +307,7 @@ export const AuthenticatorCreateWizard: FunctionComponent<AddAuthenticatorWizard
         }
     };
 
-    function loadAuthenticatorMetadata(authenticatorId: string) {
+    const loadAuthenticatorMetadata = (authenticatorId: string) => {
         getFederatedAuthenticatorMetadata(authenticatorId)
             .then((response) => {
                 setSelectedAuthenticatorMetadata(response);
@@ -315,7 +315,7 @@ export const AuthenticatorCreateWizard: FunctionComponent<AddAuthenticatorWizard
             .catch((error) => {
                 handleGetFederatedAuthenticatorMetadataAPICallError(error)
             });
-    }
+    };
 
     useEffect(() => {
         if (selectedTemplateId) {
@@ -394,7 +394,7 @@ export const AuthenticatorCreateWizard: FunctionComponent<AddAuthenticatorWizard
                 className="wizard identity-provider-create-wizard"
                 dimmer="blurring"
                 onClose={ handleWizardClose }
-                closeOnDimmerClick
+                closeOnDimmerClick={ false }
                 closeOnEscape
                 data-testid={ `${ testId }-modal` }
             >

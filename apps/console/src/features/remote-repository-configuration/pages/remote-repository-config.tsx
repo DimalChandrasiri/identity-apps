@@ -176,7 +176,7 @@ const RemoteRepoConfig: FunctionComponent = (): ReactElement => {
      * @param config Config ID which needs to be triggered
      */
     const handleOnTrigger = (config: InterfaceRemoteRepoConfig): void => {
-        triggerConfigDeployment(config.id).then((response) => {
+        triggerConfigDeployment(config.id).then(() => {
             handleAlerts({
                 description: t(
                     "devPortal:components.remoteConfig.notifications.triggerConfig.success.description"
@@ -188,7 +188,7 @@ const RemoteRepoConfig: FunctionComponent = (): ReactElement => {
             });
         });
     }
-
+    
     const handleOnConfigUpdate = (id: string, values: InterfaceEditDetails): void => {
         updateRemoteRepoConfig(id, values).then(() => {
             handleAlerts({
@@ -202,7 +202,7 @@ const RemoteRepoConfig: FunctionComponent = (): ReactElement => {
             });
         })
     }
-    
+
     return (
         <PageLayout
             title="Remote Fetch Management"
@@ -480,15 +480,17 @@ const RemoteRepoConfig: FunctionComponent = (): ReactElement => {
                 <ListLayout
                     currentListSize={ listItemLimit }
                     listItemLimit={ listItemLimit }
-                    onPageChange={ () => { console.log() } }
+                onPageChange={ () => {
+                        //onPageChange Handler
+                     } }
                     showPagination={ false }
                     showTopActionPanel={ false }
                     totalPages={ Math.ceil(remoteRepoConfig?.length / listItemLimit) }
                     totalListSize={ remoteRepoConfig?.length }
                 >
-                    <RemoteRepoList 
-                        showCreateWizard={ setShowWizard } 
-                        handleConfigDelete={ handleOnDelete } 
+                    <RemoteRepoList
+                        showCreateWizard={ setShowWizard }
+                        handleConfigDelete={ handleOnDelete }
                         repoObjectList={ remoteRepoConfig }
                         handleOnTrigger={ handleOnTrigger }
                     />

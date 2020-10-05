@@ -106,6 +106,12 @@ export const adminPortal: AdminPortalNS = {
                         requiredErrorMessage: "Alias is required"
                     }
                 },
+                list: {
+                    columns: {
+                        actions: "Actions",
+                        name: "Name"
+                    }
+                },
                 notifications: {
                     addCertificate:{
                         genericError: {
@@ -460,6 +466,12 @@ export const adminPortal: AdminPortalNS = {
                 }
             },
             list: {
+                columns: {
+                    actions: "Actions",
+                    claimURI: "Claim URI",
+                    dialectURI: "Dialect URI",
+                    name: "Name"
+                },
                 confirmation: {
                     action: "Confirm",
                     content: "{{message}} Please proceed with caution.",
@@ -761,6 +773,10 @@ export const adminPortal: AdminPortalNS = {
                     }
                 }
             },
+            list: {
+                actions: "Actions",
+                name: "Name"
+            },
             notifications: {
                 createTemplateType: {
                     error: {
@@ -788,6 +804,20 @@ export const adminPortal: AdminPortalNS = {
                     success: {
                         description: "Successfully deleted the email template type.",
                         message: "Email template type delete successful"
+                    }
+                },
+                getTemplateTypes: {
+                    error: {
+                        description: "{{description}}",
+                        message: "Retrieval error"
+                    },
+                    genericError: {
+                        description: "Couldn't retrieve the email template types.",
+                        message: "Something went wrong"
+                    },
+                    success: {
+                        description: "Successfully retrieved the email template types.",
+                        message: "Retrieval successful"
                     }
                 },
                 updateTemplateType: {
@@ -854,6 +884,10 @@ export const adminPortal: AdminPortalNS = {
                     }
                 }
             },
+            list: {
+                actions: "Actions",
+                name: "Name"
+            },
             notifications: {
                 createTemplate: {
                     error: {
@@ -881,6 +915,34 @@ export const adminPortal: AdminPortalNS = {
                     success: {
                         description: "Successfully deleted the email template .",
                         message: "Email template delete successful"
+                    }
+                },
+                getTemplateDetails: {
+                    error: {
+                        description: "{{description}}",
+                        message: "Retrieval error"
+                    },
+                    genericError: {
+                        description: "Couldn't retrieve the email template details.",
+                        message: "Something went wrong"
+                    },
+                    success: {
+                        description: "Successfully retrieved the email template details.",
+                        message: "Retrieval successful"
+                    }
+                },
+                getTemplates: {
+                    error: {
+                        description: "{{description}}",
+                        message: "Retrieval error"
+                    },
+                    genericError: {
+                        description: "Couldn't retrieve the email templates.",
+                        message: "Something went wrong"
+                    },
+                    success: {
+                        description: "Successfully retrieved the email templates.",
+                        message: "Retrieval successful"
                     }
                 },
                 iframeUnsupported: {
@@ -1003,6 +1065,11 @@ export const adminPortal: AdminPortalNS = {
                 }
             },
             list: {
+                columns: {
+                    actions: "Actions",
+                    lastModified: "Last Modified",
+                    name: "Name"
+                },
                 storeOptions: "Select User Store"
             },
             notifications: {
@@ -1466,8 +1533,8 @@ export const adminPortal: AdminPortalNS = {
                     basic: "Basics",
                     groups: "Groups",
                     permissions: "Permissions",
-                    users: "Users",
-                    roles: "Roles"
+                    roles: "Roles",
+                    users: "Users"
                 },
                 users: {
                     list: {
@@ -1484,6 +1551,11 @@ export const adminPortal: AdminPortalNS = {
                 buttons: {
                     addButton: "New {{type}}",
                     filterDropdown: "Filter By"
+                },
+                columns: {
+                    actions: "Actions",
+                    lastModified: "Last Modified",
+                    name: "Name"
                 },
                 confirmations: {
                     deleteItem: {
@@ -2175,6 +2247,12 @@ export const adminPortal: AdminPortalNS = {
                 assignUserRoleBtn: "Assign roles",
                 metaColumnBtn: "Columns"
             },
+            list: {
+                columns: {
+                    actions: "Actions",
+                    name: "Name"
+                }
+            },
             notifications: {
                 addUser: {
                     error: {
@@ -2227,6 +2305,13 @@ export const adminPortal: AdminPortalNS = {
                         1: "Something went wrong while fetching the user list"
                     },
                     title: "No Users Found"
+                },
+                userstoreError: {
+                    subtitles: {
+                        0: "An error occurred while trying to fetch users from the userstore",
+                        1: "Please make sure the connection details of the userstore are accurate."
+                    },
+                    title: "Couldn't fetch users from the userstore"
                 }
             },
             usersList: {
@@ -2507,6 +2592,16 @@ export const adminPortal: AdminPortalNS = {
         }
     },
     pages: {
+        addEmailTemplate: {
+            backButton: "Go back to {{name}} template",
+            subTitle: null,
+            title: "Add New Template"
+        },
+        editTemplate: {
+            backButton: "Go back to {{name}} template",
+            subTitle: null,
+            title: "{{template}}"
+        },
         emailLocaleAdd: {
             backButton: "Go back to {{name}} template",
             subTitle: null,

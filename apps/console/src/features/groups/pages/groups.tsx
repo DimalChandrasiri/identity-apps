@@ -369,11 +369,43 @@ const GroupsPage: FunctionComponent<any> = (): ReactElement => {
                     />
                 }
                 showPagination={ paginatedGroups.length > 0  }
-                showTopActionPanel={ isGroupsListRequestLoading || !(!searchQuery && paginatedGroups?.length <= 0) }
+                showTopActionPanel={ isGroupsListRequestLoading
+                    || !(!searchQuery
+                        && userStoreOptions.length < 3
+                        && paginatedGroups?.length <= 0) }
                 totalPages={ Math.ceil(groupList?.length / listItemLimit) }
                 totalListSize={ groupList?.length }
             >
                 <GroupList
+                    advancedSearch={ (
+                        <AdvancedSearchWithBasicFilters
+                            data-testid="group-mgt-groups-list-advanced-search"
+                            onFilter={ handleUserFilter  }
+                            filterAttributeOptions={ [
+                                {
+                                    key: 0,
+                                    text: "Name",
+                                    value: "displayName"
+                                }
+                            ] }
+                            filterAttributePlaceholder={
+                                t("adminPortal:components.groups.advancedSearch.form.inputs.filterAttribute" +
+                                    ".placeholder")
+                            }
+                            filterConditionsPlaceholder={
+                                t("adminPortal:components.groups.advancedSearch.form.inputs.filterCondition" +
+                                    ".placeholder")
+                            }
+                            filterValuePlaceholder={
+                                t("adminPortal:components.groups.advancedSearch.form.inputs.filterValue" +
+                                    ".placeholder")
+                            }
+                            placeholder={ t("adminPortal:components.groups.advancedSearch.placeholder") }
+                            defaultSearchAttribute="displayName"
+                            defaultSearchOperator="sw"
+                            triggerClearQuery={ triggerClearQuery }
+                        />
+                    ) }
                     data-testid="group-mgt-groups-list"
                     handleGroupDelete={ handleOnDelete }
                     isLoading={ isGroupsListRequestLoading }

@@ -96,6 +96,12 @@ export interface AdminPortalNS {
                 attributes: {
                     alias: string;
                 };
+                list: {
+                    columns: {
+                        actions: string;
+                        name: string;
+                    };
+                };
                 notifications: {
                     addCertificate: Notification;
                     getCertificates: Notification;
@@ -398,6 +404,12 @@ export interface AdminPortalNS {
                 };
             };
             list: {
+                columns: {
+                    actions: string;
+                    claimURI: string;
+                    dialectURI: string;
+                    name: string;
+                };
                 confirmation: {
                     local: {
                         message: string;
@@ -473,8 +485,13 @@ export interface AdminPortalNS {
                     };
                 };
             };
+            list: {
+                actions: string;
+                name: string;
+            };
             notifications: {
                 deleteTemplateType: Notification;
+                getTemplateTypes: Notification;
                 updateTemplateType: Notification;
                 createTemplateType: Notification;
             };
@@ -509,9 +526,15 @@ export interface AdminPortalNS {
                     };
                 };
             };
+            list: {
+                actions: string;
+                name: string;
+            };
             notifications: {
                 deleteTemplate: Notification;
                 createTemplate: Notification;
+                getTemplateDetails: Notification;
+                getTemplates: Notification;
                 iframeUnsupported: Notification;
                 updateTemplate: Notification;
             };
@@ -554,6 +577,11 @@ export interface AdminPortalNS {
                 };
             };
             list: {
+                columns: {
+                    actions: string;
+                    lastModified: string;
+                    name: string;
+                };
                 storeOptions: string;
             };
             notifications: {
@@ -909,6 +937,11 @@ export interface AdminPortalNS {
                 buttons: {
                     addButton: string;
                     filterDropdown: string;
+                };
+                columns: {
+                    actions: string;
+                    lastModified: string;
+                    name: string;
                 };
                 confirmations: {
                     deleteItem: Confirmation;
@@ -1352,6 +1385,12 @@ export interface AdminPortalNS {
                 assignUserRoleBtn: string;
                 metaColumnBtn: string;
             };
+            list: {
+                columns: {
+                    actions: string;
+                    name: string;
+                };
+            };
             notifications: {
                 addUser: Notification;
                 deleteUser: Notification;
@@ -1359,6 +1398,7 @@ export interface AdminPortalNS {
             };
             placeholders: {
                 emptyList: Placeholder;
+                userstoreError: Placeholder;
             };
             usersList: {
                 list: {
@@ -1507,6 +1547,8 @@ export interface AdminPortalNS {
         getProfileSchema: Notification;
     };
     pages: {
+        addEmailTemplate: EditPage;
+        editTemplate: EditPage;
         emailLocaleAdd: EditPage;
         emailLocaleAddWithDisplayName: EditPage;
         emailTemplateTypes: Page;

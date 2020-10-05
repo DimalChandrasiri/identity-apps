@@ -17,11 +17,14 @@
  */
 
 import { getUserStoreList } from "@wso2is/core/api";
+import { AlertLevels } from "@wso2is/core/models";
+import { addAlert } from "@wso2is/core/store"
 import { Field, FormValue, Forms, Validation } from "@wso2is/forms";
 import { FormValidation } from "@wso2is/validation";
 import { generate } from "generate-password";
 import React, { ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import {
     Grid,
     Message
@@ -41,6 +44,7 @@ import { BasicUserDetailsInterface } from "../models";
 interface AddUserProps {
     initialValues: any;
     triggerSubmit: boolean;
+    emailVerificationEnabled: boolean;
     onSubmit: (values: any) => void;
 }
 
@@ -54,6 +58,7 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
     const {
         initialValues,
         triggerSubmit,
+        emailVerificationEnabled,
         onSubmit
     } = props;
 
@@ -74,6 +79,7 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
     const [ isPasswordRegExLoading, setPasswordRegExLoading ] = useState<boolean>(false);
 
     const { t } = useTranslation();
+    const dispatch = useDispatch();
 
     /**
      * The following useEffect is triggered when a random password is generated.
@@ -137,6 +143,14 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
         getUsersList(null, null, "userName eq " + username, null, userStore)
             .then((response) => {
                 setIsUsernameValid(response?.totalResults === 0);
+            }).catch((error) => {
+                dispatch(addAlert({
+                    description: error?.response?.data?.description ?? error?.response?.data?.detail
+                        ?? t("adminPortal:components.users.notifications.fetchUsers.genericError.description"),
+                    level: AlertLevels.ERROR,
+                    message: error?.response?.data?.message
+                        ?? t("adminPortal:components.users.notifications.fetchUsers.genericError.message")
+                }))
             });
         setIsUsernamePatternValid(validateInputAgainstRegEx(username, usernameRegEx));
     };
@@ -271,7 +285,7 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
             lastName: values.get("lastName").toString(),
             newPassword: values.get("newPassword") && values.get("newPassword") !== undefined  ?
                 values.get("newPassword").toString() : "",
-            passwordOption: values.get("passwordOption").toString(),
+            passwordOption: values.get("passwordOption")?.toString(),
             userName: values.get("userName").toString()
         };
     };
@@ -515,20 +529,22 @@ export const AddUser: React.FunctionComponent<AddUserProps> = (props: AddUserPro
                         />
                     </Grid.Column>
                 </Grid.Row>
-                <Grid.Row columns={ 1 }>
-                    <Grid.Column mobile={ 16 } tablet={ 16 } computer={ 10 }>
-                        <Field
-                            data-testid="user-mgt-add-user-form-passwordOption-radio-button"
-                            type="radio"
-                            label={ t("adminPortal:components.user.forms.addUserForm.buttons.radioButton.label") }
-                            name="passwordOption"
-                            default="createPw"
-                            listen={ (values) => { setPasswordOption(values.get("passwordOption").toString()); } }
-                            children={ passwordOptions }
-                            value={ initialValues && initialValues.passwordOption }
-                        />
-                    </Grid.Column>
-                </Grid.Row>
+                { emailVerificationEnabled &&
+                    <Grid.Row columns={ 1 }>
+                        <Grid.Column mobile={ 16 } tablet={ 16 } computer={ 10 }>
+                            <Field
+                                data-testid="user-mgt-add-user-form-passwordOption-radio-button"
+                                type="radio"
+                                label={ t("adminPortal:components.user.forms.addUserForm.buttons.radioButton.label") }
+                                name="passwordOption"
+                                default="createPw"
+                                listen={ (values) => { setPasswordOption(values.get("passwordOption").toString()); } }
+                                children={ passwordOptions }
+                                value={ initialValues && initialValues.passwordOption }
+                            />
+                        </Grid.Column>
+                    </Grid.Row>
+                }
                 { handlePasswordOptions() }
             </Grid>
         </Forms>

@@ -170,6 +170,11 @@ export const CreateGroupWizard: FunctionComponent<CreateGroupProps> = (props: Cr
      * @param groupDetails - basic data required to create group.
      */
     const addGroup = (groupDetails: any): void => {
+        let groupName = "";
+
+        groupDetails?.BasicDetails?.domain !== "primary"
+            ? groupName = groupDetails?.BasicDetails?.domain + "/" + groupDetails?.BasicDetails?.groupName
+            : groupName = groupDetails?.BasicDetails?.groupName;
 
         const members: CreateGroupMemberInterface[] = [];
         const users = groupDetails?.UserList;
@@ -183,7 +188,7 @@ export const CreateGroupWizard: FunctionComponent<CreateGroupProps> = (props: Cr
         }
 
         const groupData: CreateGroupInterface = {
-            "displayName": groupDetails?.BasicDetails ? groupDetails?.BasicDetails?.groupName : groupDetails?.groupName,
+            "displayName": groupName,
             "members" : members,
             "schemas": [
                 "urn:ietf:params:scim:schemas:core:2.0:Group"
@@ -207,22 +212,16 @@ export const CreateGroupWizard: FunctionComponent<CreateGroupProps> = (props: Cr
                 }
 
                 const roleData = {
-                    "schemas": [
-                        "urn:ietf:params:scim:api:messages:2.0:PatchOp"
-                    ],
-                    "Operations": [
-                        {
-                            "op": "add",
-                            "value": {
-                                "groups": [
-                                    {
-                                        "display": createdGroup.displayName,
-                                        "value": createdGroup.id
-                                    }
-                                ]
-                            }
+                    "Operations": [{
+                        "op": "add",
+                        "value": {
+                            "groups": [{
+                                "display": createdGroup.displayName,
+                                "value": createdGroup.id
+                            }]
                         }
-                    ]
+                    }],
+                    "schemas": ["urn:ietf:params:scim:api:messages:2.0:PatchOp"]
                 };
 
                 if (rolesList && rolesList.length > 0) {
@@ -246,7 +245,7 @@ export const CreateGroupWizard: FunctionComponent<CreateGroupProps> = (props: Cr
                                             description: t("adminPortal:components.groups.notifications." +
                                                 "createPermission." +
                                                 "error.description",
-                                                {description: error.response.data.detail}),
+                                                { description: error.response.data.detail }),
                                             level: AlertLevels.ERROR,
                                             message: t("adminPortal:components.groups.notifications.createPermission." +
                                                 "error.message")
@@ -281,7 +280,7 @@ export const CreateGroupWizard: FunctionComponent<CreateGroupProps> = (props: Cr
             }
 
             closeWizard();
-            history.push(AppConstants.PATHS.get("GROUP_EDIT").replace(":id", response.data.id));
+            history.push(AppConstants.getPaths().get("GROUP_EDIT").replace(":id", response.data.id));
         }).catch(error => {
             if (!error.response || error.response.status === 401) {
                 closeWizard();
@@ -504,15 +503,16 @@ export const CreateGroupWizard: FunctionComponent<CreateGroupProps> = (props: Cr
                         </Grid.Column>
                         <Grid.Column mobile={ 8 } tablet={ 8 } computer={ 8 }>
                             { currentStep < WIZARD_STEPS.length - 1 && (
-                                <>
-                                    <PrimaryButton
-                                        floated="right"
-                                        onClick={ changeStepToNext }
-                                        data-testid={ `${ testId }-next-button` }
-                                    >
-                                        { t("adminPortal:components.roles.addRoleWizard.buttons.next") }
-                                        <Icon name="arrow right" data-testid={ `${ testId }-next-button-icon` }/>
-                                    </PrimaryButton>
+                                <PrimaryButton
+                                    floated="right"
+                                    onClick={ changeStepToNext }
+                                    data-testid={ `${ testId }-next-button` }
+                                >
+                                    { t("adminPortal:components.roles.addRoleWizard.buttons.next") }
+                                    <Icon name="arrow right" data-testid={ `${ testId }-next-button-icon` }/>
+                                </PrimaryButton>
+                            ) }
+                            { currentStep === 0 && (
                                     <Button
                                         basic
                                         color="orange"
@@ -522,7 +522,6 @@ export const CreateGroupWizard: FunctionComponent<CreateGroupProps> = (props: Cr
                                     >
                                         { t("adminPortal:components.roles.addRoleWizard.buttons.finish") }
                                     </Button>
-                                </>
                             ) }
                             { currentStep === WIZARD_STEPS.length - 1 && (
                                 <PrimaryButton

@@ -29,7 +29,14 @@ import { Grid } from "semantic-ui-react";
 import { GenericMinimalWizardFormHelp } from "./help";
 import { OauthProtocolSettingsWizardForm } from "./oauth-protocol-settings-wizard-form";
 import { SAMLProtocolSettingsWizardForm } from "./saml-protocol-settings-wizard-form";
-import { AppConstants, ModalWithSidePanel, TechnologyLogos, history } from "../../../core";
+import {
+    AppConstants,
+    CORSOriginsListInterface,
+    ModalWithSidePanel,
+    TechnologyLogos,
+    getCORSOrigins,
+    history, store
+} from "../../../core";
 import { createApplication, getApplicationTemplateData } from "../../api";
 import { InboundProtocolLogos } from "../../configs";
 import { ApplicationManagementConstants } from "../../constants";
@@ -82,6 +89,8 @@ export const MinimalAppCreateWizard: FunctionComponent<MinimalApplicationCreateW
 
     const dispatch = useDispatch();
 
+    const tenantName = store.getState().config.deployment.tenant;
+
     const [ submit, setSubmit ] = useTrigger();
     const [ submitProtocolForm, setSubmitProtocolForm ] = useTrigger();
 
@@ -89,6 +98,20 @@ export const MinimalAppCreateWizard: FunctionComponent<MinimalApplicationCreateW
     const [ protocolFormValues, setProtocolFormValues ] = useState<object>(undefined);
     const [ generalFormValues, setGeneralFormValues ] = useState<Map<string, FormValue>>(undefined);
     const [ selectedTemplate, setSelectedTemplate ] = useState<ApplicationTemplateListItemInterface>(template);
+
+    const [ allowedOrigins, setAllowedOrigins ] = useState([]);
+
+    useEffect(() => {
+        const allowedCORSOrigins = [];
+        getCORSOrigins()
+            .then((response: CORSOriginsListInterface[]) => {
+                response.map((origin) => {
+                    allowedCORSOrigins.push(origin.url);
+                });
+            });
+
+        setAllowedOrigins(allowedCORSOrigins);
+    }, []);
 
     /**
      * On sub-template change set the selected template to the first,
@@ -142,7 +165,7 @@ export const MinimalAppCreateWizard: FunctionComponent<MinimalApplicationCreateW
                     const createdAppID = location.substring(location.lastIndexOf("/") + 1);
 
                     history.push({
-                        pathname: AppConstants.PATHS.get("APPLICATION_EDIT")
+                        pathname: AppConstants.getPaths().get("APPLICATION_EDIT")
                             .replace(":id", createdAppID),
                         search: `?${
                             ApplicationManagementConstants.APP_STATE_URL_SEARCH_PARAM_KEY }=${
@@ -154,7 +177,7 @@ export const MinimalAppCreateWizard: FunctionComponent<MinimalApplicationCreateW
                 }
 
                 // Fallback to applications page, if the location header is not present.
-                history.push(AppConstants.PATHS.get("APPLICATIONS"));
+                history.push(AppConstants.getPaths().get("APPLICATIONS"));
             })
             .catch((error) => {
                 if (error.response && error.response.data && error.response.data.description) {
@@ -242,6 +265,8 @@ export const MinimalAppCreateWizard: FunctionComponent<MinimalApplicationCreateW
         if (selectedTemplate.authenticationProtocol === SupportedAuthProtocolTypes.OIDC) {
             return (
                 <OauthProtocolSettingsWizardForm
+                    tenantDomain={ tenantName }
+                    allowedOrigins={ allowedOrigins }
                     fields={ [ "callbackURLs" ] }
                     hideFieldHints={ true }
                     triggerSubmit={ submitProtocolForm }
@@ -357,7 +382,7 @@ export const MinimalAppCreateWizard: FunctionComponent<MinimalApplicationCreateW
             className="wizard minimal-application-create-wizard"
             dimmer="blurring"
             onClose={ handleWizardClose }
-            closeOnDimmerClick
+            closeOnDimmerClick={ false }
             closeOnEscape
             data-testid={ `${ testId }-modal` }
         >

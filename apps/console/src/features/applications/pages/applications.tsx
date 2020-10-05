@@ -275,7 +275,7 @@ const ApplicationsPage: FunctionComponent<ApplicationsPageInterface> = (
                 && (
                     <PrimaryButton
                         onClick={ (): void => {
-                            history.push(AppConstants.PATHS.get("APPLICATION_TEMPLATES"));
+                            history.push(AppConstants.getPaths().get("APPLICATION_TEMPLATES"));
                         } }
                         data-testid={ `${ testId }-list-layout-add-button` }
                     >
@@ -400,12 +400,41 @@ const ApplicationsPage: FunctionComponent<ApplicationsPageInterface> = (
                 data-testid={ `${ testId }-list-layout` }
             >
                 <ApplicationList
+                    advancedSearch={
+                        <AdvancedSearchWithBasicFilters
+                            onFilter={ handleApplicationFilter }
+                            filterAttributeOptions={ [
+                                {
+                                    key: 0,
+                                    text: t("common:name"),
+                                    value: "name"
+                                }
+                            ] }
+                            filterAttributePlaceholder={
+                                t("devPortal:components.applications.advancedSearch.form.inputs.filterAttribute" +
+                                    ".placeholder")
+                            }
+                            filterConditionsPlaceholder={
+                                t("devPortal:components.applications.advancedSearch.form.inputs.filterCondition" +
+                                    ".placeholder")
+                            }
+                            filterValuePlaceholder={
+                                t("devPortal:components.applications.advancedSearch.form.inputs.filterValue" +
+                                    ".placeholder")
+                            }
+                            placeholder={ t("devPortal:components.applications.advancedSearch.placeholder") }
+                            defaultSearchAttribute="name"
+                            defaultSearchOperator="co"
+                            triggerClearQuery={ triggerClearQuery }
+                            data-testid={ `${ testId }-list-advanced-search` }
+                        />
+                    }
                     featureConfig={ featureConfig }
                     isLoading={ isApplicationListRequestLoading }
                     list={ appList }
                     onApplicationDelete={ handleApplicationDelete }
                     onEmptyListPlaceholderActionClick={
-                        () => history.push(AppConstants.PATHS.get("APPLICATION_TEMPLATES"))
+                        () => history.push(AppConstants.getPaths().get("APPLICATION_TEMPLATES"))
                     }
                     onSearchQueryClear={ handleSearchQueryClear }
                     searchQuery={ searchQuery }

@@ -88,9 +88,21 @@ export const OIDCScopeCreateWizard: FunctionComponent<OIDCScopeCreateWizardProps
     const [ OIDCAttributes, setOIDCAttributes ] = useState<ExternalClaim[]>(undefined);
     const [ selectedAttributes, setSelectedAttributes ] = useState<ExternalClaim[]>([]);
     const [ filterSelectedClaims, setFilterSelectedClaims ] = useState<ExternalClaim[]>([]);
-    const [ selectedClaims, setSelectedClaims ] = useState<ExternalClaim[]>([]);
-    const [ showSelectionModal, setShowSelectionModal ] = useState<boolean>(false);
     const [ isClaimRequestLoading, setIsClaimRequestLoading ] = useState<boolean>(false);
+
+    /**
+     * Sets the current wizard step to the previous on every `partiallyCompletedStep`
+     * value change , and resets the partially completed step value.
+     */
+    useEffect(() => {
+        if (partiallyCompletedStep === undefined) {
+            return;
+        }
+
+        setCurrentWizardStep(currentWizardStep - 1);
+
+        setPartiallyCompletedStep(undefined);
+    }, [partiallyCompletedStep]);
 
     useEffect(() => {
         if (OIDCAttributes) {
@@ -245,7 +257,7 @@ export const OIDCScopeCreateWizard: FunctionComponent<OIDCScopeCreateWizardProps
             size="small"
             onClose={ closeWizard }
             data-testid={ testId }
-            closeOnDimmerClick
+            closeOnDimmerClick={ false }
             closeOnEscape
         >
             <Modal.Header className="wizard-header">

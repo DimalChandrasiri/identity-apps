@@ -16,13 +16,14 @@
  * under the License.
  */
 
-import { SignInUtil } from "@wso2is/authentication";
-import { IdentityClient } from "@wso2is/authentication";
+import { IdentityClient } from "@asgardio/oidc-js";
+import { CommonUtils } from "@wso2is/core/utils";
 import axios from "axios";
 import _ from "lodash";
-import { ApplicationConstants, SCIM2_ENT_USER_SCHEMA } from "../constants";
+import { Config } from "../configs";
+import { AppConstants, SCIM2_ENT_USER_SCHEMA } from "../constants";
 import { history } from "../helpers";
-import { BasicProfileInterface, HttpMethods, MultiValue, ProfileSchema, ReadOnlyUserStatus } from "../models";
+import { BasicProfileInterface, HttpMethods, ProfileSchema, ReadOnlyUserStatus } from "../models";
 import { store } from "../store";
 import { toggleSCIMEnabled } from "../store/actions";
 
@@ -73,7 +74,7 @@ export const getUserReadOnlyStatus = (): Promise<ReadOnlyUserStatus> => {
             "Content-Type": "application/json"
         },
         method: HttpMethods.GET,
-        url: store.getState().config.endpoints.isReadOnlyUser
+        url: Config.getServiceResourceEndpoints().isReadOnlyUser
     };
 
     return httpClient(requestConfig)
@@ -99,7 +100,7 @@ export const getGravatarImage = (email: string): Promise<string> => {
     if (_.isEmpty(email)) {
         return Promise.reject("Email is null");
     } else {
-        const url: string = SignInUtil.getGravatar(email);
+        const url: string = CommonUtils.getGravatar(email);
         return new Promise((resolve, reject) => {
             axios
                 .get(url)
@@ -111,26 +112,6 @@ export const getGravatarImage = (email: string): Promise<string> => {
                 });
         });
     }
-};
-
-/**
- * This function iterates over all email addresses until it finds an email with a gravatar image
- * @param emails
- */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const findGravatar = async (emails: string[] | MultiValue[]): Promise<string> => {
-    let gravatar = "";
-    if (!_.isEmpty(emails)) {
-        for (const email of emails) {
-            try {
-                gravatar = await getGravatarImage(typeof email === "string" ? email : email.value);
-                return gravatar;
-            } catch (error) {
-                continue;
-            }
-        }
-    }
-    return gravatar;
 };
 
 /**
@@ -152,30 +133,25 @@ export const getProfileInfo = (): Promise<BasicProfileInterface> => {
 
     return httpClient(requestConfig)
         .then(async (response) => {
-            let gravatar = "";
 
             if (response.status !== 200) {
                 return Promise.reject(new Error(`Failed get user profile info from:
                 ${store.getState().config.endpoints.me}`));
             }
-            if (_.isEmpty(response.data.userImage) && !response.data.profileUrl) {
-                gravatar = await findGravatar(response.data.emails);
-            }
-
-            const profileImage = response.data.profileUrl ? response.data.profileUrl : gravatar;
 
             const profileResponse: BasicProfileInterface = {
                 emails: response.data.emails || "",
                 name: response.data.name || { familyName: "", givenName: "" },
                 organisation: response.data[orgKey]?.organization ? response.data[orgKey].organization : "",
+                pendingEmails: response.data[SCIM2_ENT_USER_SCHEMA]
+                    ? response.data[SCIM2_ENT_USER_SCHEMA].pendingEmails
+                    : [],
                 phoneNumbers: response.data.phoneNumbers || [],
                 profileUrl: response.data.profileUrl || "",
                 responseStatus: response.status || null,
                 roles: response.data.roles || [],
-                userImage: response.data.userImage || profileImage,
-                pendingEmails: response.data[SCIM2_ENT_USER_SCHEMA]
-                    ? response.data[SCIM2_ENT_USER_SCHEMA].pendingEmails
-                    : [],
+                // TODO: Validate if necessary.
+                userImage: response.data.userImage || response.data.profileUrl || "",
                 ...response.data,
                 userName: response.data.userName || ""
             };
@@ -194,7 +170,7 @@ export const getProfileInfo = (): Promise<BasicProfileInterface> => {
                 store.dispatch(toggleSCIMEnabled(false));
 
                 // Navigate to login error page.
-                history.push(ApplicationConstants.LOGIN_ERROR_PAGE_PATH);
+                history.push(AppConstants.getPaths().get("LOGIN_ERROR"));
             }
 
             return Promise.reject(error);

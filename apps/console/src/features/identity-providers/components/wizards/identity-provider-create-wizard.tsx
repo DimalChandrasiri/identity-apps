@@ -158,13 +158,13 @@ export const IdentityProviderCreateWizard: FunctionComponent<IdentityProviderCre
                 if (!_.isEmpty(response.headers.location)) {
                     const location = response.headers.location;
                     const createdIdpID = location.substring(location.lastIndexOf("/") + 1);
-                    history.push(AppConstants.PATHS.get("IDP_EDIT").replace(":id",
+                    history.push(AppConstants.getPaths().get("IDP_EDIT").replace(":id",
                         createdIdpID));
                     return;
                 }
 
                 // Fallback to identity providers page, if the location header is not present.
-                history.push(AppConstants.PATHS.get("IDP"));
+                history.push(AppConstants.getPaths().get("IDP"));
             })
             .catch((error) => {
                 if (error.response && error.response.data && error.response.data.description) {
@@ -436,7 +436,7 @@ export const IdentityProviderCreateWizard: FunctionComponent<IdentityProviderCre
                 return authenticator.authenticatorId === template.federatedAuthenticators.defaultAuthenticatorId ?
                     {
                         ...authenticator,
-                        properties: getUpdatedElementsByKey(defaultAuthenticatorPropertiesFromMetadata, 
+                        properties: getUpdatedElementsByKey(defaultAuthenticatorPropertiesFromMetadata,
                             authenticator.properties, "key")
                         // properties: _.merge(defaultAuthenticatorPropertiesFromMetadata, authenticator.properties)
                     } : authenticator;
@@ -616,7 +616,7 @@ export const IdentityProviderCreateWizard: FunctionComponent<IdentityProviderCre
                 className="wizard identity-provider-create-wizard"
                 dimmer="blurring"
                 onClose={ handleWizardClose }
-                closeOnDimmerClick
+                closeOnDimmerClick={ false }
                 closeOnEscape
                 data-testid={ `${ testId }-modal` }
             >
