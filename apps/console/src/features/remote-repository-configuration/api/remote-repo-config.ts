@@ -19,7 +19,6 @@
 import { IdentityClient } from "@asgardio/oidc-js";
 import { HttpMethods } from "@wso2is/core/models";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { IdentityClient } from "@wso2is/authentication";
 import { store } from "../../core";
 import {
     InterfaceConfigDetails,
@@ -64,7 +63,7 @@ export const getRemoteRepoConfig = (id: string): Promise<AxiosResponse<Interface
         method: HttpMethods.GET,
         url: store.getState().config.endpoints.remoteFetchConfig + "/" + id
     };
-    return httpClient<InterfaceRemoteConfigDetails>(requestConfig)
+    return httpClient(requestConfig)
         .then((response: AxiosResponse<InterfaceRemoteConfigDetails>) => {
             return Promise.resolve(response);
         })
