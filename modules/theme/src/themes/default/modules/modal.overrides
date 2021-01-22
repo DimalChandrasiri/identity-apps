@@ -552,24 +552,13 @@
 --------------------------------*/
 
 .ui.modal {
-    &.attribute-modal {
+    &.attribute-modal, &.user-attributes {
 
         .content {
             height: @attributeModalContentHeight;
 
             .transfer-segment {
                 height: @transferComponentSegmentHeight;
-
-                .ui.checkbox {
-                    &.all-select {
-                        margin: 20px 10px 0px 0px;
-                        border: 1px solid #efefef;
-                        background-color: #fbfbfb;
-                        padding: 10px;
-                        border-radius: 3px;
-                        font-weight: 500;
-                    }
-                }
 
                 .transfer-list-segment {
                     height: @transferComponentListSegmentHeight;

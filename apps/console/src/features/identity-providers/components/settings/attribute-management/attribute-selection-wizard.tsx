@@ -81,17 +81,6 @@ export const AttributeSelectionWizard: FunctionComponent<AttributeSelectionWizar
         }
     };
 
-    // search operation for selected claims.
-    const searchTempSelected = (event) => {
-        const changeValue = event.target.value;
-        if (changeValue.length > 0) {
-            setFilterTempSelectedClaims(filterTempSelectedClaims.filter((item) =>
-                item.uri.toLowerCase().indexOf(changeValue.toLowerCase()) !== -1));
-        } else {
-            setFilterTempSelectedClaims(tempSelectedAttributes);
-        }
-    };
-
     const addAttributes = () => {
         const addedClaims = [...tempSelectedAttributes];
         if (checkedUnassignedListItems?.length > 0) {
@@ -132,29 +121,13 @@ export const AttributeSelectionWizard: FunctionComponent<AttributeSelectionWizar
      * checkbox field of an unassigned item.
      */
     const handleUnassignedItemCheckboxChange = (claim) => {
-        const checkedRoles = [...checkedUnassignedListItems];
+        const checkedRoles = [...checkedAssignedListItems];
 
         if (checkedRoles?.includes(claim)) {
             checkedRoles.splice(checkedRoles.indexOf(claim), 1);
-            setCheckedUnassignedListItems(checkedRoles);
-        } else {
-            checkedRoles.push(claim);
-            setCheckedUnassignedListItems(checkedRoles);
-        }
-    };
-
-    /**
-     * The following method handles the onChange event of the
-     * checkbox field of an assigned item.
-     */
-    const handleAssignedItemCheckboxChange = (role) => {
-        const checkedRoles = [...checkedAssignedListItems];
-
-        if (checkedRoles?.includes(role)) {
-            checkedRoles.splice(checkedRoles.indexOf(role), 1);
             setCheckedAssignedListItems(checkedRoles);
         } else {
-            checkedRoles.push(role);
+            checkedRoles.push(claim);
             setCheckedAssignedListItems(checkedRoles);
         }
     };
@@ -163,37 +136,20 @@ export const AttributeSelectionWizard: FunctionComponent<AttributeSelectionWizar
      * The following function enables the user to select all the roles at once.
      */
     const selectAllUnAssignedList = () => {
-        setSelectUnassignedClaimsAllClaimsChecked(!isSelectUnassignedClaimsAllClaimsChecked);
-    };
-
-    /**
-     * The following function enables the user to deselect all the roles at once.
-     */
-    const selectAllAssignedList = () => {
         setIsSelectAssignedAllClaimsChecked(!isSelectAssignedAllClaimsChecked);
     };
+
 
     /**
      *  Select all selected claims
      */
     useEffect(() => {
         if (isSelectAssignedAllClaimsChecked) {
-            setCheckedAssignedListItems(tempSelectedAttributes);
+            setCheckedAssignedListItems(filterTempAvailableClaims);
         } else {
             setCheckedAssignedListItems([]);
         }
     }, [isSelectAssignedAllClaimsChecked]);
-
-    /**
-     * Select all available claims.
-     */
-    useEffect(() => {
-        if (isSelectUnassignedClaimsAllClaimsChecked) {
-            setCheckedUnassignedListItems(tempAvailableClaims);
-        } else {
-            setCheckedUnassignedListItems([]);
-        }
-    }, [isSelectUnassignedClaimsAllClaimsChecked]);
 
     /**
      *  Set initial values for modal.
@@ -238,7 +194,7 @@ export const AttributeSelectionWizard: FunctionComponent<AttributeSelectionWizar
     });
 
     return (
-        <Modal open={ showAddModal } size="small" className="user-attributes" data-testid={ `${ testId }-modal` }>
+        <Modal open={ showAddModal } size="large" className="user-attributes" data-testid={ `${ testId }-modal` }>
             <Modal.Header data-testid={ `${ testId }-modal-header` }>
                 { t("console:develop.features.idp.modals.attributeSelection.title") }
                 <Heading subHeading ellipsis as="h6">
@@ -249,18 +205,16 @@ export const AttributeSelectionWizard: FunctionComponent<AttributeSelectionWizar
                 <TransferComponent
                     searchPlaceholder={ t("console:develop.features.idp.modals.attributeSelection." +
                         "content.searchPlaceholder") }
-                    addItems={ addAttributes }
-                    removeItems={ removeAttributes }
+                    selectionComponent
                     handleUnelectedListSearch={ searchTempAvailable }
-                    handleSelectedListSearch={ searchTempSelected }
+                    handleHeaderCheckboxChange={ selectAllUnAssignedList }
+                    isHeaderCheckboxChecked={ isSelectAssignedAllClaimsChecked }
                     data-testid={ `${ testId }-modal-content` }
                 >
                     <TransferList
+                        selectionComponent
                         isListEmpty={ !(filterTempAvailableClaims.length > 0) }
                         listType="unselected"
-                        listHeaders={ ["Attribute"] }
-                        handleHeaderCheckboxChange={ selectAllUnAssignedList }
-                        isHeaderCheckboxChecked={ isSelectUnassignedClaimsAllClaimsChecked }
                         data-testid={ `${ testId }-modal-content-unselected-list` }
                     >
                         {
@@ -272,38 +226,11 @@ export const AttributeSelectionWizard: FunctionComponent<AttributeSelectionWizar
                                         listItem={ claim.displayName }
                                         listItemId={ claim.id }
                                         listItemIndex={ claim.uri }
-                                        isItemChecked={ checkedUnassignedListItems.includes(claim) }
+                                        isItemChecked={ checkedAssignedListItems.includes(claim) }
                                         showSecondaryActions={ false }
                                         showListSubItem={ true }
                                         listSubItem={ claim.uri === claim.displayName ? "" : claim.uri }
                                         data-testid={ `${ testId }-modal-content-unselected-list-item-${ claim.id }` }
-                                    />
-                                );
-                            })
-                        }
-                    </TransferList>
-                    <TransferList
-                        isListEmpty={ !(filterTempSelectedClaims.length > 0) }
-                        listType="selected"
-                        listHeaders={ ["Attribute"] }
-                        handleHeaderCheckboxChange={ selectAllAssignedList }
-                        isHeaderCheckboxChecked={ isSelectAssignedAllClaimsChecked }
-                        data-testid={ `${ testId }-modal-content-selected-list` }
-                    >
-                        {
-                            filterTempSelectedClaims?.map((mapping) => {
-                                return (
-                                    <TransferListItem
-                                        handleItemChange={ () => handleAssignedItemCheckboxChange(mapping) }
-                                        key={ mapping.uri }
-                                        listItem={ mapping.displayName }
-                                        listItemId={ mapping.id }
-                                        listItemIndex={ mapping.uri }
-                                        isItemChecked={ checkedAssignedListItems.includes(mapping) }
-                                        showSecondaryActions={ false }
-                                        showListSubItem={ true }
-                                        listSubItem={ mapping.uri === mapping.displayName ? "" : mapping.uri }
-                                        data-testid={ `${ testId }-modal-content-selected-list-item-${ mapping.id }` }
                                     />
                                 );
                             })

@@ -92,6 +92,11 @@ export interface IdentityProviderClaimInterface {
     displayName?: string;
 }
 
+export interface IdentityProviderClaimItemInterface {
+    claim?: IdentityProviderClaimInterface;
+    mappedValue?: string;
+}
+
 export interface IdentityProviderAdvanceInterface {
     isFederationHub?: boolean;
     homeRealmIdentifier?: string;

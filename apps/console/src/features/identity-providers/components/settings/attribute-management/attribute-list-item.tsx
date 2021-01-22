@@ -18,14 +18,16 @@
 
 import { TestableComponentInterface } from "@wso2is/core/models";
 import _ from "lodash";
-import React, { FunctionComponent, ReactElement } from "react";
+import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Input, Label, Table } from "semantic-ui-react";
-import { IdentityProviderClaimInterface, IdentityProviderCommonClaimMappingInterface } from "../../../models";
+import { useStore } from "react-redux";
+import { Button, Dropdown, DropdownItemProps, Icon, Input, Label, Table } from "semantic-ui-react";
+import { IdentityProviderClaimInterface, IdentityProviderClaimItemInterface, IdentityProviderCommonClaimMappingInterface } from "../../../models";
 
 interface AttributeListItemPropInterface extends TestableComponentInterface {
-    attribute: IdentityProviderClaimInterface;
-    placeholder: string;
+    selectedAttribute?: IdentityProviderClaimItemInterface;
+    attributeList?: IdentityProviderClaimInterface[];
+    placeholder?: string;
     updateMapping?: (mapping: IdentityProviderCommonClaimMappingInterface) => void;
     mapping?: string;
 }
@@ -40,7 +42,8 @@ export const AttributeListItem: FunctionComponent<AttributeListItemPropInterface
 ): ReactElement => {
 
     const {
-        attribute,
+        selectedAttribute,
+        attributeList,
         updateMapping,
         mapping,
         placeholder,
@@ -49,41 +52,69 @@ export const AttributeListItem: FunctionComponent<AttributeListItemPropInterface
 
     const { t } = useTranslation();
 
-    const handleClaimMapping = (e) => {
+    const [ attributeDropDown, setAttributeDropDown ] = useState<DropdownItemProps[]>([]);
+
+    /**
+     * Create dropdown list from attribute list.
+     */
+    useEffect(() => {
+        const dropdownList: DropdownItemProps[] = [];
+        attributeList.map(attribute => {
+            dropdownList.push({
+                content: (
+                    <>
+                        <span>{ attribute.displayName }</span>
+                        <span>{ attribute.uri }</span>
+                    </>
+                ),
+                text: attribute.displayName,
+                value: attribute.uri
+            });
+        });
+        setAttributeDropDown(dropdownList);
+    },[ attributeList ]);
+
+
+    /* handleClaimMapping = (e) => {
         const mappingValue = e.target.value;
         updateMapping({
-            claim: attribute,
+            claim: selectedAttribute,
             mappedValue: mappingValue
         } as IdentityProviderCommonClaimMappingInterface);
-    };
+    };*/
 
     return (
         <Table.Row data-testid={ testId }>
-            <Table.Cell>
-                { attribute?.displayName }
-            </Table.Cell>
             {
                 <>
                     <Table.Cell error={ _.isEmpty(mapping) }>
                         <Input
                             placeholder={ placeholder }
                             value={ _.isEmpty(mapping) ? "" : mapping }
-                            onChange={ handleClaimMapping }
+                            onChange={ () => { console.log() } }
                             required
                             data-testid={ `${ testId }-input` }
                         />
-                        { _.isEmpty(mapping) &&
-                        (
-                            <Label
-                                basic color='red'
-                                pointing='left'>
-                                { t("console:develop.features.idp.forms.attributeSettings." +
-                                    "attributeListItem.validation.empty") }
-                            </Label>
-                        ) }
                     </Table.Cell>
                 </>
             }
+            <Table.Cell>
+                <Dropdown
+                    placeholder="Select mapping"
+                    fluid
+                    search
+                    floating
+                    selection
+                    basic
+                    className="idp-attribute-select"
+                    options={ attributeDropDown }
+                />
+            </Table.Cell>
+            <Table.Cell width="1">
+                <Button basic icon>
+                    <Icon name="trash" />
+                </Button>
+            </Table.Cell>
         </Table.Row>
     );
 };

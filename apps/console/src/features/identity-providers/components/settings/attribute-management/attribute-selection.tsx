@@ -17,15 +17,14 @@
  */
 
 import { TestableComponentInterface } from "@wso2is/core/models";
-import { EmptyPlaceholder, Heading, Hint, PrimaryButton } from "@wso2is/react-components";
+import { Heading, Hint } from "@wso2is/react-components";
 import _ from "lodash";
 import React, { FunctionComponent, ReactElement, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Divider, Grid, Icon, Input, Segment, Table } from "semantic-ui-react";
+import { Button, Divider, Grid, Icon, Input, Table } from "semantic-ui-react";
 import { AttributeListItem } from "./attribute-list-item";
 import { AttributeSelectionWizard } from "./attribute-selection-wizard";
-import { getEmptyPlaceholderIllustrations } from "../../../../core";
-import { IdentityProviderClaimInterface, IdentityProviderCommonClaimMappingInterface } from "../../../models";
+import { IdentityProviderClaimInterface, IdentityProviderClaimItemInterface, IdentityProviderCommonClaimMappingInterface } from "../../../models";
 
 interface AttributeSelectionPropsInterface extends TestableComponentInterface {
     attributeList: IdentityProviderClaimInterface[];
@@ -63,16 +62,12 @@ export const AttributeSelection: FunctionComponent<AttributeSelectionPropsInterf
     const { t } = useTranslation();
     
     const [showSelectionModal, setShowSelectionModal] = useState<boolean>(false);
-
     const [searchFilter, setSearchFilter] = useState<string>("");
+    const [addedAttributes, setAddedAttributes] = useState<IdentityProviderClaimItemInterface[]>([{}]);
 
     const handleSearch = (event) => {
         const changedValue = event.target.value;
         setSearchFilter(changedValue);
-    };
-
-    const handleOpenSelectionModal = () => {
-        setShowSelectionModal(true);
     };
 
     const addSelectionModal = (): ReactElement => {
@@ -97,99 +92,86 @@ export const AttributeSelection: FunctionComponent<AttributeSelectionPropsInterf
         );
     };
 
+    const handleAddAttributeOption = () => {
+        setAddedAttributes([...addedAttributes, {}]);
+    };
+
     const renderMappingTable = (): ReactElement => (
-        <Segment.Group fluid>
-            <Segment data-testid={ testId } className="user-role-edit-header-segment clearing">
-                <Grid.Row>
-                    <Table data-testid={ `${ testId }-action-bar` } basic="very" compact>
-                        <Table.Body>
-                            <Table.Row>
-                                <Table.Cell>
-                                    <Input
-                                        icon={ <Icon name="search"/> }
-                                        onChange={ handleSearch }
-                                        placeholder={
-                                            t("console:develop.features.idp.forms." +
-                                                "attributeSettings.attributeSelection." +
-                                                "searchAttributes.placeHolder")
-                                        }
-                                        floated="left"
-                                        size="small"
-                                        data-testid={ `${ testId }-search` }
-                                    />
-                                </Table.Cell>
-                                <Table.Cell textAlign="right">
-                                    <Button
-                                        size="medium"
-                                        icon="pencil"
-                                        floated="right"
-                                        onClick={ handleOpenSelectionModal }
-                                        data-testid={ `${ testId }-edit-button` }
-                                    />
-                                </Table.Cell>
-                            </Table.Row>
-                        </Table.Body>
-                    </Table>
-                </Grid.Row>
-                <Grid.Row>
-                    <Table data-testid={ `${ testId }-list` } singleLine compact>
-                        <Table.Header>
-                            {
-                                (
-                                    <Table.Row>
-                                        <Table.HeaderCell>
-                                            <strong>
-                                                { uiProps.attributeColumnHeader }
-                                            </strong>
-                                        </Table.HeaderCell>
-                                        <Table.HeaderCell>
-                                            <strong>
-                                                { uiProps.attributeMapColumnHeader }
-                                            </strong>
-                                        </Table.HeaderCell>
-                                    </Table.Row>
-                                )
-                            }
-                        </Table.Header>
-                        <Table.Body>
-                            {
-                                selectedAttributesWithMapping?.filter((mapping) =>
-                                    _.isEmpty(searchFilter)
-                                        ? true
-                                        : mapping?.claim?.displayName?.startsWith(searchFilter)
-                                )?.sort((a, b) => a.claim.displayName.localeCompare(b.claim.displayName)
-                                )?.map((mapping) => {
-                                        return (
-                                            <AttributeListItem
-                                                key={ mapping?.claim.id }
-                                                attribute={ mapping?.claim }
-                                                placeholder={
-                                                    uiProps.attributeMapInputPlaceholderPrefix
-                                                    + mapping?.claim.displayName
-                                                }
-                                                updateMapping={ updateAttributeMapping }
-                                                mapping={ mapping?.mappedValue }
-                                                data-testid={
-                                                    `${ testId }-attribute-list-item-${
-                                                        mapping?.claim.id }`
-                                                }
-                                            />
-                                        );
+        <>
+            <Grid.Row>
+                <Table data-testid={ `${ testId }-action-bar` } basic="very" compact>
+                    <Table.Body>
+                        <Table.Row>
+                            <Table.Cell width="6">
+                                <Input
+                                    icon={ <Icon name="search"/> }
+                                    onChange={ handleSearch }
+                                    placeholder={
+                                        t("console:develop.features.idp.forms." +
+                                            "attributeSettings.attributeSelection." +
+                                            "searchAttributes.placeHolder")
                                     }
-                                )
-                            }
-                        </Table.Body>
-                    </Table>
-                </Grid.Row>
-            </Segment>
-        </Segment.Group>
+                                    floated="left"
+                                    size="small"
+                                    data-testid={ `${ testId }-search` }
+                                />
+                            </Table.Cell>
+                            <Table.Cell textAlign="right">
+                                <Button
+                                    size="medium"
+                                    icon="add"
+                                    floated="right"
+                                    onClick={ handleAddAttributeOption }
+                                    data-testid={ `${ testId }-edit-button` }
+                                />
+                            </Table.Cell>
+                        </Table.Row>
+                    </Table.Body>
+                </Table>
+            </Grid.Row>
+            <Grid.Row>
+                <Table data-testid={ `${ testId }-list` } singleLine compact>
+                    <Table.Header>
+                        {
+                            (
+                                <Table.Row>
+                                    <Table.HeaderCell width="7">
+                                        <strong>
+                                            { uiProps.attributeMapColumnHeader }
+                                        </strong>
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell colSpan="2">
+                                        <strong>
+                                            { uiProps.attributeColumnHeader }
+                                        </strong>
+                                    </Table.HeaderCell>
+                                </Table.Row>
+                            )
+                        }
+                    </Table.Header>
+                    <Table.Body>
+                        {
+                            addedAttributes && addedAttributes.map((attribute, index) => (
+                                <AttributeListItem
+                                    key={ index }
+                                    attributeList={ attributeList }
+                                    selectedAttribute={ attribute }
+                                    placeholder={ "" }
+                                    updateMapping={ updateAttributeMapping }
+                                />
+                            ))
+                        }
+                    </Table.Body>
+                </Table>
+            </Grid.Row>
+        </>
     );
 
     return (
         (selectedAttributesWithMapping || searchFilter)
             ? (
                 <>
-                    <Grid.Row data-testid={ `${ testId }-section` }>
+                    <Grid.Row className="idp-attributes" data-testid={ `${ testId }-section` }>
                         <Grid.Column computer={ 10 }>
                             { uiProps.enablePrecedingDivider && <Divider/> }
                             <Heading as="h4">
@@ -200,28 +182,7 @@ export const AttributeSelection: FunctionComponent<AttributeSelectionPropsInterf
                             </Hint>
                             <Divider hidden/>
                             {
-                                (selectedAttributesWithMapping?.length > 0)
-                                    ? renderMappingTable()
-                                    : (
-                                        <Segment data-testid={ testId }>
-                                            <EmptyPlaceholder
-                                                title={ t("console:develop.features.idp.placeHolders.noAttributes." + 
-                                                    "title") }
-                                                subtitle={ [
-                                                    t("console:develop.features.idp.placeHolders.noAttributes." + 
-                                                        "subtitles.0")
-                                                ] }
-                                                action={
-                                                    <PrimaryButton onClick={ handleOpenSelectionModal } icon="plus">
-                                                        { t("console:develop.features.idp.buttons.addAttribute") }
-                                                    </PrimaryButton>
-                                                }
-                                                image={ getEmptyPlaceholderIllustrations().emptyList }
-                                                imageSize="tiny"
-                                                data-testid={ `${ testId }-empty-placeholder` }
-                                            />
-                                        </Segment>
-                                    )
+                                renderMappingTable()
                             }
                         </Grid.Column>
                     </Grid.Row>
