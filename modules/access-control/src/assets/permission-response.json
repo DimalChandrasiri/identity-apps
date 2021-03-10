@@ -1,0 +1,19 @@
+
+[{
+    "elemId" : "application-list",
+    "permission" : { //change term
+        "Read": true,
+        "Write": false
+    }
+},{
+    "elemId" : "application-delete",
+    "permission" : {
+        "Read": true,
+        "Write": true
+    }
+}]
+
+[{
+    "application-list": false,
+    "application-delete": true
+}]

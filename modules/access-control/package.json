@@ -1,0 +1,28 @@
+{
+    "name": "@wso2is/access-control",
+    "version": "1.0.0",
+    "description": "A react module to implement access control for child elements for a given attribute object",
+    "main": "dist/src/index.js",
+    "scripts": {
+        "build": "npm run clean && npm run compile",
+        "clean": "rm -rf ./dist",
+        "compile": "npx run-script-os",
+        "compile:win32": "..\\..\\node_modules\\.bin\\tsc -p tsconfig.json",
+        "compile:default": "../../node_modules/.bin/tsc -p tsconfig.json",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "WSO2",
+        "WSO2 IS",
+        "WSO2 Identity Server",
+        "WSO2 Identity Apps",
+        "react",
+        "react-components",
+        "component-library"
+    ],
+    "author": "WSO2",
+    "license": "Apache-2.0",
+    "peerDependencies": {
+        "rimraf": "*"
+    }
+}
