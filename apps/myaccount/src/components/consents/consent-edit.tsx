@@ -17,7 +17,7 @@
  */
 
 import { TestableComponentInterface } from "@wso2is/core/models";
-import chain from "lodash/chain";
+import flatten from "lodash-es/flatten";
 import React, { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Divider, Grid, List } from "semantic-ui-react";
@@ -88,7 +88,7 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
                 consentReceiptID === deniedPIIItem.receiptId) return true;
         }
         return false;
-    }
+    };
 
     /**
      * Checks if the consent is updatable.
@@ -98,20 +98,18 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
     const isUpdatable = (): boolean => {
 
         // This consent editing view's model {@link editingConsent}
-        const recordOnModelReceipt = chain(editingConsent.consentReceipt?.services || [])
-            .map((service: ServiceInterface) => service.purposes)
-            .flatten()
-            .map((purpose: PurposeInterface) => ( {
+        const purposes = (editingConsent.consentReceipt?.services || [])
+            .map((service: ServiceInterface) => service.purposes);
+        const piiCategoriesOfAllPurposes = flatten(purposes)
+            .map((purpose: PurposeInterface) => ({
                 piiCategory: purpose.piiCategory as PIICategoryWithStatus[],
                 purposeId: purpose.purposeId
-            } ))
-            .flatten()
-            .value();
+            }));
+        const recordOnModelReceipt = flatten(piiCategoriesOfAllPurposes);
 
         // Filter out the piiClaims of this receipt.
-        const recordOnUserInterface = chain([ ...deniedPIIClaimList, ...acceptedPIIClaimList ])
-            .filter((piiClaim) => piiClaim.receiptId === editingConsent.consentReceiptID)
-            .value();
+        const recordOnUserInterface = [ ...deniedPIIClaimList, ...acceptedPIIClaimList ]
+            .filter((piiClaim) => piiClaim.receiptId === editingConsent.consentReceiptID);
 
         // TODO: solve in linear time
         for (const uiRecord of recordOnUserInterface) {
@@ -149,7 +147,7 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
             editingConsent.consentReceipt &&
             editingConsent.consentReceipt.services &&
             editingConsent.consentReceipt.services.length > 0;
-    }
+    };
 
     /**
      * A predicate that checks whether a particular service inside
@@ -161,7 +159,7 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
         return service &&
             service.purposes &&
             service.purposes.length > 0;
-    }
+    };
 
     /**
      * A predicate that checks whether a particular {@link PurposeInterface}
@@ -171,7 +169,7 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
      */
     const hasPIICategoriesInPurpose = (purpose: PurposeInterface): boolean => {
         return purpose.piiCategory && purpose.piiCategory.length > 0;
-    }
+    };
 
     /**
      * JSX Builder method. Invoked within the scope of {@link this}
@@ -185,7 +183,7 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
          * @param {PIICategoryWithStatus} piiCat
          */
         const eachPIICategoryItem = (piiCat: PIICategoryWithStatus) => {
-            return <List.Item key={ piiCat.piiCategoryId }>
+            return (<List.Item key={ piiCat.piiCategoryId }>
                 <List.Content>
                     <List.Header>
                         <Checkbox
@@ -194,6 +192,8 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
                                 purpose.purposeId,
                                 editingConsent.consentReceiptID
                             ) }
+                            data-testid={ `${testId}-editing-section-claim` +
+                                `-${ piiCat.piiCategoryDisplayName.replace(" ", "-") }-checkbox` }
                             label={ piiCat.piiCategoryDisplayName }
                             onChange={ () => onPIIClaimToggle(
                                 piiCat.piiCategoryId,
@@ -203,7 +203,7 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
                         />
                     </List.Header>
                 </List.Content>
-            </List.Item>
+            </List.Item>);
         };
 
         return (
@@ -233,7 +233,7 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
                 </Grid.Row>
             </React.Fragment>
         );
-    }
+    };
 
     return (
         <EditSection data-testid={ `${testId}-editing-section` }>
@@ -258,6 +258,9 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
                         <Button
                             primary
                             onClick={ () => onClaimUpdate(editingConsent.consentReceiptID) }
+                            data-testid={ `${ testId }-` +
+                                `${ editingConsent.spDisplayName.replace(" ", "-") }` +
+                                `-editing-section-update-button` }
                             disabled={ !isUpdatable() }
                         >
                             { t("common:update") }
@@ -276,6 +279,7 @@ export const AppConsentEdit: FunctionComponent<EditConsentProps> = (
                                 subheader={ t("myAccount:components.consentManagement.editConsent.dangerZones." +
                                     "revoke.subheader") }
                                 onActionClick={ () => onAppConsentRevoke(editingConsent) }
+                                data-testid={ `${testId}-editing-section-revoke-application` }
                             />
                         </DangerZoneGroup>
                     </Grid.Column>

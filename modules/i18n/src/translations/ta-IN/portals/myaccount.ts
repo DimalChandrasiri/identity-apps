@@ -537,6 +537,8 @@ export const myAccount: MyAccountNS = {
                 heading: "அங்கீகார பயன்பாடு",
                 hint: "QR குறியீட்டினை காண்பி",
                 modals: {
+                    heading: "Set Up An Authenticator App",
+
                     done: "வெற்றி! இப்போது இரண்டு காரணி உறுதிப்பாட்டிற்கு உங்கள் உறுதிப்பாட்டு செயலியை பயன்படுத்தலாம்",
                     scan: {
                         authenticatorApps: "உறுதிப்பாட்டு செயலிகள்",
@@ -553,7 +555,9 @@ export const myAccount: MyAccountNS = {
                         reScan: "மீண்டும் பதிவு செய்",
                         reScanQuestion: "QR குறியீட்டினை மீண்டும் பதிவு செய்ய வேண்டுமா?",
                         requiredError: "சரிபார்ப்புக் குறியீட்டை உள்ளிடவும்"
-                    }
+                    },
+                    toolTip: "பயன்பாடு இல்லையா? <3> App Store </ 3> அல்லது <3> Google Play </ 3> " + 
+                    "இலிருந்து Google Authenticator போன்ற அங்கீகார பயன்பாட்டைப் பதிவிறக்கவும்"
                 },
                 notifications: {
                     initError: {
@@ -1324,6 +1328,10 @@ export const myAccount: MyAccountNS = {
             subTitle: "உங்கள் தனிப்பட்ட சுயவிவரத்தைத் திருத்தவும் அல்லது ஏற்றுமதி செய்யவும்",
             title: "பயனர் விபரம்"
         },
+        personalInfoWithoutExportProfile: {
+            subTitle: "உங்கள் தனிப்பட்ட சுயவிவரத்தைத் திருத்தவும்",
+            title: "பயனர் விபரம்"
+        },
         privacy: {
             subTitle: "",
             title: "WSO2 Identity Server தனியுரிமைக் கொள்கை"
@@ -1401,8 +1409,8 @@ export const myAccount: MyAccountNS = {
             actionTitles: {
                 empty: "நீங்கள் எந்தவொரு செயலிற்கும் அனுமதி அளிக்கவில்லை"
             },
-            description: "முழு பயன்பாட்டிற்கும் கூட்டாக ஒப்புதலைத் திரும்பப் பெறுங்கள் அல்லது நீங்கள் பகிர ஒப்புக்கொண்ட குறிப்பிட்ட " +
-                "தனிப்பட்ட விவரங்களுக்கான ஒப்புதலைத் திரும்பப் பெறுங்கள்",
+            description: "ஒவ்வொரு பயன்பாட்டிற்கும் நீங்கள் வழங்கிய சம்மதங்களை மதிப்பாய்வு செய்யவும். " +
+                "மேலும், அவற்றில் ஒன்று அல்லது பலவற்றை நீங்கள் தேவைக்கேற்ப திரும்பப் பெறலாம்.",
             heading: "அனுமதியளிக்கப்பட்ட செயலிகள்",
             placeholders: {
                 emptyConsentList: {

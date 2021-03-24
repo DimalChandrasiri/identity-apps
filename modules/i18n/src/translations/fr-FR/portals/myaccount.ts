@@ -536,6 +536,7 @@ export const myAccount: MyAccountNS = {
                 heading: "Application d'authentification",
                 hint: "Afficher le code QR",
                 modals: {
+                    heading: "Set Up An Authenticator App",
                     done: "Réussi ! Vous pouvez maintenant utiliser votre application d'authentification pour une authentification en deux étapes",
                     scan: {
                         authenticatorApps: "Applications d'authentification",
@@ -552,7 +553,9 @@ export const myAccount: MyAccountNS = {
                         reScan: "Re-scanner",
                         reScanQuestion: "Voulez-vous scanner le code QR à nouveau ?",
                         requiredError: "Veuillez entrer votre code de vérification"
-                    }
+                    },
+                    toolTip: "Vous n'avez pas d'application? Téléchargez une application d'authentification " + 
+                    "telle que Google Authenticator depuis <3> App Store </3> ou <3> Google Play </3>"
                 },
                 notifications: {
                     initError: {
@@ -1298,6 +1301,10 @@ export const myAccount: MyAccountNS = {
             subTitle: "Modifier ou exporter votre profil personnel",
             title: "Données personnelles"
         },
+        personalInfoWithoutExportProfile: {
+            subTitle: "Modifier votre profil personnel",
+            title: "Données personnelles"
+        },
         privacy: {
             subTitle: "",
             title: "Politique de confidentialité de WSO2 Identity Server"
@@ -1378,8 +1385,8 @@ export const myAccount: MyAccountNS = {
                 empty: "Vous n'avez accordé votre consentement à aucune application"
             },
             description:
-                "Révoquer le consentement collectivement pour l'ensemble de l'application, ou révoquer le " +
-                "consentement pour des détails personnels particuliers que vous avez accepté de partager",
+                "Passez en revue les consentements que vous avez fournis pour chaque demande. " +
+                "En outre, vous pouvez révoquer un ou plusieurs d'entre eux selon vos besoins.",
             heading: "Gérer mes consentements",
             placeholders: {
                 emptyConsentList: {

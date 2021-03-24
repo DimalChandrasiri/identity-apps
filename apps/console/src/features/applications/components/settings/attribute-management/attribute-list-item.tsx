@@ -18,7 +18,7 @@
 
 import { TestableComponentInterface } from "@wso2is/core/models";
 import { Code } from "@wso2is/react-components";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash-es/isEmpty";
 import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
@@ -42,6 +42,10 @@ interface AttributeListItemPropInterface extends TestableComponentInterface {
     claimMappingOn?: boolean;
     claimMappingError?: boolean;
     deleteAttribute?: () => void;
+    /**
+     * Specify whether this is the selected subject attribute
+     */
+    subject?: boolean;
     /**
      * Make the form read only.
      */
@@ -76,6 +80,7 @@ export const AttributeListItem: FunctionComponent<AttributeListItemPropInterface
         claimMappingError,
         readOnly,
         deleteAttribute,
+        subject,
         [ "data-testid" ]: testId
     } = props;
 
@@ -113,7 +118,7 @@ export const AttributeListItem: FunctionComponent<AttributeListItemPropInterface
 
     useEffect(() => {
         setMandatory(initialMandatory);
-    }, [initialMandatory]);
+    }, []);
 
     useEffect(() => {
         setRequested(initialRequested);
@@ -186,6 +191,7 @@ export const AttributeListItem: FunctionComponent<AttributeListItemPropInterface
                     trigger={
                         (
                             <Checkbox
+                                checked={ mandatory || subject }
                                 defaultChecked={ initialMandatory }
                                 onClick={ handleMandatoryCheckChange }
                                 disabled={ mappingOn ? !requested : false }
@@ -195,15 +201,17 @@ export const AttributeListItem: FunctionComponent<AttributeListItemPropInterface
                     }
                     position="top right"
                     content={
-                        mandatory
-                            ? t("console:develop.features.applications.edit.sections.attributes.selection" +
-                            ".mappingTable.listItem.actions.removeMandatory")
-                            : t("console:develop.features.applications.edit.sections.attributes.selection" +
-                            ".mappingTable.listItem.actions.makeMandatory")
+                        subject ? t("console:develop.features.applications.edit.sections.attributes.selection" +
+                            ".mappingTable.listItem.actions.subjectDisabledSelection") :
+                            mandatory
+                                ? t("console:develop.features.applications.edit.sections.attributes.selection" +
+                                ".mappingTable.listItem.actions.removeMandatory")
+                                : t("console:develop.features.applications.edit.sections.attributes.selection" +
+                                ".mappingTable.listItem.actions.makeMandatory")
                     }
                     inverted
                     disabled={
-                        readOnly
+                        subject ? false : readOnly
                             ? true
                             : mappingOn
                                 ? !requested

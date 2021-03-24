@@ -532,6 +532,7 @@ export const myAccount: MyAccountNS = {
                 heading: "App autenticador",
                 hint: "Mostrar o QR Code",
                 modals: {
+                    heading: "Set Up An Authenticator App",
                     done: "Sucesso! Agora você pode usar seu aplicativo de autenticação para autenticação de dois " +
                         "fatores",
                     scan: {
@@ -549,7 +550,9 @@ export const myAccount: MyAccountNS = {
                         reScan: "Verificar novamente",
                         reScanQuestion: "Deseja digitalizar o código QR novamente?",
                         requiredError: "Insira o código de verificação"
-                    }
+                    },
+                    toolTip: "Não tem um aplicativo? Baixe um aplicativo autenticador como o " +
+                    "Google Authenticator na <3> App Store </3> ou <3> Google Play </3>"
                 },
                 notifications: {
                     initError: {
@@ -1276,6 +1279,10 @@ export const myAccount: MyAccountNS = {
             subTitle: "Edite ou exporte o seu perfil pessoal",
             title: "Informação pessoal"
         },
+        personalInfoWithoutExportProfile: {
+            subTitle: "Edite o seu perfil pessoal",
+            title: "Informação pessoal"
+        },
         privacy: {
             subTitle: "",
             title: "Política de Privacidade do Servidor de Identidade WSO2"
@@ -1353,8 +1360,8 @@ export const myAccount: MyAccountNS = {
             actionTitles: {
                 empty: "Você não concedeu consentimento a nenhum aplicativo"
             },
-            description: "Revogar o consentimento coletivamente para todo o aplicativo ou revogar o " +
-                "consentimento para detalhes pessoais específicos que você concordou em compartilhar",
+            description: "Revise os consentimentos que você forneceu para cada aplicativo. " +
+                "Além disso, você pode revogar um ou mais deles, conforme necessário.",
             heading: "Aplicações Consentidas",
             placeholders: {
                 emptyConsentList: {

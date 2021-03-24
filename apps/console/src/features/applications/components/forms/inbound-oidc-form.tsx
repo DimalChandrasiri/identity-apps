@@ -31,9 +31,9 @@ import {
     URLInput
 } from "@wso2is/react-components";
 import { FormValidation } from "@wso2is/validation";
-import get from "lodash/get";
-import isEmpty from "lodash/isEmpty";
-import intersection from "lodash/intersection";
+import get from "lodash-es/get";
+import isEmpty from "lodash-es/isEmpty";
+import intersection from "lodash-es/intersection";
 import React, { FunctionComponent, MouseEvent, ReactElement, useEffect, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +44,6 @@ import {
     ApplicationTemplateListItemInterface,
     CertificateInterface,
     CertificateTypeInterface,
-    emptyOIDCConfig,
     GrantTypeInterface,
     GrantTypeMetaDataInterface,
     MetadataPropertyInterface,
@@ -172,6 +171,7 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
     const frontChannelLogoutUrl = useRef<HTMLElement>();
     const enableRequestObjectSignatureValidation = useRef<HTMLElement>();
     const scopeValidator = useRef<HTMLElement>();
+    const [ isSPAApplication, setSPAApplication ] = useState<boolean>(false);
 
     /**
      * Reset the encryption field initial values if its
@@ -260,6 +260,17 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
         }
 
     }, [ selectedGrantTypes, isGrantChanged ]);
+
+    useEffect(() => {
+        if (!template?.id || !SinglePageApplicationTemplate?.id) {
+            return;
+        }
+
+        if (template.id == SinglePageApplicationTemplate.id) {
+            setSPAApplication(true);
+        }
+    }, [ template ]);
+
 
     useEffect(() => {
         if (selectedGrantTypes !== undefined) {
@@ -561,6 +572,8 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
 
     /**
      * Show Revoke confirmation.
+     * TODO - Currently revoke functionality is disabled until proper backend support is provided for disabling
+     * @link https://github.com/wso2/product-is/issues/11453
      *
      * @param event Button click event.
      */
@@ -2069,8 +2082,7 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
             <ConfirmationModal.Content
                 data-testid={ `${ testId }-oidc-revoke-confirmation-modal-content` }
             >
-                {
-                    SinglePageApplicationTemplate.id === template.id
+                { isSPAApplication
                         ? (
                             t("console:develop.features.applications.confirmations" +
                             ".revokeApplication.content"))
@@ -2090,7 +2102,7 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
                 type="warning"
                 open={showReactiveConfirmationModal}
                 assertion={initialValues?.clientId}
-                assertionHint={SinglePageApplicationTemplate.id === template.id ? (
+                assertionHint={ isSPAApplication ? (
                     <p>
                         <Trans
                             i18nKey={
@@ -2132,8 +2144,8 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
                 <ConfirmationModal.Header
                     data-testid={`${testId}-oidc-reactivate-confirmation-modal-header`}
                 >
-                    {
-                        SinglePageApplicationTemplate.id === template.id
+                    { 
+                        isSPAApplication
                             ? (
                                 t("console:develop.features.applications.confirmations" +
                                   ".reactivateSPA.header") )
@@ -2142,8 +2154,8 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
                                   ".reactivateOIDC.header") )
                     }
                 </ConfirmationModal.Header>
-                    {
-                        SinglePageApplicationTemplate.id === template.id
+                    { 
+                        isSPAApplication
                             ? (                 
                             <ConfirmationModal.Message
                                 attached
@@ -2159,7 +2171,7 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
                     data-testid={`${testId}-oidc-reactivate-confirmation-modal-content`}
                 >
                     {
-                        SinglePageApplicationTemplate.id === template.id
+                        isSPAApplication
                             ? (
                                 t("console:develop.features.applications.confirmations" +
                                   ".reactivateSPA.content"))
@@ -2354,6 +2366,9 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
                                                     value={ initialValues?.clientId }
                                                     data-testid={ `${ testId }-client-id-readonly-input` }
                                                 />
+                                                {/*TODO - Application revoke is disabled until proper
+                                                backend support for application disabling is provided
+                                                @link https://github.com/wso2/product-is/issues/11453
                                                 {
                                                     (!readOnly
                                                         && initialValues?.clientSecret
@@ -2367,11 +2382,11 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
                                                             { t("common:revoke") }
                                                         </Button>
                                                     )
-                                                }
+                                                }*/}
                                             </div>
                                         </Form.Field>
                                         { ((initialValues?.state !== State.REVOKED) &&
-                                            SinglePageApplicationTemplate.id === template.id) ?
+                                            isSPAApplication ) ?
                                             (<Message info={ true }>
                                                 <Trans
                                                     i18nKey={
@@ -2492,5 +2507,23 @@ export const InboundOIDCForm: FunctionComponent<InboundOIDCFormPropsInterface> =
  */
 InboundOIDCForm.defaultProps = {
     "data-testid": "inbound-oidc-form",
-    initialValues: emptyOIDCConfig
+    initialValues: {
+        accessToken: undefined,
+        allowedOrigins: [],
+        callbackURLs: [],
+        clientId: "",
+        clientSecret: "",
+        grantTypes: [],
+        idToken: undefined,
+        logout: undefined,
+        refreshToken: undefined,
+        pkce: {
+            mandatory: false,
+            supportPlainTransformAlgorithm: false
+        },
+        publicClient: false,
+        scopeValidators: [],
+        state: undefined,
+        validateRequestObjectSignature: undefined
+    }
 };

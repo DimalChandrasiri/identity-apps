@@ -774,7 +774,9 @@ export const console: ConsoleNS = {
                                             makeMandatory: "අනිවාර්ය කරන්න",
                                             makeRequested: "ඉල්ලීමක් කරන්න",
                                             removeMandatory: "අනිවාර්ය ඉවත් කරන්න",
-                                            removeRequested: "ඉල්ලූ දේ ඉවත් කරන්න"
+                                            removeRequested: "ඉල්ලූ දේ ඉවත් කරන්න",
+                                            subjectDisabledSelection: "මෙම ගුණාංගය අනිවාර්ය වන්නේ " +
+                                                "එය විෂය ගුණාංගය වන බැවිනි."
                                         },
                                         fields: {
                                             claim: {
@@ -1197,6 +1199,10 @@ export const console: ConsoleNS = {
                                     implicit: {
                                         hint: "පොදු අයදුම්පත් සමඟ ව්‍යංග ප්‍රදානය භාවිතා කිරීම නිර්දේශ නොකරයි.",
                                         label: "{{grantType}} (නිර්දේශ නොකරයි)"
+                                    },
+                                    password: {
+                                        hint: "පොදු යෙදුම් සමඟ මුරපද ප්‍රදානය භාවිතා කිරීම නිර්දේශ නොකරයි.",
+                                        label: "{{grantType}} (නිර්දේශ නොකරයි)"
                                     }
                                 },
                                 hint: "යෙදුම ටෝකන් සේවාව සමඟ සන්නිවේදනය කරන්නේ කෙසේද යන්න මෙය තීරණය කරයි.",
@@ -1250,7 +1256,8 @@ export const console: ConsoleNS = {
                                         label: "පරිශීලක ප්‍රවේශ ටෝකන කල් ඉකුත් වීමේ කාලය",
                                         placeholder: "පරිශීලක ප්‍රවේශ ටෝකන කල් ඉකුත් වීමේ වේලාව ඇතුළත් කරන්න",
                                         validations: {
-                                            empty: "කරුණාකර පරිශීලක ප්‍රවේශ ටෝකන කල් ඉකුත් වීමේ කාලය පුරවන්න"
+                                            empty: "කරුණාකර පරිශීලක ප්‍රවේශ ටෝකන කල් ඉකුත් වීමේ කාලය පුරවන්න",
+                                            invalid: "ප්‍රවේශ ටෝකන කල් ඉකුත් වීමේ කාලය තත්පර වලින් විය යුතුය."
                                         }
                                     },
                                     revokeToken: {
@@ -1292,8 +1299,9 @@ export const console: ConsoleNS = {
                                         label: "ප්‍රේක්ෂකයෝ",
                                         placeholder: "ප්‍රේක්ෂකයින් ඇතුළත් කරන්න",
                                         validations: {
+                                            duplicate: "Audience හි අනුපිටපත් අගයන් අඩංගු වේ",
                                             empty: "කරුණාකර audience පුරවන්න",
-                                            duplicate: "Audience හි අනුපිටපත් අගයන් අඩංගු වේ"
+                                            invalid: "කරුණාකර වලංගු ප්‍රේක්ෂක පිරිසක් එක් කරන්න."
                                         }
                                     },
                                     encryption: {
@@ -1310,7 +1318,8 @@ export const console: ConsoleNS = {
                                         label: "හැඳුනුම්පත් කල් ඉකුත් වීමේ කාලය",
                                         placeholder: "හැඳුනුම් ටෝකන කල් ඉකුත් වීමේ වේලාව ඇතුළත් කරන්න",
                                         validations: {
-                                            empty: "කරුණාකර හැඳුනුම්පත් ටෝකන කල් ඉකුත් වීමේ කාලය පුරවන්න"
+                                            empty: "කරුණාකර හැඳුනුම්පත් ටෝකන කල් ඉකුත් වීමේ කාලය පුරවන්න",
+                                            invalid: "හැඳුනුම්පත් ටෝකන කල් ඉකුත් වීමේ කාලය තත්පර වලින් විය යුතුය."
                                         }
                                     },
                                     method: {
@@ -1378,7 +1387,8 @@ export const console: ConsoleNS = {
                                         label: "ටෝකන කල් ඉකුත් වීමේ වේලාව නැවුම් කරන්න",
                                         placeholder: "නැවුම් ටෝකන කල් ඉකුත් වීමේ වේලාව ඇතුළත් කරන්න",
                                         validations: {
-                                            empty: "කරුණාකර නැවුම් ටෝකන කල් ඉකුත් වීමේ කාලය පුරවන්න"
+                                            empty: "කරුණාකර නැවුම් ටෝකන කල් ඉකුත් වීමේ කාලය පුරවන්න",
+                                            invalid: "ටෝකන කල් ඉකුත්වීමේ කාලය තත්පර කිහිපයකින් විය යුතුය."
                                         }
                                     },
                                     renew: {
@@ -2476,7 +2486,8 @@ export const console: ConsoleNS = {
                         alias: {
                             hint: "ෆෙඩරල් අනන්‍යතා සැපයුම්කරුගේ අන්වර්ථ නාමයක් මගින් නේවාසික අනන්‍යතා " +
                                 "සැපයුම්කරු හඳුනන්නේ නම්, එය මෙහි සඳහන් කරන්න.",
-                            label: "අන්වර්ථය"
+                            label: "අන්වර්ථය",
+                            placeholder: "අන්වර්ථය සඳහා අගය ඇතුළත් කරන්න."
                         },
                         certificateType: {
                             certificateJWKS: {
@@ -2504,7 +2515,8 @@ export const console: ConsoleNS = {
                         },
                         homeRealmIdentifier: {
                             hint: "මෙම අනන්‍යතා සැපයුම්කරු සඳහා ගෘහස්ථ හඳුනාගැනීමේ යන්ත්‍රය ඇතුළත් කරන්න",
-                            label: "මුල් පිටුව හඳුනාගැනීමේ යන්ත්‍රය"
+                            label: "මුල් පිටුව හඳුනාගැනීමේ යන්ත්‍රය",
+                            placeholder: "Home Realm Identifier සඳහා අගය ඇතුළත් කරන්න."
                         }
                     },
                     attributeSettings: {
@@ -3806,7 +3818,7 @@ export const console: ConsoleNS = {
                         list: {
                             description: "ගුණාංග උපභාෂා සාදන්න සහ කළමනාකරණය කරන්න",
                             primaryAction: "නව බාහිර උපභාෂාව",
-                            title: "උපභාෂා ආරෝපණය කරන්න",
+                            title: "ගුණාංග",
                             view: "දේශීය හිමිකම් බලන්න"
                         }
                     },
@@ -3900,7 +3912,7 @@ export const console: ConsoleNS = {
                             },
                             success: {
                                 description: "බාහිර ගුණාංගය උපභාෂාවට සාර්ථකව එකතු කර ඇත!",
-                                message: "බාහිර ගුණාංගය සාර්ථකව එක් කරන ලදි"
+                                message: "ගුණාංගය එකතු කරන ලදි"
                             }
                         },
                         deleteExternalClaim: {
@@ -3910,7 +3922,7 @@ export const console: ConsoleNS = {
                             },
                             success: {
                                 description: "බාහිර ගුණාංගය සාර්ථකව මකා දමා ඇත!",
-                                message: "බාහිර ගුණාංගය සාර්ථකව මකා දමන ලදි"
+                                message: "ගුණාංගය මකා දමන ලදි"
                             }
                         },
                         fetchExternalClaims: {
@@ -3940,7 +3952,7 @@ export const console: ConsoleNS = {
                             },
                             success: {
                                 description: "බාහිර ගුණාංගය සාර්ථකව යාවත්කාලීන කර ඇත!",
-                                message: "බාහිර ගුණාංගය සාර්ථකව යාවත්කාලීන කරන ලදි"
+                                message: "ගුණාංගය යාවත්කාලීන කරන ලදි"
                             }
                         }
                     },
@@ -5538,7 +5550,7 @@ export const console: ConsoleNS = {
                 addEmailTemplate: "විද්‍යුත් තැපැල් අච්චුව එක් කරන්න",
                 addEmailTemplateLocale: "විද්‍යුත් තැපැල් ආකෘති පෙදෙසි එක් කරන්න",
                 approvals: "අනුමත කිරීම්",
-                attributeDialects: "උපභාෂා ආරෝපණය කරන්න",
+                attributeDialects: "ගුණාංග",
                 categories: {
                     attributes: "ගුණාංග",
                     certificates: "සහතික",

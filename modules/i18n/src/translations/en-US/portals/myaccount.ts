@@ -536,23 +536,26 @@ export const myAccount: MyAccountNS = {
                 heading: "Authenticator App",
                 hint: "Show the QR Code",
                 modals: {
+                    heading: "Set Up An Authenticator App",
                     done: "Success! Now you can use your Authenticator App for two-factor authentication",
                     scan: {
                         authenticatorApps: "Authenticator Apps",
                         generate: "Generate a new code",
-                        heading: "Scan this QR Code using an Authenticator App",
+                        heading: "Scan the QR code below using an anthenticator app",
                         messageBody: "You can find a list of Authenticator Apps available here.",
                         messageHeading: "Don't have an Authenticator App installed?"
                     },
                     verify: {
                         error: "Verification failed. Please try again.",
-                        heading: "Enter the verification code from the Authenticator App",
+                        heading: "Enter the generated code to verify",
                         label: "Verification Code",
                         placeholder: "Enter your verification code",
                         reScan: "Re-scan",
                         reScanQuestion: "Want to scan the QR code again?",
                         requiredError: "Enter the verification code"
-                    }
+                    },
+                    toolTip: "Don't have an app? Download an authenticator application like " + 
+                    "Google Authenticator from <3>App Store</3> or <3>Google Play</3>"
                 },
                 notifications: {
                     initError: {
@@ -1294,6 +1297,10 @@ export const myAccount: MyAccountNS = {
             subTitle: "Edit or export your personal profile",
             title: "Personal Info"
         },
+        personalInfoWithoutExportProfile: {
+            subTitle: "Edit your personal profile",
+            title: "Personal Info"
+        },
         privacy: {
             subTitle: "",
             title: "WSO2 Identity Server Privacy Policy"
@@ -1370,8 +1377,8 @@ export const myAccount: MyAccountNS = {
                 empty: "You have not granted consent to any application"
             },
             description:
-                "Revoke consent collectively for the whole application, or revoke consent for particular personal " +
-                "details that you have agreed to share",
+                "Review the consents you have provided for each application. " +
+                "Also, you can revoke one or many of them as required.",
             heading: "Manage Consents",
             placeholders: {
                 emptyConsentList: {

@@ -534,6 +534,7 @@ export const myAccount: MyAccountNS = {
                 heading: "සත්‍යාපන යෙදුම",
                 hint: "QR කේතය පෙන්වන්න",
                 modals: {
+                    heading: "Set Up An Authenticator App",
                     done: "සාර්ථකත්වය! දැන් ඔබට සාධක දෙකක සත්‍යාපනය සඳහා ඔබේ සත්‍යාපන යෙදුම භාවිතා කළ හැකිය",
                     scan: {
                         authenticatorApps: "සත්‍යාපන යෙදුම්",
@@ -550,7 +551,9 @@ export const myAccount: MyAccountNS = {
                         requiredError: "සත්‍යාපන කේතය ඇතුළත් කරන්න",
                         reScan: "නැවත පරිලෝකනය කරන්න",
                         reScanQuestion: "QR කේතය නැවත පරිලෝකනය කිරීමට අවශ්‍යද?"
-                    }
+                    },
+                    toolTip: "යෙදුමක් නැද්ද? <3> යෙදුම් වෙළඳසැල </ 3> App Store <3> Google Play </ 3> " +
+                    "වෙතින් Google Authenticator වැනි සත්‍යාපන යෙදුමක් බාගන්න."
                 },
                 notifications: {
                     initError: {
@@ -1287,6 +1290,10 @@ export const myAccount: MyAccountNS = {
             subTitle: "ඔබගේ පුද්ගලික පැතිකඩ සංස්කරණය කරන්න හෝ අපනයනය කරන්න",
             title: "පෞද්ගලික තොරතුරු"
         },
+        personalInfoWithoutExportProfile: {
+            subTitle: "ඔබගේ පුද්ගලික පැතිකඩ සංස්කරණය කරන්න",
+            title: "පෞද්ගලික තොරතුරු"
+        },
         privacy: {
             subTitle: "",
             title: "WSO2 හැඳුනුම් සේවාදායක රහස්‍යතා ප්‍රතිපත්තිය"
@@ -1365,8 +1372,8 @@ export const myAccount: MyAccountNS = {
             actionTitles: {
                 empty: "ඔබ කිසිදු යෙදුමක් අනුමත කර නැත"
             },
-            description: "සමස්ත යෙදුම සඳහා සාමූහිකව කැමැත්ත අවලංගු කරන්න, නැතහොත් ඔබ බෙදා ගැනීමට එකඟ වූ විශේෂිත පෞද්ගලික තොරතුරු " +
-                "සඳහා කැමැත්ත අවලංගු කරන්න",
+            description: "එක් එක් යෙදුම සඳහා ඔබ ලබා දී ඇති කැමැත්ත සමාලෝචනය කරන්න. " +
+                "එසේම, ඔබට අවශ්‍ය පරිදි එකක් හෝ කිහිපයක් අවලංගු කළ හැකිය.",
             heading: "අනුමත යෙදුම්",
             placeholders: {
                 emptyConsentList: {

@@ -772,7 +772,9 @@ export const console: ConsoleNS = {
                                             makeMandatory: "Rendre obligatoire",
                                             makeRequested: "Rendre demandable",
                                             removeMandatory: "Retirer l'obligation",
-                                            removeRequested: "Retirer la demandabilité"
+                                            removeRequested: "Retirer la demandabilité",
+                                            subjectDisabledSelection: "Cet attribut est obligatoire car il " +
+                                                "s'agit de l'attribut sujet."
                                         },
                                         fields: {
                                             claim: {
@@ -1197,6 +1199,11 @@ export const console: ConsoleNS = {
                                         hint: "L'utilisation de l'octroi implicite avec des applications publiques " +
                                             "n'est pas recommandée.",
                                         label: "{{grantType}} (non recommandé)"
+                                    },
+                                    password: {
+                                        hint: "L'utilisation de l'octroi de mot de passe avec des applications " +
+                                            "publiques n'est pas recommandée.",
+                                        label: "{{grantType}} (non recommandé)"
                                     }
                                 },
                                 hint: "Cela déterminera la manière dont l'application communique avec le service " +
@@ -1259,7 +1266,9 @@ export const console: ConsoleNS = {
                                         label: "Délai d'expiration du jeton d'accès utilisateur",
                                         placeholder: "Saisissez l'heure d'expiration des jetons d'accès utilisateur",
                                         validations: {
-                                            empty: "Veuillez indiquer le délai d'expiration des jetons d'accès"
+                                            empty: "Veuillez indiquer le délai d'expiration des jetons d'accès",
+                                            invalid: "L'heure d'expiration du jeton d'accès doit être exprimée "
+                                                +"en secondes."
                                         }
                                     },
                                     revokeToken: {
@@ -1304,8 +1313,9 @@ export const console: ConsoleNS = {
                                         label: "Audience",
                                         placeholder: "Saisir l'audience",
                                         validations: {
+                                            duplicate: "L'audience contient des valeurs en double",
                                             empty: "Veuillez remplir le public",
-                                            duplicate: "L'audience contient des valeurs en double"
+                                            invalid: "Veuillez ajouter une audience valide."
                                         }
                                     },
                                     encryption: {
@@ -1325,7 +1335,9 @@ export const console: ConsoleNS = {
                                         label: "Délai d'expiration du jeton d'identification",
                                         placeholder: "Entrez l'heure d'expiration du jeton d'identification",
                                         validations: {
-                                            empty: "Veuillez indiquer l'heure d'expiration du jeton d'identification"
+                                            empty: "Veuillez indiquer l'heure d'expiration du jeton d'identification",
+                                            invalid: "Le délai d'expiration du jeton d'identification doit être " +
+                                                "exprimé en secondes."
                                         }
                                     },
                                     method: {
@@ -1397,7 +1409,9 @@ export const console: ConsoleNS = {
                                         placeholder: "Saisissez l'heure d'expiration du jeton de rafraîchissement",
                                         validations: {
                                             empty: "Veuillez indiquer le délai d'expiration du jeton de " +
-                                                "rafraîchissement"
+                                                "rafraîchissement",
+                                            invalid: "L'heure d'expiration du jeton d'actualisation doit " +
+                                                "être exprimée en secondes."
                                         }
                                     },
                                     renew: {
@@ -2499,7 +2513,8 @@ export const console: ConsoleNS = {
                         alias: {
                             hint: "If the resident identity provider is known by an alias at the federated identity " +
                                 "provider, specify it here.",
-                            label: "Alias"
+                            label: "Alias",
+                            placeholder: "Entrez une valeur pour Alias."
                         },
                         certificateType: {
                             certificateJWKS: {
@@ -2527,7 +2542,8 @@ export const console: ConsoleNS = {
                         },
                         homeRealmIdentifier: {
                             hint: "Entrez l'identifiant du domaine d'identité pour ce fournisseur d'identité",
-                            label: " Identifiant du domaine local"
+                            label: " Identifiant du domaine local",
+                            placeholder: "Entrez la valeur de l'identifiant du royaume d'origine."
                         }
                     },
                     attributeSettings: {
@@ -3828,7 +3844,7 @@ export const console: ConsoleNS = {
                             description: "Affichez et gérez la façon dont les attributs utilisateur d'{{productName}} " +
                                 "sont mappés et transformés lors de l'interaction avec les API ou vos applications.",
                             primaryAction: "Nouveau mappage d'attributse",
-                            title: "Dialectes des attributs",
+                            title: "Les attributs",
                             view: "Voir les claims locaux"
                         }
                     },
@@ -3925,7 +3941,7 @@ export const console: ConsoleNS = {
                             },
                             success: {
                                 description: "L'attribut {{type}} a été ajouté au dialecte avec succès !",
-                                message: "L'attribut {{type}} a été ajouté avec succès"
+                                message: "Attribut ajouté"
                             }
                         },
                         deleteExternalClaim: {
@@ -3935,7 +3951,7 @@ export const console: ConsoleNS = {
                             },
                             success: {
                                 description: "L'attribut {{type}} a été supprimé avec succès !",
-                                message: "L'attribut {{type}} a été effacé avec succès"
+                                message: "Attribut supprimé"
                             }
                         },
                         fetchExternalClaims: {
@@ -3965,7 +3981,7 @@ export const console: ConsoleNS = {
                             },
                             success: {
                                 description: "L'attribut {{type}} a été mis à jour avec succès !",
-                                message: "L'attribut {{type}} a été mis à jour avec succès"
+                                message: "Attribut mis à jour"
                             }
                         }
                     },
@@ -5566,7 +5582,7 @@ export const console: ConsoleNS = {
                 addEmailTemplate: "Ajouter un modèle d'e-mail",
                 addEmailTemplateLocale: "Ajouter une langue de modèle d'e-mail",
                 approvals: "Approbations",
-                attributeDialects: "Dialectes d'attributs",
+                attributeDialects: "Les attributs",
                 categories: {
                     attributes: "Attributs Utilisateur",
                     certificates: "Certificats",

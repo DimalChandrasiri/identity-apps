@@ -52,7 +52,7 @@ import {
 import { AuthenticateUtils, ContextUtils } from "@wso2is/core/utils";
 import { I18n } from "@wso2is/i18n";
 import axios from "axios";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash-es/isEmpty";
 import { UAParser } from "ua-parser-js";
 import { Config } from "../../../core/configs";
 import { AppConstants, CommonConstants } from "../../../core/constants";
@@ -308,7 +308,6 @@ export const initializeAuthentication = () => (dispatch) => {
                         associatedTenants: idToken?.associated_tenants,
                         defaultTenant: idToken?.default_tenant,
                         displayName: response.displayName,
-                        // eslint-disable-next-line @typescript-eslint/camelcase
                         display_name: response.displayName,
                         email: response.email,
                         scope: response.allowedScopes,

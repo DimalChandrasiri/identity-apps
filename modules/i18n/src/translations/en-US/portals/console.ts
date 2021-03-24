@@ -111,7 +111,7 @@ export const console: ConsoleNS = {
                     }
                 },
                 description: null,
-                heading: "Update profile picture",
+                heading: "Update Profile Picture",
                 primaryButton: "Save",
                 secondaryButton: "Cancel"
             },
@@ -590,10 +590,10 @@ export const console: ConsoleNS = {
                     },
                     deleteApplication: {
                         assertionHint: "Please type <1>{{ name }}</1> to confirm.",
-                        content: "All the applications depending on this also might stop working. " +
-                            "Please proceed with caution.",
+                        content: "This action is irreversible and will permanently delete the application.",
                         header: "Are you sure?",
-                        message: "This action is irreversible and will permanently delete the application."
+                        message: "If you delete this application, authentication flows for this application will " +
+                            "stop working. Please proceed with caution."
                     },
                     deleteOutboundProvisioningIDP: {
                         assertionHint: "Please type <1>{{ name }}</1> to confirm.",
@@ -617,10 +617,11 @@ export const console: ConsoleNS = {
                         message: "This is a handler."
                     },
                     lowOIDCExpiryTimes: {
-                        assertionHint: "Proceed with the existing values.",
-                        content: "You have entered a value less than 60 seconds for the following configuration(s).",
+                        assertionHint: "Click Confirm to continue with your values.",
+                        content: "This means that your tokens may expire too soon. Please recheck your values " +
+                            "for the following configuration(s).",
                         header: "Are you sure?",
-                        message: "Please double check your values."
+                        message: "You have entered a value less than 60 seconds for token expiry."
                     },
                     regenerateSecret: {
                         assertionHint: "Please type <1>{{ id }}</1> to regenerate the client secret.",
@@ -770,7 +771,9 @@ export const console: ConsoleNS = {
                                             makeMandatory: "Make mandatory",
                                             makeRequested: "Make requested",
                                             removeMandatory: "Remove mandatory",
-                                            removeRequested: "Remove requested"
+                                            removeRequested: "Remove requested",
+                                            subjectDisabledSelection: "This attribute is mandatory because it " +
+                                                "is the subject attribute."
                                         },
                                         fields: {
                                             claim: {
@@ -1192,6 +1195,10 @@ export const console: ConsoleNS = {
                                     implicit: {
                                         hint: "Using the implicit grant with public applications is not recommended.",
                                         label: "{{grantType}} (Not recommended)"
+                                    },
+                                    password: {
+                                        hint: "Using the password grant with public applications is not recommended.",
+                                        label: "{{grantType}} (Not recommended)"
                                     }
                                 },
                                 hint: "This will determine how the application communicates with the token service.",
@@ -1252,7 +1259,9 @@ export const console: ConsoleNS = {
                                         labelForSPA: "Access token expiry time",
                                         placeholder: "Enter the user access token expiry time",
                                         validations: {
-                                            empty: "Please fill the user access token expiry time"
+                                            empty: "Please fill the user access token expiry time",
+                                            invalid: "Access token expiry time should be in seconds. " +
+                                                "Decimal points and negative numbers are not allowed."
                                         }
                                     },
                                     revokeToken: {
@@ -1295,8 +1304,9 @@ export const console: ConsoleNS = {
                                         label: "Audience",
                                         placeholder: "Enter Audience",
                                         validations: {
+                                            duplicate: "Audience contains duplicate values",
                                             empty: "Please fill the audience",
-                                            duplicate: "Audience contains duplicate values"
+                                            invalid: "Please avoid special characters like commas (,)"
                                         }
                                     },
                                     encryption: {
@@ -1314,7 +1324,9 @@ export const console: ConsoleNS = {
                                         label: "ID Token expiry time",
                                         placeholder: "Enter the id token expiry time",
                                         validations: {
-                                            empty: "Please fill the id token expiry time"
+                                            empty: "Please fill the id token expiry time",
+                                            invalid: "ID token expiry time should be in seconds. " +
+                                                "Decimal points and negative numbers are not allowed."
                                         }
                                     },
                                     method: {
@@ -1382,7 +1394,9 @@ export const console: ConsoleNS = {
                                         label: "Refresh token expiry time",
                                         placeholder: "Enter the refresh token expiry time",
                                         validations: {
-                                            empty: "Please fill the refresh token expiry time"
+                                            empty: "Please fill the refresh token expiry time",
+                                            invalid: "Refresh token expiry time should be in seconds. " +
+                                                "Decimal points and negative numbers are not allowed."
                                         }
                                     },
                                     renew: {
@@ -2486,7 +2500,8 @@ export const console: ConsoleNS = {
                         alias: {
                             hint: "If the resident identity provider is known by an alias at the federated " +
                                 "identity provider, specify it here.",
-                            label: "Alias"
+                            label: "Alias",
+                            placeholder: "Enter value for Alias."
                         },
                         certificateType: {
                             certificateJWKS: {
@@ -2514,7 +2529,8 @@ export const console: ConsoleNS = {
                         },
                         homeRealmIdentifier: {
                             hint: "Enter the home realm identifier for this identity provider",
-                            label: "Home Realm Identifier"
+                            label: "Home Realm Identifier",
+                            placeholder: "Enter value for Home Realm Identifier."
                         }
                     },
                     attributeSettings: {
@@ -4692,7 +4708,7 @@ export const console: ConsoleNS = {
                             description: "View and manage how user attributes are mapped and " +
                                 "transformed when interacting with APIs or your applications.",
                             primaryAction: "New Attribute Mapping",
-                            title: "Attributes and Mappings",
+                            title: "Attributes",
                             view: "View attributes"
                         }
                     },
@@ -4788,7 +4804,7 @@ export const console: ConsoleNS = {
                             success: {
                                 description: "The {{type}} attribute has been added to the attribute mapping" +
                                     " successfully!",
-                                message: "{{type}} attribute added successfully"
+                                message: "Attribute added"
                             }
                         },
                         deleteExternalClaim: {
@@ -4798,7 +4814,7 @@ export const console: ConsoleNS = {
                             },
                             success: {
                                 description: "The {{type}} attribute has been deleted successfully!",
-                                message: "{{type}} attribute deleted successfully"
+                                message: "Attribute deleted"
                             }
                         },
                         fetchExternalClaims: {
@@ -4828,7 +4844,7 @@ export const console: ConsoleNS = {
                             },
                             success: {
                                 description: "The {{type}} attribute has been updated successfully!",
-                                message: "{{type}} attribute updated successfully"
+                                message: "Attribute updated"
                             }
                         }
                     },
@@ -6419,7 +6435,7 @@ export const console: ConsoleNS = {
                 addEmailTemplate: "Add Email Template",
                 addEmailTemplateLocale: "Add Email Template Locale",
                 approvals: "Approvals",
-                attributeDialects: "Attributes & Mappings",
+                attributeDialects: "Attributes",
                 categories: {
                     attributes: "User Attributes",
                     certificates: "Certificates",
@@ -7556,7 +7572,7 @@ export const console: ConsoleNS = {
                             message: "Something went wrong"
                         },
                         success: {
-                            description: "Successfully deleted the user's association to your organization.",
+                            description: "Successfully deleted the user's invitation.",
                             message: "Invitation deletion successful"
                         }
                     },
