@@ -16,6 +16,7 @@
  * under the License.
  */
 
+import { AccessControlProvider } from "@wso2is/access-control";
 import { AlertInterface, RouteInterface } from "@wso2is/core/models";
 import { initializeAlertSystem } from "@wso2is/core/store";
 import {
@@ -153,24 +154,30 @@ export const DefaultLayout: FunctionComponent<DefaultLayoutPropsInterface> = (
                                 ? <Redirect to={ route.redirectTo }/>
                                 : route.protected
                                 ? (
-                                    <ProtectedRoute
-                                        component={ route.component ? route.component : null }
-                                        path={ route.path }
-                                        key={ index }
-                                        exact={ route.exact }
-                                    />
+                                    <AccessControlProvider>
+                                        <ProtectedRoute
+                                            component={ route.component ? route.component : null }
+                                            path={ route.path }
+                                            key={ index }
+                                            exact={ route.exact }
+                                        />
+                                    </AccessControlProvider>
+                                    
                                 )
                                 : (
-                                    <Route
-                                        path={ route.path }
-                                        render={ (renderProps) =>
-                                            route.component
-                                                ? <route.component { ...renderProps } />
-                                                : null
-                                        }
-                                        key={ index }
-                                        exact={ route.exact }
-                                    />
+                                    <AccessControlProvider>
+                                        <Route
+                                            path={ route.path }
+                                            render={ (renderProps) =>
+                                                route.component
+                                                    ? <route.component { ...renderProps } />
+                                                    : null
+                                            }
+                                            key={ index }
+                                            exact={ route.exact }
+                                        />
+                                    </AccessControlProvider>
+                                    
                                 )
                         ))
                     }

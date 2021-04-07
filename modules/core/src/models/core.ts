@@ -109,6 +109,13 @@ export interface TestableComponentInterface {
 }
 
 /**
+ * Common interface to extend access control module.
+ */
+export interface AccessControlableInterface {
+    "data-access-id"?: string;
+}
+
+/**
  * Common interface to be extended to for components having loading capability.
  */
 export interface LoadableComponentInterface {

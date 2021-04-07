@@ -18,6 +18,7 @@
 
 import { hasRequiredScopes, isFeatureEnabled } from "@wso2is/core/helpers";
 import {
+    AccessControlableInterface,
     AlertLevels,
     LoadableComponentInterface,
     SBACInterface,
@@ -64,7 +65,7 @@ import { ApplicationTemplateManagementUtils } from "../utils";
  * Proptypes for the applications list component.
  */
 interface ApplicationListPropsInterface extends SBACInterface<FeatureConfigInterface>, LoadableComponentInterface,
-    TestableComponentInterface {
+    TestableComponentInterface, AccessControlableInterface {
 
     /**
      * Advanced Search component.
@@ -137,7 +138,8 @@ export const ApplicationList: FunctionComponent<ApplicationListPropsInterface> =
         selection,
         showListItemActions,
         isSetStrongerAuth,
-        [ "data-testid" ]: testId
+        [ "data-testid" ]: testId,
+        [ "data-access-id" ]: accessId
     } = props;
 
     const { t } = useTranslation();
@@ -261,6 +263,7 @@ export const ApplicationList: FunctionComponent<ApplicationListPropsInterface> =
                             as="h6"
                             className="header-with-icon"
                             data-testid={ `${ testId }-item-heading` }
+                            data-access-id={ accessId }
                         >
                             {
                                 app.image

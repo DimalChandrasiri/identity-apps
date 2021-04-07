@@ -1,7 +1,6 @@
-
 [{
     "elemId" : "application-list",
-    "permission" : { //change term
+    "permission" : {
         "Read": true,
         "Write": false
     }
@@ -13,7 +12,3 @@
     }
 }]
 
-[{
-    "application-list": false,
-    "application-delete": true
-}]

@@ -17,5 +17,6 @@
  *
  */
 
-export * from "./access-controller";
-export * from "./access-controller-permission";
+// export * from "./access-controller";
+// export * from "./access-controller-permission";
+export * from "./access-control-provider";

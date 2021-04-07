@@ -1,0 +1,18 @@
+{
+    "scopes" : {
+        "application-list" : {
+            "create": [
+                "internal_keystore_update"
+            ],
+            "read": [
+                "internal_keystore_view"
+            ],
+            "update": [
+                "internal_keystore_update"
+            ],
+            "delete": [
+                "internal_keystore_update"
+            ]
+        }
+    }
+}

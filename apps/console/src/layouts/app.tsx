@@ -71,37 +71,37 @@ export const AppLayout: FunctionComponent<{}> = (): ReactElement => {
                     />
                 ) }
             >
-                <Suspense fallback={ <PreLoader /> }>
-                    <Switch>
-                        {
-                            appRoutes.map((route, index) => (
-                                route.redirectTo
-                                    ? <Redirect to={ route.redirectTo } />
-                                    : route.protected
-                                        ? (
-                                            <ProtectedRoute
-                                                component={ route.component ? route.component : null }
-                                                path={ route.path }
-                                                key={ index }
-                                                exact={ route.exact }
-                                            />
-                                        )
-                                        : (
-                                            <Route
-                                                path={ route.path }
-                                                render={ (renderProps) =>
-                                                    route.component
-                                                        ? <route.component { ...renderProps } />
-                                                        : null
-                                                }
-                                                key={ index }
-                                                exact={ route.exact }
-                                            />
-                                        )
-                            ))
-                        }
-                    </Switch>
-                </Suspense>
+                    <Suspense fallback={ <PreLoader /> }>
+                        <Switch>
+                            {
+                                appRoutes.map((route, index) => (
+                                    route.redirectTo
+                                        ? <Redirect to={ route.redirectTo } />
+                                        : route.protected
+                                            ? (
+                                                <ProtectedRoute
+                                                    component={ route.component ? route.component : null }
+                                                    path={ route.path }
+                                                    key={ index }
+                                                    exact={ route.exact }
+                                                />
+                                            )
+                                            : (
+                                                <Route
+                                                    path={ route.path }
+                                                    render={ (renderProps) =>
+                                                        route.component
+                                                            ? <route.component { ...renderProps } />
+                                                            : null
+                                                    }
+                                                    key={ index }
+                                                    exact={ route.exact }
+                                                />
+                                            )
+                                ))
+                            }
+                        </Switch>
+                    </Suspense>
             </ErrorBoundary>
         </AppLayoutSkeleton>
     );
