@@ -35,7 +35,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { initializeAuthentication } from "./features/authentication";
 import { AuthenticateUtils } from "./features/authentication/utils";
-import { PreLoader } from "./features/core"
+import { PreLoader } from "./features/core";
 import { ProtectedRoute } from "./features/core/components";
 import { Config, getBaseRoutes } from "./features/core/configs";
 import { AppConstants } from "./features/core/constants";
@@ -207,7 +207,7 @@ export const App: FunctionComponent<{}> = (): ReactElement => {
                                                         rel="shortcut icon"
                                                         href={ `${ window["AppUtils"].getConfig().clientOrigin }/` +
                                                         `${ window["AppUtils"].getConfig().appBase }/libs/themes/` +
-                                                        `${ state.theme }/assets/images/favicon.ico` }
+                                                        `${ state.theme }/assets/images/branding/favicon.ico` }
                                                     />
                                                     <link
                                                         href={ `${ window["AppUtils"].getConfig().clientOrigin }/` +

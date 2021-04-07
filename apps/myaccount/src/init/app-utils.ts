@@ -157,8 +157,16 @@ export const AppUtils = (function() {
             if (Object.entries(_config).length === 0) {
                 return null;
             }
+            if (_config.consoleApp && _config.consoleApp.origin) {
+                _config.consoleAppOrigin = _config.consoleApp.origin;
+            } 
 
             return {
+                consoleApp: {
+                    path: _config.consoleApp?.path ?
+                    _config.consoleAppOrigin + this.getTenantPath(false) + _config.consoleApp?.path
+                    : null
+                },
                 appBase: _config.appBaseName,
                 appBaseNameForHistoryAPI: this.constructAppBaseNameForHistoryAPI(),
                 appBaseWithTenant: this.getAppBaseWithTenant(),
@@ -293,6 +301,7 @@ export const AppUtils = (function() {
             _args = Args;
 
             _default = {
+                "consoleAppOrigin": _args.consoleAppOrigin || _args.serverOrigin || fallbackServerOrigin,
                 "accountAppOrigin": _args.accountAppOrigin || _args.serverOrigin || fallbackServerOrigin,
                 "clientOrigin": window.location.origin,
                 "contextPath": _args.contextPath,

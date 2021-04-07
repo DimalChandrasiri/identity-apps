@@ -63,7 +63,7 @@ export const console: ConsoleNS = {
             resultsIndicator: "Showing results for the query \"{{query}}\""
         },
         header: {
-            tenantSwitchHeader: "Switch Tenant"
+            tenantSwitchHeader: "Switch Organization"
         },
         modals: {
             editAvatarModal: {
@@ -345,8 +345,8 @@ export const console: ConsoleNS = {
                     requestRemoval: {
                         description: {
                             para1: "You can request the administrator to delete your account. The " +
-                                "administrator is the administrator of the tenant you are registered under, or " +
-                                "the super-administrator if you do not use the tenant feature.",
+                                "administrator is the administrator of the organization you are registered under, or " +
+                                "the super-administrator if you do not use the organization feature.",
                             para2: "Additionally, you can request to anonymize all traces of your activities " +
                                 "that WSO2 IS may have retained in logs, databases or analytical storage."
                         },
@@ -956,9 +956,9 @@ export const console: ConsoleNS = {
                                         }
                                     },
                                     subjectIncludeTenantDomain: {
-                                        hint: "This option will append the tenant domain to the local subject " +
+                                        hint: "This option will append the organization name to the local subject " +
                                             " identifier",
-                                        label: "Include tenant domain",
+                                        label: "Include organization name",
                                         validations: {
                                             empty: "This is a required field."
                                         }
@@ -1004,8 +1004,8 @@ export const console: ConsoleNS = {
                             },
                             saas: {
                                 hint: "By default, applications can only be used by users belonging to the " +
-                                    "application's tenant. If this application is SaaS-enabled, it will be " +
-                                    "accessible to all users across all tenants.",
+                                    "application's organization. If this application is SaaS-enabled, it will be " +
+                                    "accessible to all users across all organizations.",
                                 label: "SaaS application",
                                 validations: {
                                     empty: "This is a required field."
@@ -1164,7 +1164,8 @@ export const console: ConsoleNS = {
                                 label: "Authorized redirect URLs",
                                 placeholder: "https://myapp.io/login",
                                 validations: {
-                                    empty: "Please add a valid URL.",
+                                    empty: "This is a required field.",
+                                    invalid: "The entered URL is neither HTTP nor HTTPS. Please add a valid URL.",
                                     required: "This field is required for a functional app. " +
                                         "However, if you are planning to try the sample app, " +
                                         "this field can be ignored."
@@ -4434,8 +4435,8 @@ export const console: ConsoleNS = {
                         hint: "Please type <1>{{id}}</1> to confirm.",
                         message: "This action is irreversible and will permanently delete the certificate.",
                         primaryAction: "Confirm",
-                        tenantContent: "This will delete the tenant certificate permanently."
-                            + "Once deleted, unless you import a new tenant certificate,"
+                        tenantContent: "This will delete the organization certificate permanently."
+                            + "Once deleted, unless you import a new organization certificate,"
                             + "you won't be able to access the portal applications."
                             + "To continue deleting, enter the alias of the certificate and click delete."
                     },
@@ -4503,7 +4504,7 @@ export const console: ConsoleNS = {
                         },
                         getPublicCertificate: {
                             genericError: {
-                                description: "There was an error while fetching the tenant certificate.",
+                                description: "There was an error while fetching the organization certificate.",
                                 message: "Something went wrong!"
                             }
                         }
@@ -4975,6 +4976,7 @@ export const console: ConsoleNS = {
                             placeholder: "Enter a description",
                             requiredErrorMessage: "Description is required"
                         },
+                        descriptionHint: "A meaningful description for the attribute.",
                         displayOrder: {
                             label: "Display Order",
                             placeholder: "Enter the display order"
@@ -4991,21 +4993,20 @@ export const console: ConsoleNS = {
                                     " underscores (_), plus signs (+), and spaces."
                             }
                         },
-                        nameHint: "Name of the attribute that will be shown on the user profile "
-                            + "and user registration page",
+                        nameHint: "The display name of the attribute in the user profile.",
                         readOnly: {
-                            label: "Make this attribute read-only"
+                            label: "Make this attribute read-only on the user's profile"
                         },
                         regEx: {
                             label: "Regular expression",
                             placeholder: "Enter a regular expression"
                         },
-                        regExHint: "This regular expression is used to validate the value this attribute can take",
+                        regExHint: "Use a regex pattern to validate the attribute input value.",
                         required: {
                             label: "Make this attribute required during user registration"
                         },
                         supportedByDefault: {
-                            label: "Show this attribute on user profile and user registration page"
+                            label: "Display this attribute on the user's profile"
                         }
                     },
                     mappedAttributes: {
@@ -6596,8 +6597,9 @@ export const console: ConsoleNS = {
                                     empty: "Username is a required field",
                                     invalid: "A user already exists with this username.",
                                     invalidCharacters: "Username seems to contain invalid characters.",
-                                    regExViolation: "Username is invalid. It should be a valid email that contains " +
-                                        "between 3-30 alphanumeric characters with no whitespaces."
+                                    regExViolation: "Please enter a valid email. It can only contain between 3 and 50 characters " +
+                                        "including alphanumeric characters, underscores (_), dashes (-), plus signs (+), " +
+                                        "periods (.) and an at sign (@), with no whitespaces."
                                 }
                             }
                         },
