@@ -90,3 +90,19 @@ export const imageUrl = async (value: string): Promise<boolean> => {
         }
     }
 };
+
+/**
+ * This validates resource names. Returns true if valid. False if not valid.
+ * @param value
+ */
+export const resourceName: ValidationFunction = (value: string): boolean => {
+    if (
+        Joi.string()
+            .alphanum()
+            .min(3)
+            .validate(value).error
+    ) {
+        return false;
+    }
+    return true;
+};

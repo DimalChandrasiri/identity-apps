@@ -1665,6 +1665,34 @@ export interface ConsoleNS {
                 };
             };
             users: {
+                consumerUsers: {
+                    fields: {
+                       username: {
+                           label: string;
+                           placeholder: string;
+                           validations: {
+                               empty: string;
+                               invalid: string;
+                               invalidCharacters: string;
+                               regExViolation: string;
+                           };
+                       }
+                    }
+                };
+                guestUsers: {
+                    fields: {
+                        username: {
+                            label: string;
+                            placeholder: string;
+                            validations: {
+                                empty: string;
+                                invalid: string;
+                                invalidCharacters: string;
+                                regExViolation: string;
+                            };
+                        }
+                    }
+                };
                 confirmations: {
                     terminateAllSessions: Confirmation;
                     terminateSession: Confirmation;
@@ -2456,6 +2484,7 @@ export interface ConsoleNS {
                 editScope: {
                     claimList: {
                         emptyPlaceholder: Placeholder;
+                        emptySearch: Placeholder;
                         title: string;
                         subTitle: string;
                         addClaim: string;

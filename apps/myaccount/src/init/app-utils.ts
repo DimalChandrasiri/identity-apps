@@ -438,7 +438,7 @@ export const AppUtils = (function() {
                         .replace(SUPER_TENANT_DOMAIN_IDP_URL_PLACEHOLDER, this.getSuperTenantProxy())
                         .replace(USER_TENANT_DOMAIN_IDP_URL_PLACEHOLDER, this.getTenantName()
                             ? this.getTenantName()
-                            : this.getSuperTenantProxy())
+                            : this.getSuperTenantProxy()),
             };
         },
 

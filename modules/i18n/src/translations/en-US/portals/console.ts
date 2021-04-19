@@ -5643,6 +5643,14 @@ export const console: ConsoleNS = {
                             },
                             title: "No OIDC attributes"
                         },
+                        emptySearch: {
+                            action: "View all",
+                            subtitles: {
+                                0: "We couldn't find the attribute you searched for.",
+                                1: "Please try a different name."
+                            },
+                            title: "No results found"
+                        },
                         popupDelete: "Delete attribute",
                         searchClaims: "search attributes",
                         subTitle: "Add or remove attributes of an OIDC scope",
@@ -6597,9 +6605,7 @@ export const console: ConsoleNS = {
                                     empty: "Username is a required field",
                                     invalid: "A user already exists with this username.",
                                     invalidCharacters: "Username seems to contain invalid characters.",
-                                    regExViolation: "Please enter a valid email. It can only contain between 3 and 50 characters " +
-                                        "including alphanumeric characters, underscores (_), dashes (-), plus signs (+), " +
-                                        "periods (.) and an at sign (@), with no whitespaces."
+                                    regExViolation: "Please enter a valid username."
                                 }
                             }
                         },
@@ -7082,6 +7088,36 @@ export const console: ConsoleNS = {
                 }
             },
             users: {
+                consumerUsers: {
+                    fields: {
+                        username: {
+                            label: "Username",
+                            placeholder: "Enter the username",
+                            validations: {
+                                empty: "Username is a required field",
+                                invalid: "A user already exists with this username.",
+                                invalidCharacters: "Username seems to contain invalid characters.",
+                                regExViolation: "Enter a valid email between 3 and 50 characters. You can use " +
+                                    "alphanumeric characters, underscores (_), dashes (-), plus signs (+), " +
+                                    "periods (.), and an at sign (@)."
+                            }
+                        }
+                    }
+                },
+                guestUsers: {
+                    fields: {
+                        username: {
+                            label: "Username",
+                            placeholder: "Enter the username",
+                            validations: {
+                                empty: "Username is a required field",
+                                invalid: "A user already exists with this username.",
+                                invalidCharacters: "Username seems to contain invalid characters.",
+                                regExViolation: "Please enter a valid email."
+                            }
+                        }
+                    }
+                },
                 advancedSearch: {
                     form: {
                         dropdown: {

@@ -4785,6 +4785,14 @@ export const console: ConsoleNS = {
                             },
                             title: "Pas d'attributs OIDC"
                         },
+                        emptySearch: {
+                            action: "Voir tout",
+                            subtitles: {
+                                0: "Nous n'avons pas trouvé l'attribut recherché.",
+                                1: "Veuillez essayer un autre nom."
+                            },
+                            title: "Aucun résultat trouvé"
+                        },
                         popupDelete: "Supprimer l'attribut",
                         searchClaims: "Recherche d'attributs",
                         subTitle: "Ajouter ou supprimer des attributs d'un scope OIDC",
@@ -5749,10 +5757,7 @@ export const console: ConsoleNS = {
                                     empty: "Le nom d'utilisateur est obligatoire",
                                     invalid: "Ce nom d'utilisateur n'est pas disponible.",
                                     invalidCharacters: "Le nom d'utilisateur semble contenir des caractères non valides.",
-                                    regExViolation: "Veuillez saisir une adresse e-mail valide. Il ne peut contenir "+
-                                        "qu'entre 3 et 50 caractères, y compris les caractères alphanumériques, traits de "+
-                                        "soulignement (_), tirets (-), signes plus (+) et points (.) et un signes at "+
-                                        "(@) Sans espaces."
+                                    regExViolation: "Merci d'entrer un nom d'utilisateur valide."
                                 }
                             }
                         },
@@ -6254,6 +6259,36 @@ export const console: ConsoleNS = {
                 }
             },
             users: {
+                consumerUsers: {
+                    fields: {
+                        username: {
+                            label: "Nom d'utilisateur",
+                            placeholder: "Veuillez saisir un nom d'utilisateur",
+                            validations: {
+                                empty: "Le nom d'utilisateur est obligatoire",
+                                invalid: "Ce nom d'utilisateur n'est pas disponible.",
+                                invalidCharacters: "Le nom d'utilisateur semble contenir des caractères non valides.",
+                                regExViolation: "Saisissez un e-mail valide entre 3 et 50 caractères. Vous pouvez " +"" +
+                                    "utiliser des caractères alphanumériques, des traits de soulignement (_), " +
+                                    "des tirets (-), des signes plus (+), des points (.), et un signe arobase (@)."
+                            }
+                        }
+                    }
+                },
+                guestUsers: {
+                    fields: {
+                        username: {
+                            label: "Nom d'utilisateur",
+                            placeholder: "Veuillez saisir un nom d'utilisateur",
+                            validations: {
+                                empty: "Le nom d'utilisateur est obligatoire",
+                                invalid: "Ce nom d'utilisateur n'est pas disponible.",
+                                invalidCharacters: "Le nom d'utilisateur semble contenir des caractères non valides.",
+                                regExViolation: "Veuillez saisir une adresse e-mail valide."
+                            }
+                        }
+                    }
+                },
                 advancedSearch: {
                     form: {
                         dropdown: {
