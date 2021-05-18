@@ -16,10 +16,10 @@
  * under the License.
  */
 
-import { hasRequiredScopes, hasRequiredScopesForAdminView } from "@wso2is/core/helpers";
+import { hasRequiredScopes } from "@wso2is/core/helpers";
 import { AlertInterface, ChildRouteInterface, ProfileInfoInterface, RouteInterface } from "@wso2is/core/models";
 import { initializeAlertSystem } from "@wso2is/core/store";
-import { RouteUtils as CommonRouteUtils, CommonUtils, AuthenticateUtils } from "@wso2is/core/utils";
+import { AuthenticateUtils, RouteUtils as CommonRouteUtils, CommonUtils } from "@wso2is/core/utils";
 import {
     Alert,
     ContentLoader,
@@ -47,9 +47,9 @@ import { System } from "react-notification-system";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, RouteComponentProps, Switch } from "react-router-dom";
 import { Responsive } from "semantic-ui-react";
-import { setManageVisibility } from "../features/core/store/actions/acess-control";
 import { getProfileInformation } from "../features/authentication/store";
 import {
+    AccessControlProvider,
     AppConstants,
     AppState,
     ConfigReducerStateInterface,
@@ -66,6 +66,7 @@ import {
     history,
     useUIElementSizes
 } from "../features/core";
+import { setManageVisibility } from "../features/core/store/actions/acess-control";
 import {
     GovernanceConnectorCategoryInterface,
     GovernanceConnectorUtils,
@@ -409,80 +410,82 @@ export const AdminView: FunctionComponent<AdminViewPropsInterface> = (
     };
 
     return (
-        <DashboardLayoutSkeleton
-            alert={ (
-                <Alert
-                    dismissInterval={ UIConstants.ALERT_DISMISS_INTERVAL }
-                    alertsPosition="br"
-                    alertSystem={ alertSystem }
-                    alert={ alert }
-                    onAlertSystemInitialize={ handleAlertSystemInitialize }
-                    withIcon={ true }
-                />
-            ) }
-            topLoadingBar={ (
-                <TopLoadingBar
-                    height={ UIConstants.AJAX_TOP_LOADING_BAR_HEIGHT }
-                    visibility={ isAJAXTopLoaderVisible }
-                />
-            ) }
-            onLayoutOnUpdate={ handleLayoutOnUpdate }
-            header={ (
-                <Header
-                    activeView="ADMIN"
-                    fluid={ !isMobileViewport ? fluid : false }
-                    onSidePanelToggleClick={ handleSidePanelToggleClick }
-                />
-            ) }
-            sidePanel={ (
-                <SidePanel
-                    categorized={ config?.ui?.isLeftNavigationCategorized ?? true }
-                    caretIcon={ getSidePanelMiscIcons().caretRight }
-                    desktopContentTopSpacing={ UIConstants.DASHBOARD_LAYOUT_DESKTOP_CONTENT_TOP_SPACING }
-                    fluid={ !isMobileViewport ? fluid : false }
-                    footerHeight={ footerHeight }
-                    headerHeight={ headerHeight }
-                    hoverType="background"
-                    mobileSidePanelVisibility={ mobileSidePanelVisibility }
-                    onSidePanelItemClick={ handleSidePanelItemClick }
-                    onSidePanelPusherClick={ handleSidePanelPusherClick }
-                    routes={ accessControlledRoutes }
-                    selected={ selectedRoute }
-                    translationHook={ t }
-                    allowedScopes={ allowedScopes }
-                />
-            ) }
-            footer={ (
-                <Footer
-                    fluid={ !isMobileViewport ? fluid : false }
-                />
-            ) }
-        >
-            <ErrorBoundary
-                fallback={ (
-                    <EmptyPlaceholder
-                        action={ (
-                            <LinkButton onClick={ () => CommonUtils.refreshPage() }>
-                                { t("console:common.placeholders.brokenPage.action") }
-                            </LinkButton>
-                        ) }
-                        image={ getEmptyPlaceholderIllustrations().brokenPage }
-                        imageSize="tiny"
-                        subtitle={ [
-                            t("console:common.placeholders.brokenPage.subtitles.0"),
-                            t("console:common.placeholders.brokenPage.subtitles.1")
-                        ] }
-                        title={ t("console:common.placeholders.brokenPage.title") }
+        <AccessControlProvider>
+            <DashboardLayoutSkeleton
+                alert={ (
+                    <Alert
+                        dismissInterval={ UIConstants.ALERT_DISMISS_INTERVAL }
+                        alertsPosition="br"
+                        alertSystem={ alertSystem }
+                        alert={ alert }
+                        onAlertSystemInitialize={ handleAlertSystemInitialize }
+                        withIcon={ true }
+                    />
+                ) }
+                topLoadingBar={ (
+                    <TopLoadingBar
+                        height={ UIConstants.AJAX_TOP_LOADING_BAR_HEIGHT }
+                        visibility={ isAJAXTopLoaderVisible }
+                    />
+                ) }
+                onLayoutOnUpdate={ handleLayoutOnUpdate }
+                header={ (
+                    <Header
+                        activeView="ADMIN"
+                        fluid={ !isMobileViewport ? fluid : false }
+                        onSidePanelToggleClick={ handleSidePanelToggleClick }
+                    />
+                ) }
+                sidePanel={ (
+                    <SidePanel
+                        categorized={ config?.ui?.isLeftNavigationCategorized ?? true }
+                        caretIcon={ getSidePanelMiscIcons().caretRight }
+                        desktopContentTopSpacing={ UIConstants.DASHBOARD_LAYOUT_DESKTOP_CONTENT_TOP_SPACING }
+                        fluid={ !isMobileViewport ? fluid : false }
+                        footerHeight={ footerHeight }
+                        headerHeight={ headerHeight }
+                        hoverType="background"
+                        mobileSidePanelVisibility={ mobileSidePanelVisibility }
+                        onSidePanelItemClick={ handleSidePanelItemClick }
+                        onSidePanelPusherClick={ handleSidePanelPusherClick }
+                        routes={ accessControlledRoutes }
+                        selected={ selectedRoute }
+                        translationHook={ t }
+                        allowedScopes={ allowedScopes }
+                    />
+                ) }
+                footer={ (
+                    <Footer
+                        fluid={ !isMobileViewport ? fluid : false }
                     />
                 ) }
             >
-                <Suspense fallback={ <ContentLoader dimmer/> }>
-                    <Switch>
-                        { resolveRoutes() }
-                    </Switch>
-                </Suspense>
-            </ErrorBoundary>
-        </DashboardLayoutSkeleton>
+                <ErrorBoundary
+                    fallback={ (
+                        <EmptyPlaceholder
+                            action={ (
+                                <LinkButton onClick={ () => CommonUtils.refreshPage() }>
+                                    { t("console:common.placeholders.brokenPage.action") }
+                                </LinkButton>
+                            ) }
+                            image={ getEmptyPlaceholderIllustrations().brokenPage }
+                            imageSize="tiny"
+                            subtitle={ [
+                                t("console:common.placeholders.brokenPage.subtitles.0"),
+                                t("console:common.placeholders.brokenPage.subtitles.1")
+                            ] }
+                            title={ t("console:common.placeholders.brokenPage.title") }
+                        />
+                    ) }
+                >
+                    <Suspense fallback={ <ContentLoader dimmer/> }>
+                        <Switch>
+                            { resolveRoutes() }
+                        </Switch>
+                    </Suspense>
+                </ErrorBoundary>
+            </DashboardLayoutSkeleton>
+        </AccessControlProvider>
     );
 };
 

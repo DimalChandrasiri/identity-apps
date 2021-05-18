@@ -16,6 +16,7 @@
 * under the License.
 */
 
+export * from "./access-control";
 export * from "./advanced-search-with-basic-filters";
 export * from "./authenticator-accordion";
 export * from "./footer";
