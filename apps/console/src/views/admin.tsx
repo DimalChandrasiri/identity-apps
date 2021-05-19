@@ -19,7 +19,7 @@
 import { hasRequiredScopes } from "@wso2is/core/helpers";
 import { AlertInterface, ChildRouteInterface, ProfileInfoInterface, RouteInterface } from "@wso2is/core/models";
 import { initializeAlertSystem } from "@wso2is/core/store";
-import { AuthenticateUtils, RouteUtils as CommonRouteUtils, CommonUtils } from "@wso2is/core/utils";
+import { RouteUtils as CommonRouteUtils, CommonUtils } from "@wso2is/core/utils";
 import {
     Alert,
     ContentLoader,
@@ -50,6 +50,7 @@ import { Responsive } from "semantic-ui-react";
 import { getProfileInformation } from "../features/authentication/store";
 import {
     AccessControlProvider,
+    AccessControlUtils,
     AppConstants,
     AppState,
     ConfigReducerStateInterface,
@@ -60,13 +61,14 @@ import {
     RouteUtils,
     UIConstants,
     getAdminViewRoutes,
+    getDeveloperViewRoutes,
     getEmptyPlaceholderIllustrations,
     getSidePanelIcons,
     getSidePanelMiscIcons,
     history,
     useUIElementSizes
 } from "../features/core";
-import { setManageVisibility } from "../features/core/store/actions/acess-control";
+import { setDeveloperVisibility, setManageVisibility } from "../features/core/store/actions/acess-control";
 import {
     GovernanceConnectorCategoryInterface,
     GovernanceConnectorUtils,
@@ -115,7 +117,7 @@ export const AdminView: FunctionComponent<AdminViewPropsInterface> = (
         (state: AppState) => state.governanceConnector.categories);
     const [ governanceConnectorsEvaluated, setGovernanceConnectorsEvaluated ] = useState<boolean>(false);
     const [ governanceConnectorRoutesAdded, setGovernanceConnectorRoutesAdded ] = useState<boolean>(false);
-
+    const [ developRoutes, setDevelopRoutes ] = useState<RouteInterface[]>(getDeveloperViewRoutes());
     const [ filteredRoutes, setFilteredRoutes ] = useState<RouteInterface[]>(getAdminViewRoutes());
     const [
         selectedRoute,
@@ -134,35 +136,17 @@ export const AdminView: FunctionComponent<AdminViewPropsInterface> = (
         }
 
         const routes: RouteInterface[] = CommonRouteUtils.sanitizeForUI(cloneDeep(filteredRoutes));
-        const controlledRoutes = [];
-        routes.forEach((route: RouteInterface) => {
-            const feature = featureConfig[route.id];
-            if (feature) {
-                let shouldShowRoute: boolean = false;
-                for (const [ key, value ] of Object.entries(feature?.scopes)) {
-                    if (value && value instanceof Array) {
-                        if (AuthenticateUtils.hasScopes(value, allowedScopes)) {
-                            shouldShowRoute = true;
-                        }
-                    }
-                }
-    
-                if (route.showOnSidePanel && shouldShowRoute) {
-                    controlledRoutes.push(route);
-                }
-            } else {
-                controlledRoutes.push(route);
-            }
-            
-        });
+        const sanitizedDevelopRoutes: RouteInterface[] = CommonRouteUtils.sanitizeForUI(cloneDeep(developRoutes));
+        const controlledRoutes = AccessControlUtils.getAuthenticatedRoutes(routes, allowedScopes, featureConfig);
+        
+        setAccessControlledRoutes(controlledRoutes);
 
-        // TODO : Temporary fix for access controlled routes
-        if (controlledRoutes.length !== 1 && controlledRoutes[0].id !== "developer-getting-started") {
-            setAccessControlledRoutes(controlledRoutes);
-            RouteUtils.gracefullyHandleRouting(controlledRoutes,
-                AppConstants.getAdminViewBasePath(),
-                location.pathname);
-        } else {
+        const tab: string = AccessControlUtils.getDisabledTab(
+            filteredRoutes, sanitizedDevelopRoutes, allowedScopes, featureConfig);
+
+        if (tab === "MANAGE") {
+            dispatch(setDeveloperVisibility(false));
+        } else if (tab === "DEVELOP") {
             dispatch(setManageVisibility(false));
         }
     }, [ allowedScopes ]);
