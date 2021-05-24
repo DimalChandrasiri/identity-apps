@@ -47,6 +47,8 @@ import { Redirect, Route, RouteComponentProps, Switch } from "react-router-dom";
 import { Responsive } from "semantic-ui-react";
 import { getProfileInformation } from "../features/authentication/store";
 import {
+    AccessControlProvider,
+    AccessControlUtils,
     AppConstants,
     AppState,
     AppUtils,
@@ -57,14 +59,12 @@ import {
     ProtectedRoute,
     RouteUtils,
     UIConstants,
+    getAdminViewRoutes,
     getDeveloperViewRoutes,
     getEmptyPlaceholderIllustrations,
     getSidePanelMiscIcons,
     history,
-    useUIElementSizes,
-    AccessControlProvider,
-    AccessControlUtils,
-    getAdminViewRoutes
+    useUIElementSizes
 } from "../features/core";
 import { setDeveloperVisibility, setManageVisibility } from "../features/core/store/actions/acess-control";
 
@@ -122,12 +122,12 @@ export const DeveloperView: FunctionComponent<DeveloperViewPropsInterface> = (
      */
     useEffect(() => {
 
-        if (isEmpty(accessControlledRoutes) || !location?.pathname) {
+        if (isEmpty(filteredRoutes) || !location?.pathname) {
             return;
         }
 
-        setSelectedRoute(CommonRouteUtils.getInitialActiveRoute(location.pathname, accessControlledRoutes));
-    }, [ location?.pathname, accessControlledRoutes ]);
+        setSelectedRoute(CommonRouteUtils.getInitialActiveRoute(location.pathname, filteredRoutes));
+    }, [ location?.pathname, filteredRoutes ]);
 
     useEffect(() => {
 
@@ -136,21 +136,27 @@ export const DeveloperView: FunctionComponent<DeveloperViewPropsInterface> = (
             return;
         }
 
-        const routes: RouteInterface[] = CommonRouteUtils.filterEnabledRoutes<FeatureConfigInterface>(
+        let routes: RouteInterface[] = CommonRouteUtils.filterEnabledRoutes<FeatureConfigInterface>(
             getDeveloperViewRoutes(),
             featureConfig,
             allowedScopes);
+
+        if (routes.length === 2 
+            && routes.filter(route => route.id === AccessControlUtils.DEVELOP_GETTING_STARTED_ID).length > 0 
+                && routes.filter(route => route.id === "404").length > 0) {
+                    routes = routes.filter(route => route.id === "404");
+        }
 
         const controlledRoutes = AccessControlUtils.getAuthenticatedRoutes(routes, allowedScopes, featureConfig);
         const sanitizedManageRoutes: RouteInterface[] = CommonRouteUtils.sanitizeForUI(cloneDeep(manageRoutes));
 
         const tab: string = AccessControlUtils.getDisabledTab(
-            filteredRoutes, sanitizedManageRoutes, allowedScopes, featureConfig);
+            sanitizedManageRoutes, filteredRoutes, allowedScopes, featureConfig);
 
         if (tab === "MANAGE") {
-            dispatch(setDeveloperVisibility(false));
-        } else if (tab === "DEVELOP") {
             dispatch(setManageVisibility(false));
+        } else if (tab === "DEVELOP") {
+            dispatch(setDeveloperVisibility(false));
         }
 
         // Try to handle any un-expected routing issues. Returns a void if no issues are found.

@@ -25,8 +25,8 @@ import { FeatureConfigInterface } from "../../models";
  */
 export class AccessControlUtils {
 
-    private static readonly MANAGE_GETTING_STARTED_ID: string = "manage-getting-started";
-    private static readonly DEVELOP_GETTING_STARTED_ID: string = "developer-getting-started";
+    public static readonly MANAGE_GETTING_STARTED_ID: string = "manage-getting-started";
+    public static readonly DEVELOP_GETTING_STARTED_ID: string = "developer-getting-started";
 
     /**
      * Util method to filter base routes based on user scopes retrieved via the token call.
@@ -83,28 +83,31 @@ export class AccessControlUtils {
         allowedScopes: string, featureConfig: FeatureConfigInterface
     ): string {
 
-        let isManageTabDisabled = true;
-        let isDevelopTabDisabled = true;
+        let isManageTabDisabled = false;
+        let isDevelopTabDisabled = false;
 
         const authenticatedManageRoutes = this.getAuthenticatedRoutes(manageRoutes, allowedScopes, featureConfig);
         const authenticatedDevelopRoutes = this.getAuthenticatedRoutes(developRoutes, allowedScopes, featureConfig);
 
-        if (authenticatedDevelopRoutes.length > 1 
-            || (authenticatedDevelopRoutes.length === 1 
-                && authenticatedDevelopRoutes[0].id !== this.DEVELOP_GETTING_STARTED_ID)) {
-            isManageTabDisabled = false;
-        }
-
-        if (authenticatedManageRoutes.length > 1
+        if (authenticatedManageRoutes.length < 2 
             || (authenticatedManageRoutes.length === 1 
                 && authenticatedManageRoutes[0].id !== this.MANAGE_GETTING_STARTED_ID)) {
-            isDevelopTabDisabled = false;
+            isManageTabDisabled = true;
         }
 
-        if (isDevelopTabDisabled) {
+        if (authenticatedDevelopRoutes.length < 2 
+            || (authenticatedDevelopRoutes.length === 1 
+                && authenticatedDevelopRoutes[0].id !== this.DEVELOP_GETTING_STARTED_ID)) {
+            isDevelopTabDisabled = true;
+        }
+
+        if (isDevelopTabDisabled && isManageTabDisabled) {
+            return "BOTH";
+        } else if (isDevelopTabDisabled) {
             return "DEVELOP";
         } else if (isManageTabDisabled) {
             return "MANAGE";
         }
+
     }
 }

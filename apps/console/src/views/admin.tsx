@@ -140,14 +140,15 @@ export const AdminView: FunctionComponent<AdminViewPropsInterface> = (
         const controlledRoutes = AccessControlUtils.getAuthenticatedRoutes(routes, allowedScopes, featureConfig);
         
         setAccessControlledRoutes(controlledRoutes);
+        setFilteredRoutes(controlledRoutes);
 
         const tab: string = AccessControlUtils.getDisabledTab(
             filteredRoutes, sanitizedDevelopRoutes, allowedScopes, featureConfig);
 
         if (tab === "MANAGE") {
-            dispatch(setDeveloperVisibility(false));
-        } else if (tab === "DEVELOP") {
             dispatch(setManageVisibility(false));
+        } else if (tab === "DEVELOP") {
+            dispatch(setDeveloperVisibility(false));
         }
     }, [ allowedScopes ]);
 
