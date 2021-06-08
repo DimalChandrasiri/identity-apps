@@ -50,6 +50,8 @@ export const AccessControlContext: FunctionComponent<PropsWithChildren<AccessCon
     } = props;
 
     useEffect(() => {
+
+        console.log("defining");
         
         if (isEmpty(allowedScopes)) {
             return;
@@ -129,7 +131,7 @@ export const AccessControlContext: FunctionComponent<PropsWithChildren<AccessCon
             }
         });
 
-    }, [ allowedScopes ]);
+    }, []);
 
     return (<> { children } </>);
 };

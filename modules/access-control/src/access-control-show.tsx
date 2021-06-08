@@ -22,7 +22,8 @@ import React, {
     PropsWithChildren, 
     ReactElement, 
     cloneElement, 
-    isValidElement
+    isValidElement,
+    useEffect
 } from "react";
 import { useAccess } from "react-access-control";
 
@@ -58,7 +59,7 @@ export const Show: FunctionComponent<PropsWithChildren<AccessControlShowInterfac
     props: PropsWithChildren<AccessControlShowInterface>
 ): ReactElement<any, any> | null => {
 
-    const { hasPermission } = useAccess();
+    const { hasPermission, isLoaded } = useAccess();
 
     const {
         when,
@@ -68,6 +69,8 @@ export const Show: FunctionComponent<PropsWithChildren<AccessControlShowInterfac
         children,
         ...rest
     } = props;
+
+    console.log("showing");
 
     const show = hasPermission(when, { resource });
     let hideOn = false;
